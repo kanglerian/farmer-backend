@@ -1,12 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+        <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
+            <i class="fa-solid fa-user-circle"></i>
+            <span>{{ __('Users') }}</span>
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
+                <a href="{{ route('users.create') }}" class="inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5"><i class="fa-solid fa-circle-plus me-1"></i> Tambah Pengguna</a>
+                <div class="w-full md:w-auto grid grid-cols-2 gap-3">
+                    <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
+                        <h4 class="text-sm">Administrator</h4>
+                        <span class="font-medium text-lg">{{ $total_administrator }}</span>
+                    </div>
+                    <div class="bg-emerald-500 text-white px-5 py-2.5 rounded-2xl">
+                        <h4 class="text-sm">Petugas</h4>
+                        <span class="font-medium text-lg">{{ $total_petugas }}</span>
+                    </div>
+                </div>
+            </div>
             <section class="bg-white p-10 rounded-2xl">
                 <div class="relative overflow-x-auto">
                     <table class="w-full bg-white text-sm text-left rtl:text-right text-gray-500" id="table-users">
