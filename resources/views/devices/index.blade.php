@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
-            <i class="fa-solid fa-user-circle"></i>
-            <span>{{ __('Users') }}</span>
+            <i class="fa-solid fa-microchip"></i>
+            <span>{{ __('Devices') }}</span>
         </h2>
     </x-slot>
 
@@ -13,11 +13,11 @@
                 <div class="w-full md:w-auto grid grid-cols-2 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Administrator</h4>
-                        <span class="font-medium text-lg">{{ $total_administrator }}</span>
+                        <span class="font-medium text-lg">0</span>
                     </div>
                     <div class="bg-emerald-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Petugas</h4>
-                        <span class="font-medium text-lg">{{ $total_petugas }}</span>
+                        <span class="font-medium text-lg">0</span>
                     </div>
                 </div>
             </div>
