@@ -9,7 +9,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <a href="{{ route('users.create') }}" class="inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5"><i class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
+                <a href="{{ route('users.create') }}" class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
                 <div class="w-full md:w-auto grid grid-cols-2 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Administrator</h4>

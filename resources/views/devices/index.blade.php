@@ -25,12 +25,12 @@
             @endif
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
                 <a href="{{ route('devices.create') }}"
-                    class="inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
+                    class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
                         class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
                 <div class="w-full md:w-auto grid grid-cols-1 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Devices</h4>
-                        <span class="font-medium text-lg">0</span>
+                        <span class="font-medium text-lg">{{ $total_devices }}</span>
                     </div>
                 </div>
             </div>
@@ -131,8 +131,13 @@
                                 let locationDevice = locationData.replaceAll(' ', '-');
                                 let editUrl = "{{ route('devices.edit', ':id') }}".replace(
                                     ':id', data.id);
+                                let showUrl = "{{ route('devices.show', ':id') }}".replace(
+                                    ':id', data.uuid);
                                 return `
                                 <div class="flex items-center gap-1">
+                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                     <a href="${qrcodeVal}" class="bg-sky-500 hover:bg-sky-600 px-3 py-1 rounded-lg text-xs text-white" download="${nameDevice}_${locationDevice}">
                                         <i class="fa-solid fa-download"></i>
                                     </a>

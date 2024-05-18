@@ -4,7 +4,7 @@
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{ route('users.index') }}"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 space-x-2">
+                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
                         <i class="fa-solid fa-user-circle"></i>
                         <span>Users</span>
                     </a>
@@ -43,26 +43,26 @@
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama lengkap</label>
                     <input type="name" id="name" name="name" value="{{ $user->name }}"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Nama lengkap" required />
                 </div>
                 <div class="mb-5">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
                     <input type="email" id="email" name="email" value="{{ $user->email }}"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="name@flowbite.com" required />
                 </div>
                 <div class="mb-5">
                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Sebagai</label>
                     <select id="role" name="role"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
                         <option value="{{ $user->role }}">{{ $user->role }}</option>
                         <option value="Administrator">Administrator</option>
                         <option value="Petugas">Petugas</option>
                     </select>
                 </div>
                 <button type="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                    class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>Simpan perubahan</span>
                 </button>

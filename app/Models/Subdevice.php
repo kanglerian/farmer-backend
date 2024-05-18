@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Device extends Model
+class Subdevice extends Model
 {
     use HasFactory;
 
@@ -18,15 +18,14 @@ class Device extends Model
         'uuid',
         'name',
         'location',
-        'id_user',
+        'id_device',
+        'condition'
     ];
 
-    public function petugas()
+    protected $table = 'subdevice';
+
+    public function device()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id');
-    }
-    public function subdevice()
-    {
-        return $this->hasOne(Device::class, 'id_device', 'uuid');
+        return $this->belongsTo(Device::class, 'id_device', 'uuid');
     }
 }

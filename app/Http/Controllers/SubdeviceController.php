@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Device;
 use App\Models\Subdevice;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class DeviceController extends Controller
+class SubdeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $total_devices = Device::count();
-        return view('devices.index')->with([
-            'total_devices' => $total_devices
-        ]);
+        //
     }
 
     /**
@@ -29,10 +24,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        $users = User::where('role', 'Petugas')->get();
-        return view('devices.create')->with([
-            'users' => $users
-        ]);
+        //
     }
 
     /**
@@ -47,7 +39,7 @@ class DeviceController extends Controller
             $request->validate([
                 'name' => ['required', 'string'],
                 'location' => ['required', 'string'],
-                'id_user' => ['required']
+                'id_device' => ['required'],
             ]);
 
             $uniqueID = uniqid('', true);
@@ -55,10 +47,11 @@ class DeviceController extends Controller
                 'uuid' => explode('.', $uniqueID)[0],
                 'name' => $request->input('name'),
                 'location' => $request->input('location'),
-                'id_user' => $request->input('id_user'),
+                'id_device' => $request->input('id_device'),
+                'condition' => $request->input('condition'),
             ];
 
-            Device::create($data);
+            Subdevice::create($data);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
         } catch (\Throwable $th) {
@@ -74,16 +67,7 @@ class DeviceController extends Controller
      */
     public function show($id)
     {
-        try {
-            $device = Device::where('uuid', $id)->first();
-            $subdevices = Subdevice::where('id_device', $device->uuid)->get();
-            return view('devices.show')->with([
-                'device' => $device,
-                'subdevices' => $subdevices
-            ]);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        
     }
 
     /**
@@ -94,12 +78,7 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
-        $users = User::all();
-        $device = Device::findOrFail($id);
-        return view('devices.edit')->with([
-            'device' => $device,
-            'users' => $users
-        ]);
+        //
     }
 
     /**
@@ -122,14 +101,6 @@ class DeviceController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $device = Device::findOrFail($id);
-            $device->delete();
-            return response()->json([
-                'message' => 'Berhasil menghapus perangkat'
-            ]);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        //
     }
 }
