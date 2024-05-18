@@ -119,6 +119,12 @@ class SubdeviceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $subdevice = Subdevice::findOrFail($id);
+            $subdevice->delete();
+            return redirect()->back()->with('message','Berhasil menghapus data sub perangkat!');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

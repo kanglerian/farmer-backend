@@ -71,7 +71,11 @@
                         <hr class="my-5">
                         <div class="space-x-1">
                             <button type="button" onclick="toggleEditModal('{{ $subdevice->id }}')" class="bg-amber-500 hover:bg-amber-600 text-xs text-white px-5 py-2 rounded-xl"><i class="fa-solid fa-edit me-1"></i> Ubah</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-xs text-white px-5 py-2 rounded-xl"><i class="fa-solid fa-trash-can me-1"></i> Hapus</button>
+                            <form action="{{ route('subdevices.destroy', $subdevice->id) }}" method="POST" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-xs text-white px-5 py-2 rounded-xl"><i class="fa-solid fa-trash-can me-1"></i> Hapus</button>
+                            </form>
                         </div>
                     </div>
                 @empty
