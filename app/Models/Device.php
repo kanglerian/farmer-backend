@@ -15,8 +15,14 @@ class Device extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_user',
+        'uuid',
         'name',
-        'location'
+        'location',
+        'id_user',
     ];
+
+    public function petugas()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
 }

@@ -3,10 +3,10 @@
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('users.index') }}"
+                    <a href="{{ route('devices.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 space-x-2">
-                        <i class="fa-solid fa-user-circle"></i>
-                        <span>Users</span>
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>Devices</span>
                     </a>
                 </li>
                 <li aria-current="page">
@@ -36,29 +36,30 @@
                     </button>
                 </div>
             @endif
-            <form method="POST" action="{{ route('users.update', $user->id) }}"
+            <form method="POST" action="{{ route('devices.update', $device->id) }}"
                 class="max-w-sm bg-white p-10 rounded-2xl">
                 @csrf
                 @method('PATCH')
                 <div class="mb-5">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama lengkap</label>
-                    <input type="name" id="name" name="name" value="{{ $user->name }}"
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Device</label>
+                    <input type="text" id="name" name="name" value="{{ $device->name }}"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="Nama lengkap" required />
+                        placeholder="Nama Device" required />
                 </div>
                 <div class="mb-5">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                    <input type="email" id="email" name="email" value="{{ $user->email }}"
+                    <label for="location" class="block mb-2 text-sm font-medium text-gray-900">Lokasi</label>
+                    <input type="text" id="location" name="location" value="{{ $device->location }}"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="name@flowbite.com" required />
+                        placeholder="Lokasi" required />
                 </div>
                 <div class="mb-5">
-                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Sebagai</label>
-                    <select id="role" name="role"
+                    <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900">Petugas</label>
+                    <select id="id_user" name="id_user"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option value="{{ $user->role }}">{{ $user->role }}</option>
-                        <option value="Administrator">Administrator</option>
-                        <option value="Petugas">Petugas</option>
+                        <option value="{{ $device->id_user }}">{{ $device->petugas->name }}</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <button type="submit"

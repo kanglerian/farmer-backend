@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_user');
+            $table->string('uuid');
             $table->string('name');
             $table->text('location');
+            $table->bigInteger('id_user');
             $table->timestamps();
         });
     }

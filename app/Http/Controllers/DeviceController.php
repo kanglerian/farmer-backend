@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -23,7 +25,10 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('role','Petugas')->get();
+        return view('devices.create')->with([
+            'users' => $users
+        ]);
     }
 
     /**
@@ -34,7 +39,27 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'location' => ['required', 'string'],
+                'id_user' => ['required']
+            ]);
+
+            $uniqueID = uniqid('', true);
+            $data = [
+                'uuid' => explode('.', $uniqueID)[0],
+                'name' => $request->input('name'),
+                'location' => $request->input('location'),
+                'id_user' => $request->input('id_user'),
+            ];
+
+            Device::create($data);
+
+            return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -56,7 +81,12 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::all();
+        $device = Device::findOrFail($id);
+        return view('devices.edit')->with([
+            'device' => $device,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -79,6 +109,14 @@ class DeviceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $device = Device::findOrFail($id);
+            $device->delete();
+            return response()->json([
+                'message' => 'Berhasil menghapus perangkat'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
