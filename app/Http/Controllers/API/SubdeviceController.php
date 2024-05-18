@@ -18,4 +18,12 @@ class SubdeviceController extends Controller
             'subDevices' => $subDevices
         ]);
     }
+
+    public function get_one($id)
+    {
+        $subdevice = Subdevice::findOrFail($id);
+        return response()->json([
+            'subdevice' => $subdevice,
+        ]);
+    }
 }

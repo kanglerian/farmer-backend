@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('subdevice', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->string('uuid')->unique();
             $table->string('name');
             $table->text('location');
             $table->string('id_device');

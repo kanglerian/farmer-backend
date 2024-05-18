@@ -67,7 +67,7 @@ class SubdeviceController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -78,7 +78,7 @@ class SubdeviceController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -90,7 +90,25 @@ class SubdeviceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'location' => ['required', 'string'],
+            ]);
+
+            $data = [
+                'name' => $request->input('name'),
+                'location' => $request->input('location'),
+                'condition' => $request->input('condition'),
+            ];
+
+            $subdevice = Subdevice::findOrFail($id);
+            $subdevice->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil diubah data perangkat.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

@@ -24,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', [UserController::class, 'get']);
 Route::get('/devices', [DeviceController::class, 'get']);
 Route::get('/subdevices/{uuid}', [SubdeviceController::class, 'get_all']);
+Route::get('/subdevice/{id}', [SubdeviceController::class, 'get_one']);
