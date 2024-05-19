@@ -1,12 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>Maintenance: {{ $subdevice->name }} ({{ $subdevice->location }})</span>
-            </h2>
+            <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('devices.index') }}"
+                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>Devices</span>
+                    </a>
+                </li>
+                <li>
+                  <div class="flex items-center">
+                    <i class="fa-solid fa-angle-right text-gray-300"></i>
+                    <a href="{{ route('devices.show', $subdevice->id_device) }}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->device->name }} ({{ $subdevice->device->location }})</a>
+                  </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-angle-right text-gray-300"></i>
+                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">
+                            {{ $subdevice->name }} ({{ $subdevice->location }})
+                        </span>
+                    </div>
+                </li>
+            </ol>
             <input type="hidden" id="id_subdevice" value="{{ $subdevice->id }}">
-            <p class="text-sm text-gray-700">{{ $subdevice->device->name }} - {{ $subdevice->device->location }}</p>
         </div>
     </x-slot>
 
@@ -27,6 +45,10 @@
                     </button>
                 </div>
             @endif
+            <header class="mb-5 space-y-1 mx-5 md:mx-0">
+                <h2 class="font-bold text-2xl">Maintenance</h2>
+                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ducimus.</p>
+            </header>
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
                 <button type="button" onclick="toggleModal()"
                     class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
