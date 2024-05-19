@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\DeviceController;
+use App\Http\Controllers\API\MaintenanceController;
 use App\Http\Controllers\API\SubdeviceController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
@@ -25,3 +26,4 @@ Route::get('/users', [UserController::class, 'get']);
 Route::get('/devices', [DeviceController::class, 'get']);
 Route::get('/subdevices/{uuid}', [SubdeviceController::class, 'get_all']);
 Route::get('/subdevice/{id}', [SubdeviceController::class, 'get_one']);
+Route::get('/maintenances/{id}', [MaintenanceController::class, 'get_all']);

@@ -75,8 +75,8 @@ class DeviceController extends Controller
     public function show($id)
     {
         try {
-            $device = Device::where('uuid', $id)->first();
-            $subdevices = Subdevice::where('id_device', $device->uuid)->get();
+            $device = Device::findOrFail($id);
+            $subdevices = Subdevice::where('id_device', $device->id)->get();
             return view('devices.show')->with([
                 'device' => $device,
                 'subdevices' => $subdevices

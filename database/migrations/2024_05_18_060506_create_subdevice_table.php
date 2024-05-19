@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('uuid')->unique();
             $table->string('name');
             $table->text('location');
-            $table->string('id_device');
+            $table->unsignedBigInteger('id_device');
             $table->boolean('condition');
+            $table->foreign('id_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();
         });
     }

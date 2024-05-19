@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubdeviceController;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->middleware('role:Administrator');
     Route::resource('devices', DeviceController::class)->middleware('role:Administrator');
     Route::resource('subdevices', SubdeviceController::class)->middleware('role:Administrator');
+    Route::resource('maintenances', MaintenanceController::class)->middleware('role:Administrator');
 });
 
 require __DIR__.'/auth.php';

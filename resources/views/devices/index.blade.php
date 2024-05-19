@@ -132,7 +132,7 @@
                                 let editUrl = "{{ route('devices.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 let showUrl = "{{ route('devices.show', ':id') }}".replace(
-                                    ':id', data.uuid);
+                                    ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
                                     <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
@@ -180,14 +180,6 @@
                         let responseDTS = response[0];
                         dataTableInstance = $('#table-devices').DataTable(responseDTS.config);
                         dataTableInitialized = responseDTS.initialized;
-
-                        const qrcodes = responseDTS.config.data;
-                        qrcodes.forEach(qrcode => {
-                            let canvas = document.getElementById(`qrcode-${qrcode.id}`);
-                            QRCode.toCanvas(canvas, `satu`, function(error) {
-                                if (error) console.error(error)
-                            });
-                        });
                     })
                     .catch((error) => {
                         console.log(error);
@@ -198,17 +190,21 @@
 
         <script>
             const deleteDevice = async (data) => {
-                await axios.post(`/devices/${data}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then((response) => {
-                        alert(response.data.message);
-                        location.reload();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                const message = confirm('Apakah anda yakin akan menghapus perangkat?');
+                if (message) {
+                    await axios.post(`/devices/${data}`, {
+                            '_method': 'DELETE',
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        })
+                        .then((response) => {
+                            alert(response.data.message);
+                            location.reload();
+                        })
+                        .catch((error) => {
+                            alert('Perangkat tidak dapat dihapus!')
+                            console.log(error);
+                        });
+                }
             }
 
             const downloadQRCode = async (data) => {

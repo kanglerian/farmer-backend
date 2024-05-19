@@ -5,28 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Device extends Model
+class Maintenance extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'uuid',
-        'name',
-        'location',
-        'id_user',
+        'date',
+        'id_subdevice',
+        'problem',
+        'cost',
     ];
 
-    public function petugas()
-    {
-        return $this->belongsTo(User::class, 'id_user', 'id');
-    }
+    protected $table = 'maintenance';
+
     public function subdevice()
     {
-        return $this->hasMany(Device::class, 'id_device', 'id');
+        return $this->belongsTo(Subdevice::class, 'id_subdevice', 'id');
     }
 }

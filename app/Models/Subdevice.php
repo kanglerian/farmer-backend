@@ -26,6 +26,11 @@ class Subdevice extends Model
 
     public function device()
     {
-        return $this->belongsTo(Device::class, 'id_device', 'uuid');
+        return $this->belongsTo(Device::class, 'id_device', 'id');
+    }
+
+    public function maintenance()
+    {
+        return $this->hasMany(Maintenance::class, 'id_subdevice', 'id');
     }
 }

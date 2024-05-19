@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
-            $table->string('name');
-            $table->text('location');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
+            $table->date('date');
+            $table->unsignedBigInteger('id_subdevice');
+            $table->text('problem');
+            $table->integer('cost');
+            $table->foreign('id_subdevice')->references('id')->on('subdevice')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('maintenance');
     }
 };
