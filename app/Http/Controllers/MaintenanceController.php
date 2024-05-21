@@ -95,7 +95,29 @@ class MaintenanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'date' => ['required'],
+                'id_subdevice' => ['required'],
+                'problem' => ['required'],
+                'cost' => ['required'],
+            ]);
+
+            $maintenance = Maintenance::findOrFail($id);
+
+            $data = [
+                'date' => $request->input('date'),
+                'id_subdevice' => $request->input('id_subdevice'),
+                'problem' => $request->input('problem'),
+                'cost' => $request->input('cost'),
+            ];
+
+            $maintenance->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil mengubah data perawatan.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -106,6 +128,8 @@ class MaintenanceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $maintenance = Maintenance::findOrFail($id);
+        $maintenance->delete();
+        return response()->json('message', 'Berhasil menghapus data perawatan.');
     }
 }

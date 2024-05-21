@@ -27,3 +27,4 @@ Route::get('/devices', [DeviceController::class, 'get']);
 Route::get('/subdevices/{uuid}', [SubdeviceController::class, 'get_all']);
 Route::get('/subdevice/{id}', [SubdeviceController::class, 'get_one']);
 Route::get('/maintenances/{id}', [MaintenanceController::class, 'get_all']);
+Route::get('/maintenance/{id}', [MaintenanceController::class, 'get_one']);

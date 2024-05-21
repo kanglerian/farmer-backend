@@ -18,4 +18,12 @@ class MaintenanceController extends Controller
             'maintenances' => $maintenances
         ]);
     }
+
+    public function get_one($id)
+    {
+        $maintenance = Maintenance::with(['subdevice','subdevice.device'])->where('id',$id)->first();
+        return response()->json([
+            'maintenance' => $maintenance
+        ]);
+    }
 }
