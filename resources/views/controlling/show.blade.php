@@ -28,7 +28,7 @@
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <span class="ms-1 text-sm font-medium text-gray-500 ms-2">
-                            Maintenance
+                            Controlling
                         </span>
                     </div>
                 </li>
@@ -55,19 +55,13 @@
                 </div>
             @endif
             <header class="mb-5 space-y-1 mx-5 md:mx-0">
-                <h2 class="font-bold text-2xl">Maintenance</h2>
+                <h2 class="font-bold text-2xl">Controlling</h2>
                 <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ducimus.</p>
             </header>
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <button type="button" onclick="toggleMaintenanceModal('create')"
+                <button type="button" onclick="toggleModal('create')"
                     class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
                         class="fa-solid fa-circle-plus me-1"></i> Tambah</button>
-                <div class="w-full md:w-auto grid grid-cols-1 gap-3">
-                    <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
-                        <h4 class="text-sm">Perawatan</h4>
-                        <span class="font-medium text-lg">{{ $total_maintenance }}</span>
-                    </div>
-                </div>
             </div>
             <section class="bg-white p-10 rounded-2xl">
                 <div class="relative overflow-x-auto">
@@ -82,10 +76,10 @@
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Keluhan
+                                    Durasi
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Biaya
+                                    Status
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
@@ -107,7 +101,7 @@
             let dataTableInstance;
             let dataTableInitialized = false;
             let idSubdevice = document.getElementById('id_subdevice').value;
-            let endpoint = `/api/maintenances/${idSubdevice}`;
+            let endpoint = `/api/controlling/${idSubdevice}`;
 
             const DataTable = async () => {
                 return new Promise(async (resolve, reject) => {
@@ -126,28 +120,28 @@
                                 return data;
                             },
                         }, {
-                            data: 'problem',
+                            data: 'duration',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
-                            data: 'cost',
+                            data: 'status',
                             render: (data, type, row, meta) => {
-                                return `Rp${data.toLocaleString('id-ID')}`;
+                                return data;
                             },
                         }, {
                             data: {
                                 id: 'id',
                             },
                             render: (data, type, row, meta) => {
-                                let editUrl = "{{ route('devices.edit', ':id') }}".replace(
+                                let editUrl = "{{ route('controlling.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <button type="button" onclick="toggleMaintenanceModal('edit','${data.id}')" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
+                                    <button type="button" onclick="toggleModal('edit','${data.id}')" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </button>
-                                    <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteMaintenance('${data.id}')">
+                                    <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteFunction('${data.id}')">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -192,10 +186,10 @@
         </script>
 
         <script>
-            const deleteMaintenance = async (data) => {
+            const deleteFunction = async (data) => {
                 const message = confirm('Apakah anda yakin akan menghapus perangkat?');
                 if (message) {
-                    await axios.post(`/maintenances/${data}`, {
+                    await axios.post(`/controlling/${data}`, {
                             '_method': 'DELETE',
                             '_token': $('meta[name="csrf-token"]').attr('content')
                         })
@@ -204,49 +198,49 @@
                             location.reload();
                         })
                         .catch((error) => {
-                            alert('Perangkat tidak dapat dihapus!')
+                            alert('Data pengendalian tidak dapat dihapus!')
                             console.log(error);
                         });
                 }
             }
         </script>
         <script>
-            const toggleMaintenanceModal = async (status, data) => {
+            const toggleModal = async (status, data) => {
                 if (status == 'create') {
-                    const url = "{{ route('maintenances.store') }}";
-                    $('#maintenance-form').attr('action', url);
-                    $('#maintenance-header').text('Tambah Perawatan');
-                    $('#maintenance-button').text('Simpan');
-                    $('#maintenance-field').html('');
+                    const url = "{{ route('controlling.store') }}";
+                    $('#subject-form').attr('action', url);
+                    $('#subject-header').text('Tambah Pengendalian');
+                    $('#subject-button').text('Simpan');
+                    $('#subject-field').html('');
                     $('#date').val('');
                     $('#problem').val('');
                     $('#cost').val('');
                 } else if (status == 'edit') {
-                    await axios.get(`/api/maintenance/${data}`)
+                    await axios.get(`/api/controlling/${data}`)
                         .then((response) => {
-                            const maintenance = response.data.maintenance;
+                            const result = response.data.result;
                             const token = $('meta[name="csrf-token"]').attr('content')
-                            const url = "{{ route('maintenances.update', ':id') }}".replace(':id', data);
-                            $('#maintenance-header').text(`Edit Perawatan ${maintenance.subdevice.name}`);
-                            $('#maintenance-button').text('Simpan perubahan');
-                            $('#maintenance-form').attr('action', url);
-                            $('#maintenance-field').html(`<input type="hidden" name="_method" value="PATCH">`
+                            const url = "{{ route('controlling.update', ':id') }}".replace(':id', data);
+                            $('#subject-header').text(`Edit Pengendalian ${maintenance.subdevice.name}`);
+                            $('#subject-button').text('Simpan perubahan');
+                            $('#subject-form').attr('action', url);
+                            $('#subject-field').html(`<input type="hidden" name="_method" value="PATCH">`
                             );
-                            $('#date').val(maintenance.date);
-                            $('#problem').val(maintenance.problem);
-                            $('#cost').val(maintenance.cost);
+                            $('#date').val(result.date);
+                            $('#problem').val(result.problem);
+                            $('#cost').val(result.cost);
                         })
                         .catch((error) => {
                             console.log(error);
                         })
 
                 }
-                $('#maintenance-modal').toggle();
+                $('#subject-modal').toggle();
             }
         </script>
     @endpush
 
-    <div id="maintenance-modal"
+    <div id="subject-modal"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="relative flex justify-center items-center h-screen p-4 w-full max-w-md mx-auto max-h-full">
@@ -255,16 +249,16 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-5 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900" id="maintenance-header">
-                        Tambah Perawatan
+                        Tambah Pengendalian
                     </h3>
-                    <button type="button" onclick="toggleMaintenanceModal()"
+                    <button type="button" onclick="toggleModal()"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                         <i class="fa-solid fa-xmark"></i>
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form method="POST" action="{{ route('maintenances.store') }}" id="maintenance-form"
+                <form method="POST" action="{{ route('controlling.store') }}" id="maintenance-form"
                     class="w-full px-6">
                     @csrf
                     <div class="w-full grid gap-4 mb-4 grid-cols-1">

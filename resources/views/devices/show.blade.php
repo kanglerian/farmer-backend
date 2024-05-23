@@ -12,8 +12,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">{{ $device->name }}
-                            ({{ $device->location }})</span>
+                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">{{ $device->name }} ({{ $device->location }})</span>
                     </div>
                 </li>
             </ol>
@@ -51,15 +50,17 @@
             </div>
             <section class="mx-5 md:mx-0">
                 @if (count($subdevices) > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 ">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 ">
                         @foreach ($subdevices as $subdevice)
                             <div class="relative bg-white p-8 rounded-3xl">
                                 <div class="flex items-end gap-4">
-                                    <a href="javascript.void(0)" class="cursor-pointer" id="download-qrcode-{{ $subdevice->id }}">
+                                    <a href="javascript.void(0)" class="cursor-pointer"
+                                        id="download-qrcode-{{ $subdevice->id }}">
                                         <img src="" id="qrcode-{{ $subdevice->id }}" alt="">
                                     </a>
                                     <div class="space-y-2">
-                                        <a href="{{ route('maintenances.show', $subdevice->id) }}" class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $subdevice->name }}</a>
+                                        <a href="{{ route('subdevices.show', $subdevice->id) }}"
+                                            class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $subdevice->name }}</a>
                                         <ul class="text-gray-700 text-sm space-y-2">
                                             <li><i class="fa-solid fa-location-dot text-sky-500"></i>
                                                 {{ $subdevice->location }}
@@ -72,19 +73,47 @@
                                 </div>
                                 <i class="absolute right-5 top-10 text-gray-200 fa-solid fa-house-signal text-3xl"></i>
                                 <hr class="my-5">
-                                <div class="space-x-1">
-                                    <button type="button" onclick="toggleEditModal('{{ $subdevice->id }}')"
-                                        class="bg-amber-500 hover:bg-amber-600 text-xs text-white px-5 py-2 rounded-xl"><i
-                                            class="fa-solid fa-edit me-1"></i> Ubah</button>
-                                    <button type="button" onclick="toggleDeleteModal('{{ $subdevice->id }}')"
-                                        class="bg-red-500 hover:bg-red-600 text-xs text-white px-5 py-2 rounded-xl"><i
-                                            class="fa-solid fa-trash-can me-1"></i> Hapus</button>
+                                <div class="relative mb-10">
+                                    <label for="steps-range"
+                                        class="block mb-2 text-sm font-medium text-gray-900">Durasi: <span
+                                            id="duration-value-{{ $subdevice->id }}">0</span></label>
+                                    <input onchange="rangeFunction('{{ $subdevice->id }}')"
+                                        id="duration-{{ $subdevice->id }}" type="range" min="0"
+                                        max="4" value="0" step="1"
+                                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                    <span class="text-sm text-gray-500 absolute start-0 -bottom-6">0 Menit</span>
+                                    <span class="text-sm text-gray-500 absolute end-0 -bottom-6">4 Menit</span>
+                                </div>
+                                <hr class="my-5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick="toggleEditModal('{{ $subdevice->id }}')"
+                                            class="bg-sky-500 hover:bg-sky-600 text-xs text-white px-5 py-2 rounded-xl"><i
+                                                class="fa-solid fa-save me-1"></i> Perbarui</button>
+                                        <button type="button" onclick="toggleEditModal('{{ $subdevice->id }}')"
+                                            class="bg-amber-500 hover:bg-amber-600 text-xs text-white px-5 py-2 rounded-xl"><i
+                                                class="fa-solid fa-edit me-1"></i> Ubah</button>
+                                        <button type="button" onclick="toggleDeleteModal('{{ $subdevice->id }}')"
+                                            class="bg-red-500 hover:bg-red-600 text-xs text-white px-5 py-2 rounded-xl"><i
+                                                class="fa-solid fa-trash-can me-1"></i> Hapus</button>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5" placeholder="Select date">
+
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" value="" id="status" class="sr-only peer">
+                                            <div
+                                                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-sky-600">
+                                            </div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <p class="text-center text-gray-700 mt-10"><i class="fa-solid fa-microchip me-1"></i> Belum ada sub perangkat yang terdaftar.</p>
+                    <p class="text-center text-gray-700 mt-10"><i class="fa-solid fa-microchip me-1"></i> Belum ada sub
+                        perangkat yang terdaftar.</p>
                 @endif
             </section>
         </div>
@@ -96,6 +125,10 @@
         <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
         <script src="{{ asset('js/qrcode.js') }}"></script>
         <script>
+            const rangeFunction = (id) => {
+                let range = document.getElementById(`duration-${id}`).value;
+                document.getElementById(`duration-value-${id}`).innerText = range;
+            }
             const getSubdevices = async () => {
                 const device = document.getElementById('id_device').value;
                 await axios.get(`/api/subdevices/${device}`)

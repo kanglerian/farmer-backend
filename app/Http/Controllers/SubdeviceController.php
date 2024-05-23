@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Controlling;
 use App\Models\Subdevice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SubdeviceController extends Controller
@@ -51,7 +53,16 @@ class SubdeviceController extends Controller
                 'condition' => $request->input('condition'),
             ];
 
-            Subdevice::create($data);
+            $subdevice = Subdevice::create($data);
+
+            $data_controlling = [
+                'date' => Carbon::now(),
+                'id_subdevice' => $subdevice->id,
+                'duration' => 0,
+                'status' => 1
+            ];
+
+            Controlling::create($data_controlling);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
         } catch (\Throwable $th) {
@@ -67,7 +78,10 @@ class SubdeviceController extends Controller
      */
     public function show($id)
     {
-
+        $subdevice = Subdevice::findOrFail($id);
+        return view('subdevice.show')->with([
+            'subdevice' => $subdevice
+        ]);
     }
 
     /**
@@ -122,7 +136,7 @@ class SubdeviceController extends Controller
         try {
             $subdevice = Subdevice::findOrFail($id);
             $subdevice->delete();
-            return redirect()->back()->with('message','Berhasil menghapus data sub perangkat!');
+            return redirect()->back()->with('message', 'Berhasil menghapus data sub perangkat!');
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -130,6 +130,8 @@ class MaintenanceController extends Controller
     {
         $maintenance = Maintenance::findOrFail($id);
         $maintenance->delete();
-        return response()->json('message', 'Berhasil menghapus data perawatan.');
+        return response()->json([
+            'message' => 'Berhasil menghapus data perawatan.'
+        ]);
     }
 }
