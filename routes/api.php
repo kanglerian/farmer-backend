@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ControllingController;
 use App\Http\Controllers\API\DeviceController;
 use App\Http\Controllers\API\MaintenanceController;
 use App\Http\Controllers\API\SubdeviceController;
@@ -28,5 +29,5 @@ Route::get('/subdevices/{uuid}', [SubdeviceController::class, 'get_all']);
 Route::get('/subdevice/{id}', [SubdeviceController::class, 'get_one']);
 Route::get('/maintenances/{id}', [MaintenanceController::class, 'get_all']);
 Route::get('/maintenance/{id}', [MaintenanceController::class, 'get_one']);
-Route::get('/controllings/{id}', [MaintenanceController::class, 'get_all']);
-Route::get('/controlling/{id}', [MaintenanceController::class, 'get_one']);
+Route::get('/controllings/{id}', [ControllingController::class, 'get_all']);
+Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);

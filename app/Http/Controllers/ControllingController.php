@@ -36,7 +36,27 @@ class ControllingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'date' => ['required'],
+                'id_subdevice' => ['required'],
+                'duration' => ['required'],
+                'status' => ['required'],
+            ]);
+
+            $data = [
+                'date' => $request->input('date'),
+                'id_subdevice' => $request->input('id_subdevice'),
+                'duration' => $request->input('duration'),
+                'status' => $request->input('status'),
+            ];
+
+            Controlling::create($data);
+
+            return redirect()->back()->with('message', 'Berhasil menambahkan pengendalian.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -73,7 +93,29 @@ class ControllingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $controlling = Controlling::findOrFail($id);
+        try {
+            $request->validate([
+                'date' => ['required'],
+                'id_subdevice' => ['required'],
+                'duration' => ['required'],
+                'status' => ['required'],
+            ]);
+
+            $controlling = Controlling::findOrFail($id);
+
+            $data = [
+                'date' => $request->input('date'),
+                'id_subdevice' => $request->input('id_subdevice'),
+                'duration' => $request->input('duration'),
+                'status' => $request->input('status'),
+            ];
+
+            $controlling->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil mengubah data pengendalian.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -84,6 +126,10 @@ class ControllingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $controlling = Controlling::findOrFail($id);
+        $controlling->delete();
+        return response()->json([
+            'message' => 'Berhasil menghapus data pengendalian.'
+        ]);
     }
 }

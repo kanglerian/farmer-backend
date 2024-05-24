@@ -5,36 +5,19 @@
                 <li class="inline-flex items-center">
                     <a href="{{ route('devices.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
-                        <i class="fa-solid fa-microchip"></i>
-                        <span>Devices</span>
+                        <i class="fa-solid fa-gears"></i>
+                        <span>Controlling</span>
                     </a>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <a href="{{ route('devices.show', $subdevice->id_device) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->device->name }}
-                            ({{ $subdevice->device->location }})</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <a href="{{ route('subdevices.show', $subdevice->id) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->name }}
-                            ({{ $subdevice->location }})</a>
-                    </div>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <span class="ms-1 text-sm font-medium text-gray-500 ms-2">
-                            Controlling
+                            Detail Controlling
                         </span>
                     </div>
                 </li>
             </ol>
-            <input type="hidden" id="id_subdevice" value="{{ $subdevice->id }}">
         </div>
     </x-slot>
 
@@ -55,9 +38,27 @@
                     </button>
                 </div>
             @endif
-            <header class="mb-5 space-y-1 mx-5 md:mx-0">
-                <h2 class="font-bold text-2xl">Controlling {{ $subdevice->name }}</h2>
-                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ducimus.</p>
+            <header class="mb-5 space-y-3 mx-5 md:mx-0">
+                <div class="space-y-1">
+                    <h2 class="font-bold text-2xl space-x-1">
+                        <a href="{{ route('controlling.show', $controlling->subdevice->id) }}"><i class="fa-solid fa-arrow-left-long"></i></a>
+                        <span>Detail Controlling</span>
+                    </h2>
+                    <p class="text-gray-600 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa ipsam
+                        excepturi modi tempore dolor debitis, deserunt voluptatum nobis aperiam repudiandae.</p>
+                </div>
+                <ul class="text-sm space-y-1 text-gray-600 border border-gray-300 p-5 rounded-2xl">
+                    <li>Tanggal: {{ $controlling->date }}</li>
+                    <li>Subdevice: {{ $controlling->subdevice->name }}</li>
+                    <li>Durasi: {{ $controlling->duration }}</li>
+                    <li>Status:
+                        @if ($controlling->status)
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        @else
+                            <i class="fa-solid fa-circle-xmark text-red-500"></i>
+                        @endif
+                    </li>
+                </ul>
             </header>
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
                 <button type="button" onclick="toggleModal('create')"
@@ -127,8 +128,6 @@
                                 status: 'status'
                             },
                             render: (data, type, row, meta) => {
-                                let showUrl = "{{ route('detailcontrolling.show', ':id') }}".replace(
-                                    ':id', data.id);
                                 let editUrl = "{{ route('controlling.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
@@ -136,9 +135,9 @@
                                     <button type="button" onclick="toggleModal('edit','${data.id}')" class="${data.status ? 'bg-sky-500 hover:bg-sky-600' : 'bg-slate-300 hover:bg-slate-400'} px-3 py-1 rounded-lg text-xs text-white">
                                         ${data.status ? '<i class="fa-solid fa-toggle-on"></i>' : '<i class="fa-solid fa-toggle-off"></i>'}
                                     </button>
-                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
+                                    <button type="button" onclick="toggleModal('edit','${data.id}')" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-eye"></i>
-                                    </a>
+                                    </button>
                                     <button type="button" onclick="toggleModal('edit','${data.id}')" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </button>
@@ -262,7 +261,6 @@
                     @csrf
                     <div class="w-full grid gap-4 mb-4 grid-cols-1">
                         <div id="subject-field"></div>
-                        <input type="hidden" name="id_subdevice" id="id_subdevice" value="{{ $subdevice->id }}">
                         <div>
                             <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal</label>
                             <input type="date" id="date" name="date"

@@ -53,16 +53,7 @@ class SubdeviceController extends Controller
                 'condition' => $request->input('condition'),
             ];
 
-            $subdevice = Subdevice::create($data);
-
-            $data_controlling = [
-                'date' => Carbon::now(),
-                'id_subdevice' => $subdevice->id,
-                'duration' => 0,
-                'status' => 1
-            ];
-
-            Controlling::create($data_controlling);
+            Subdevice::create($data);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
         } catch (\Throwable $th) {

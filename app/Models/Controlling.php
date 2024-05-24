@@ -26,4 +26,9 @@ class Controlling extends Model
     {
         return $this->belongsTo(Subdevice::class, 'id_subdevice', 'id');
     }
+
+    public function detailcontrolling()
+    {
+        return $this->hasMany(DetailControlling::class, 'id_controlling', 'id');
+    }
 }

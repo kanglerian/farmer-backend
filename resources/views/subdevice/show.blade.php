@@ -48,7 +48,7 @@
                 </div>
             @endif
 
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <a href="{{ route('maintenances.show', $subdevice->id) }}" class="bg-sky-500 hover:bg-sky-600 text-white flex items-center gap-3 p-5 rounded-2xl">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     <h2>Maintenance</h2>
