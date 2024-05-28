@@ -13,7 +13,7 @@
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <a href="{{ route('devices.show', $subdevice->id_device) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->device->name }}
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->device->name }}
                             ({{ $subdevice->device->location }})</a>
                     </div>
                 </li>

@@ -13,7 +13,7 @@
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <a href="{{ route('devices.show', $subdevice->id_device) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->device->name }}
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->device->name }}
                             ({{ $subdevice->device->location }})</a>
                     </div>
                 </li>
@@ -21,7 +21,7 @@
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <a href="{{ route('subdevices.show', $subdevice->id) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">{{ $subdevice->name }}
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->name }}
                             ({{ $subdevice->location }})</a>
                     </div>
                 </li>
@@ -133,7 +133,7 @@
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <button type="button" onclick="toggleModal('edit','${data.id}')" class="${data.status ? 'bg-sky-500 hover:bg-sky-600' : 'bg-slate-300 hover:bg-slate-400'} px-3 py-1 rounded-lg text-xs text-white">
+                                    <button type="button" onclick="toggleStatus('${data.id}')" class="${data.status ? 'bg-sky-500 hover:bg-sky-600' : 'bg-slate-300 hover:bg-slate-400'} px-3 py-1 rounded-lg text-xs text-white">
                                         ${data.status ? '<i class="fa-solid fa-toggle-on"></i>' : '<i class="fa-solid fa-toggle-off"></i>'}
                                     </button>
                                     <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
@@ -206,6 +206,18 @@
             }
         </script>
         <script>
+            const toggleStatus = async (data) => {
+                await axios.post(`/api/controlling/status`, {
+                    id: data
+                })
+                .then((response) => {
+                    alert(response.data.message);
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
             const toggleModal = async (status, data) => {
                 if (status == 'create') {
                     const url = "{{ route('controlling.store') }}";
@@ -266,7 +278,7 @@
                         <div>
                             <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal</label>
                             <input type="date" id="date" name="date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
                                 placeholder="Tanggal" required />
                         </div>
                         <div>
@@ -277,7 +289,7 @@
                                     <i class="fa-solid fa-stopwatch"></i>
                                 </div>
                                 <input type="number" id="duration" name="duration"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5"
                                     placeholder="0" required />
                             </div>
                         </div>
@@ -285,7 +297,7 @@
                             <label for="status"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
                             <select id="status" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
                                 <option selected="">Pilih</option>
                                 <option value="1">Aktif</option>
                                 <option value="0">Tidak Aktif</option>
@@ -293,7 +305,7 @@
                         </div>
                         <div>
                             <button type="submit"
-                                class="w-full block text-white flex justify-center items-center gap-2 bg-blue-700 gap-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                                class="w-full block text-white flex justify-center items-center gap-2 bg-sky-700 gap-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
                                 <i class="fa-solid fa-save"></i>
                                 <span id="subject-button">Tambah Pengendalian</span>
                             </button>

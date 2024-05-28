@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('devices.index') }}"
+                    <a href="{{ route('controlling.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
                         <i class="fa-solid fa-gears"></i>
                         <span>Controlling</span>
@@ -20,6 +20,8 @@
             </ol>
         </div>
     </x-slot>
+
+    <input type="hidden" id="id_controlling" value="{{ $controlling->id }}">
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -74,10 +76,13 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Tanggal
+                                    Waktu
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Durasi
+                                    Suhu
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Tegangan Arus
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
@@ -98,46 +103,44 @@
             let devices;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let idSubdevice = document.getElementById('id_subdevice').value;
-            let endpoint = `/api/controllings/${idSubdevice}`;
+            let id = document.getElementById('id_controlling').value;
+            let endpoint = `/api/detailcontrollings/${id}`;
 
             const DataTable = async () => {
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(endpoint);
                         const dataResult = response.data.result;
-
+                        console.log(dataResult);
                         let columnConfigs = [{
                             data: 'id',
                             render: (data, type, row, meta) => {
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'date',
+                            data: 'time',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
-                            data: 'duration',
+                            data: 'temperature',
+                            render: (data, type, row, meta) => {
+                                return data;
+                            },
+                        }, {
+                            data: 'voltage',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
                             data: {
                                 id: 'id',
-                                status: 'status'
                             },
                             render: (data, type, row, meta) => {
                                 let editUrl = "{{ route('controlling.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <button type="button" onclick="toggleModal('edit','${data.id}')" class="${data.status ? 'bg-sky-500 hover:bg-sky-600' : 'bg-slate-300 hover:bg-slate-400'} px-3 py-1 rounded-lg text-xs text-white">
-                                        ${data.status ? '<i class="fa-solid fa-toggle-on"></i>' : '<i class="fa-solid fa-toggle-off"></i>'}
-                                    </button>
-                                    <button type="button" onclick="toggleModal('edit','${data.id}')" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
                                     <button type="button" onclick="toggleModal('edit','${data.id}')" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </button>
@@ -187,9 +190,9 @@
 
         <script>
             const deleteFunction = async (data) => {
-                const message = confirm('Apakah anda yakin akan menghapus pengendalian?');
+                const message = confirm('Apakah anda yakin akan menghapus detail pengendalian?');
                 if (message) {
-                    await axios.post(`/controlling/${data}`, {
+                    await axios.post(`/detailcontrolling/${data}`, {
                             '_method': 'DELETE',
                             '_token': $('meta[name="csrf-token"]').attr('content')
                         })
@@ -198,7 +201,7 @@
                             location.reload();
                         })
                         .catch((error) => {
-                            alert('Data pengendalian tidak dapat dihapus!')
+                            alert('Data detail pengendalian tidak dapat dihapus!')
                             console.log(error);
                         });
                 }
@@ -207,27 +210,27 @@
         <script>
             const toggleModal = async (status, data) => {
                 if (status == 'create') {
-                    const url = "{{ route('controlling.store') }}";
+                    const url = "{{ route('detailcontrolling.store') }}";
                     $('#subject-form').attr('action', url);
-                    $('#subject-header').text('Tambah Pengendalian');
+                    $('#subject-header').text('Tambah Detail Pengendalian');
                     $('#subject-button').text('Simpan');
                     $('#subject-field').html('');
-                    $('#date').val('');
-                    $('#problem').val('');
-                    $('#cost').val('');
+                    $('#time').val('');
+                    $('#temperature').val('');
+                    $('#voltage').val('');
                 } else if (status == 'edit') {
-                    await axios.get(`/api/controlling/${data}`)
+                    await axios.get(`/api/detailcontrolling/${data}`)
                         .then((response) => {
                             const result = response.data.result;
                             const token = $('meta[name="csrf-token"]').attr('content')
-                            const url = "{{ route('controlling.update', ':id') }}".replace(':id', data);
-                            $('#subject-header').text(`Edit Pengendalian`);
+                            const url = "{{ route('detailcontrolling.update', ':id') }}".replace(':id', data);
+                            $('#subject-header').text(`Edit Detail Pengendalian`);
                             $('#subject-button').text('Simpan perubahan');
                             $('#subject-form').attr('action', url);
                             $('#subject-field').html(`<input type="hidden" name="_method" value="PATCH">`);
-                            $('#date').val(result.date);
-                            $('#duration').val(result.duration);
-                            $('#status').val(result.status);
+                            $('#time').val(result.time);
+                            $('#temperature').val(result.temperature);
+                            $('#voltage').val(result.voltage);
                         })
                         .catch((error) => {
                             console.log(error);
@@ -248,7 +251,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-5 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900" id="subject-header">
-                        Tambah Pengendalian
+                        Tambah Detail Pengendalian
                     </h3>
                     <button type="button" onclick="toggleModal()"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
@@ -257,41 +260,44 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form method="POST" action="{{ route('controlling.store') }}" id="subject-form" class="w-full px-6">
+                <form method="POST" action="{{ route('detailcontrolling.store') }}" id="subject-form" class="w-full px-6">
                     @csrf
                     <div class="w-full grid gap-4 mb-4 grid-cols-1">
                         <div id="subject-field"></div>
+                        <input type="hidden" name="id_controlling" value="{{ $controlling->id }}">
                         <div>
-                            <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal</label>
-                            <input type="date" id="date" name="date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            <label for="time" class="block mb-2 text-sm font-medium text-gray-900">Waktu</label>
+                            <input type="time" id="time" name="time"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
                                 placeholder="Tanggal" required />
                         </div>
                         <div>
-                            <label for="duration" class="block mb-2 text-sm font-medium text-gray-900">Durasi</label>
+                            <label for="temperature" class="block mb-2 text-sm font-medium text-gray-900">Suhu</label>
                             <div class="relative">
                                 <div
                                     class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none text-gray-400 text-sm font-medium">
-                                    <i class="fa-solid fa-stopwatch"></i>
+                                    <i class="fa-solid fa-temperature-three-quarters"></i>
                                 </div>
-                                <input type="number" id="duration" name="duration"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                <input type="number" id="temperature" name="temperature"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5"
                                     placeholder="0" required />
                             </div>
                         </div>
                         <div>
-                            <label for="status"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                            <select id="status" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option selected="">Pilih</option>
-                                <option value="1">Aktif</option>
-                                <option value="0">Tidak Aktif</option>
-                            </select>
+                            <label for="voltage" class="block mb-2 text-sm font-medium text-gray-900">Tegangan Arus</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none text-gray-400 text-sm font-medium">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <input type="number" id="voltage" name="voltage"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5"
+                                    placeholder="0" required />
+                            </div>
                         </div>
                         <div>
                             <button type="submit"
-                                class="w-full block text-white flex justify-center items-center gap-2 bg-blue-700 gap-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                                class="w-full block text-white flex justify-center items-center gap-2 bg-sky-700 gap-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
                                 <i class="fa-solid fa-save"></i>
                                 <span id="subject-button">Tambah Pengendalian</span>
                             </button>

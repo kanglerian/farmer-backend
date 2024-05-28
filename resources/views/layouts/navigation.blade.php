@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="{{ asset('img/sipetani.png') }}" alt="" class="w-auto h-full">
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                     </a>
                 </div>
 
@@ -17,6 +18,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('devices.index')" :active="request()->routeIs(['devices.index','devices.edit','devices.show','subdevices.show','maintenances.show','controlling.show','detailcontrolling.show'])">
                         {{ __('Devices') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('controlling.index')" :active="request()->routeIs(['controlling.index','controlling.edit','controlling.show','detailcontrolling.show'])">
+                        {{ __('Controlling') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index','users.edit'])">
                         {{ __('Users') }}

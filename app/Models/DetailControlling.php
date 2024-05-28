@@ -14,7 +14,6 @@ class DetailControlling extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'date',
         'id_controlling',
         'time',
         'temperature',

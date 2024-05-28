@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <button type="submit"
-                    class="text-white inline-flex items-center bg-blue-700 gap-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                    class="text-white inline-flex items-center bg-sky-700 gap-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
                     <i class="fa-solid fa-plus"></i>
                     Add sub device
                 </button>

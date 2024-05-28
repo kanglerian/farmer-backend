@@ -15,7 +15,7 @@ class ControllingController extends Controller
      */
     public function index()
     {
-        //
+        return view('controlling.index');
     }
 
     /**

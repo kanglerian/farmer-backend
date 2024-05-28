@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_controlling');
             $table->string('time');
             $table->integer('temperature');
-            $table->boolean('voltage');
+            $table->integer('voltage');
             $table->foreign('id_controlling')->references('id')->on('controlling')->onDelete('restrict');
             $table->timestamps();
         });
