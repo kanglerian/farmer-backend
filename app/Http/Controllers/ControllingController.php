@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Controlling;
-use App\Models\Subdevice;
 use Illuminate\Http\Request;
 
 class ControllingController extends Controller
@@ -25,7 +24,7 @@ class ControllingController extends Controller
      */
     public function create()
     {
-        //
+        return view('controlling.create');
     }
 
     /**
@@ -39,21 +38,21 @@ class ControllingController extends Controller
         try {
             $request->validate([
                 'date' => ['required'],
-                'id_subdevice' => ['required'],
                 'duration' => ['required'],
                 'status' => ['required'],
+                'id_sub_device' => ['required'],
             ]);
 
             $data = [
                 'date' => $request->input('date'),
-                'id_subdevice' => $request->input('id_subdevice'),
                 'duration' => $request->input('duration'),
                 'status' => $request->input('status'),
+                'id_sub_device' => $request->input('id_sub_device'),
             ];
 
             Controlling::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan pengendalian.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data controlling.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -67,9 +66,9 @@ class ControllingController extends Controller
      */
     public function show($id)
     {
-        $subdevice = Subdevice::findOrFail($id);
+        $controlling = Controlling::findOrFail($id);
         return view('controlling.show')->with([
-            'subdevice' => $subdevice
+            'controlling' => $controlling
         ]);
     }
 
@@ -81,7 +80,10 @@ class ControllingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $controlling = Controlling::findOrFail($id);
+        return view('controlling.edit')->with([
+            'controlling' => $controlling
+        ]);
     }
 
     /**
@@ -96,23 +98,23 @@ class ControllingController extends Controller
         try {
             $request->validate([
                 'date' => ['required'],
-                'id_subdevice' => ['required'],
                 'duration' => ['required'],
                 'status' => ['required'],
+                'id_sub_device' => ['required'],
             ]);
-
-            $controlling = Controlling::findOrFail($id);
 
             $data = [
                 'date' => $request->input('date'),
-                'id_subdevice' => $request->input('id_subdevice'),
                 'duration' => $request->input('duration'),
                 'status' => $request->input('status'),
+                'id_sub_device' => $request->input('id_sub_device'),
             ];
+
+            $controlling = Controlling::findOrFail($id);
 
             $controlling->update($data);
 
-            return redirect()->back()->with('message', 'Berhasil mengubah data pengendalian.');
+            return redirect()->back()->with('message', 'Berhasil memperbarui data controlling.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -126,10 +128,14 @@ class ControllingController extends Controller
      */
     public function destroy($id)
     {
-        $controlling = Controlling::findOrFail($id);
-        $controlling->delete();
-        return response()->json([
-            'message' => 'Berhasil menghapus data pengendalian.'
-        ]);
+        try {
+            $controlling = Controlling::findOrFail($id);
+            $controlling->delete();
+            return response()->json([
+                'message' => 'Berhasil menghapus data detail controlling'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

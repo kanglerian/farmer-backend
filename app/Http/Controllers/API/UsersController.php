@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
-    public function get()
+    public function get_all()
     {
         $userQuery = User::query();
         $users = $userQuery->get();

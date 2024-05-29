@@ -6,6 +6,7 @@ use App\Http\Controllers\API\DeviceController;
 use App\Http\Controllers\API\MaintenanceController;
 use App\Http\Controllers\API\SubdeviceController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,15 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', [UserController::class, 'get']);
-Route::get('/devices', [DeviceController::class, 'get']);
-Route::get('/subdevices/{uuid}', [SubdeviceController::class, 'get_all']);
-Route::get('/subdevice/{id}', [SubdeviceController::class, 'get_one']);
-Route::get('/maintenances/{id}', [MaintenanceController::class, 'get_all']);
-Route::get('/maintenance/{id}', [MaintenanceController::class, 'get_one']);
-Route::get('/controllings', [ControllingController::class, 'get']);
-Route::get('/controllings/{id}', [ControllingController::class, 'get_all']);
-Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);
-Route::post('/controlling/status', [ControllingController::class, 'status']);
-Route::get('/detailcontrollings/{id}', [DetailControllingController::class, 'get_all']);
-Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_one']);
+Route::get('/users', [UsersController::class, 'get_all']);

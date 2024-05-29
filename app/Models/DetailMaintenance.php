@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailControlling extends Model
+class DetailMaintenance extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,7 @@ class DetailControlling extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_controlling',
-        'temperature',
-        'watt',
+        'detail',
+        'id_maintenance',
     ];
 }

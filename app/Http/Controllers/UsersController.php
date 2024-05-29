@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Controlling;
-use App\Models\Subdevice;
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class SubdeviceController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,12 @@ class SubdeviceController extends Controller
      */
     public function index()
     {
-        //
+        $total_administrator = User::where('level','1')->count();
+        $total_petugas = User::where('level','0')->count();
+        return view('users.index')->with([
+            'total_administrator' => $total_administrator,
+            'total_petugas' => $total_petugas
+        ]);
     }
 
     /**
@@ -26,7 +30,7 @@ class SubdeviceController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -39,23 +43,22 @@ class SubdeviceController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required', 'string'],
-                'location' => ['required', 'string'],
-                'id_device' => ['required'],
+                'name' => ['required','string'],
+                'email' => ['required','email'],
+                'level' => ['required'],
+                'password' => ['required', 'confirmed'],
             ]);
 
-            $uniqueID = uniqid('', true);
             $data = [
-                'uuid' => explode('.', $uniqueID)[0],
                 'name' => $request->input('name'),
-                'location' => $request->input('location'),
-                'id_device' => $request->input('id_device'),
-                'condition' => $request->input('condition'),
+                'email' => $request->input('email'),
+                'level' => $request->input('level'),
+                'password' => Hash::make($request->input('password')),
             ];
 
-            Subdevice::create($data);
+            User::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data pengguna.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -69,10 +72,7 @@ class SubdeviceController extends Controller
      */
     public function show($id)
     {
-        $subdevice = Subdevice::findOrFail($id);
-        return view('subdevice.show')->with([
-            'subdevice' => $subdevice
-        ]);
+        //
     }
 
     /**
@@ -83,7 +83,10 @@ class SubdeviceController extends Controller
      */
     public function edit($id)
     {
-
+        $user = User::findOrFail($id);
+        return view('users.edit')->with([
+            'user' => $user
+        ]);
     }
 
     /**
@@ -97,20 +100,21 @@ class SubdeviceController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required', 'string'],
-                'location' => ['required', 'string'],
+                'name' => ['required','string'],
+                'email' => ['required','email'],
+                'level' => ['required'],
             ]);
 
             $data = [
                 'name' => $request->input('name'),
-                'location' => $request->input('location'),
-                'condition' => $request->input('condition'),
+                'email' => $request->input('email'),
+                'level' => $request->input('level'),
             ];
 
-            $subdevice = Subdevice::findOrFail($id);
-            $subdevice->update($data);
+            $user = User::findOrFail($id);
+            $user->update($data);
 
-            return redirect()->back()->with('message', 'Berhasil diubah data perangkat.');
+            return redirect()->back()->with('message', 'Berhasil mengubah data pengguna.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -125,9 +129,11 @@ class SubdeviceController extends Controller
     public function destroy($id)
     {
         try {
-            $subdevice = Subdevice::findOrFail($id);
-            $subdevice->delete();
-            return redirect()->back()->with('message', 'Berhasil menghapus data sub perangkat!');
+            $user = User::findOrFail($id);
+            $user->delete();
+            return response()->json([
+                'message' => 'Berhasil menghapus akun'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

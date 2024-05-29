@@ -8,25 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Device extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'uuid',
         'name',
-        'location',
-        'id_user',
+        'coordinate_device_x',
+        'coordinate_device_y',
+        'status',
+        'condition',
     ];
-
-    public function petugas()
-    {
-        return $this->belongsTo(User::class, 'id_user', 'id');
-    }
-    public function subdevice()
-    {
-        return $this->hasMany(Device::class, 'id_device', 'id');
-    }
 }

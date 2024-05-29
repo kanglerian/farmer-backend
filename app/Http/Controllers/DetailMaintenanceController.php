@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\DetailMaintenance;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class DetailMaintenanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $total_administrator = User::where('role','Administrator')->count();
-        $total_petugas = User::where('role','Petugas')->count();
-        return view('users.index')->with([
-            'total_administrator' => $total_administrator,
-            'total_petugas' => $total_petugas
-        ]);
+        return view('detail-maintenances.index');
     }
 
     /**
@@ -30,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('detail-maintenances.create');
     }
 
     /**
@@ -43,22 +37,18 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required','string'],
-                'email' => ['required','email'],
-                'role' => ['required'],
-                'password' => ['required', 'confirmed'],
+                'detail' => ['required'],
+                'id_maintenance' => ['required'],
             ]);
 
             $data = [
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'role' => $request->input('role'),
-                'password' => Hash::make($request->input('password')),
+                'detail' => $request->input('detail'),
+                'id_maintenance' => $request->input('id_maintenance'),
             ];
 
-            User::create($data);
+            DetailMaintenance::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan data pengguna.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data detail maintenance.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -72,7 +62,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail_maintenance = DetailMaintenance::findOrFail($id);
+        return view('detail-maintenances.show')->with([
+            'detail_maintenance' => $detail_maintenance
+        ]);
     }
 
     /**
@@ -83,9 +76,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.edit')->with([
-            'user' => $user
+        $detail_maintenance = DetailMaintenance::findOrFail($id);
+        return view('detail-maintenances.edit')->with([
+            'detail_maintenance' => $detail_maintenance
         ]);
     }
 
@@ -100,21 +93,20 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required','string'],
-                'email' => ['required','email'],
-                'role' => ['required'],
+                'detail' => ['required'],
+                'id_maintenance' => ['required'],
             ]);
 
             $data = [
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'role' => $request->input('role'),
+                'detail' => $request->input('detail'),
+                'id_maintenance' => $request->input('id_maintenance'),
             ];
 
-            $user = User::findOrFail($id);
-            $user->update($data);
+            $detail_maintenance = DetailMaintenance::findOrFail($id);
 
-            return redirect()->back()->with('message', 'Berhasil mengubah data pengguna.');
+            $detail_maintenance->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil memperbarui data detail maintenance.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -129,10 +121,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $user = User::findOrFail($id);
-            $user->delete();
+            $detail_maintenance = DetailMaintenance::findOrFail($id);
+            $detail_maintenance->delete();
             return response()->json([
-                'message' => 'Berhasil menghapus akun'
+                'message' => 'Berhasil menghapus data detail maintenance'
             ]);
         } catch (\Throwable $th) {
             throw $th;

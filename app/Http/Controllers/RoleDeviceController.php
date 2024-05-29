@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailControlling;
+use App\Models\RoleDevice;
 use Illuminate\Http\Request;
 
-class DetailControllingController extends Controller
+class RoleDeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DetailControllingController extends Controller
      */
     public function index()
     {
-        return view('detail-controlling.index');
+        return view('role-device.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class DetailControllingController extends Controller
      */
     public function create()
     {
-        return view('detail-controlling.create');
+        return view('role-device.create');
     }
 
     /**
@@ -37,20 +37,18 @@ class DetailControllingController extends Controller
     {
         try {
             $request->validate([
-                'id_controlling' => ['required'],
-                'temperature' => ['required'],
-                'watt' => ['required'],
+                'id_device_master' => ['required'],
+                'id_user' => ['required'],
             ]);
 
             $data = [
-                'id_controlling' => $request->input('id_controlling'),
-                'temperature' => $request->input('temperature'),
-                'watt' => $request->input('watt'),
+                'id_device_master' => $request->input('id_device_master'),
+                'id_user' => $request->input('id_user'),
             ];
 
-            DetailControlling::create($data);
+            RoleDevice::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan data detail controlling.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data role device.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -64,9 +62,9 @@ class DetailControllingController extends Controller
      */
     public function show($id)
     {
-        $detail_controlling = DetailControlling::findOrFail($id);
-        return view('detail-controlling.show')->with([
-            'detail_controlling' => $detail_controlling
+        $role_device = RoleDevice::findOrFail($id);
+        return view('role-device.show')->with([
+            'role_device' => $role_device
         ]);
     }
 
@@ -78,9 +76,9 @@ class DetailControllingController extends Controller
      */
     public function edit($id)
     {
-        $detail_controlling = DetailControlling::findOrFail($id);
-        return view('detail-controlling.edit')->with([
-            'detail_controlling' => $detail_controlling
+        $role_device = RoleDevice::findOrFail($id);
+        return view('role-device.edit')->with([
+            'role_device' => $role_device
         ]);
     }
 
@@ -95,22 +93,20 @@ class DetailControllingController extends Controller
     {
         try {
             $request->validate([
-                'id_controlling' => ['required'],
-                'temperature' => ['required'],
-                'watt' => ['required'],
+                'id_device_master' => ['required'],
+                'id_user' => ['required'],
             ]);
 
             $data = [
-                'id_controlling' => $request->input('id_controlling'),
-                'temperature' => $request->input('temperature'),
-                'watt' => $request->input('watt'),
+                'id_device_master' => $request->input('id_device_master'),
+                'id_user' => $request->input('id_user'),
             ];
 
-            $detail_controlling = DetailControlling::findOrFail($id);
+            $role_device = RoleDevice::findOrFail($id);
 
-            $detail_controlling->update($data);
+            $role_device->update($data);
 
-            return redirect()->back()->with('message', 'Berhasil memperbarui data detail controlling.');
+            return redirect()->back()->with('message', 'Berhasil memperbarui data role device.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -125,10 +121,10 @@ class DetailControllingController extends Controller
     public function destroy($id)
     {
         try {
-            $detail_controlling = DetailControlling::findOrFail($id);
-            $detail_controlling->delete();
+            $role_device = RoleDevice::findOrFail($id);
+            $role_device->delete();
             return response()->json([
-                'message' => 'Berhasil menghapus data detail controlling'
+                'message' => 'Berhasil menghapus data role device.'
             ]);
         } catch (\Throwable $th) {
             throw $th;

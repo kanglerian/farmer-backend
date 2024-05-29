@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
-use App\Models\Subdevice;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class DeviceController extends Controller
+class DevicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $total_devices = Device::count();
-        return view('devices.index')->with([
-            'total_devices' => $total_devices
-        ]);
+        return view('devices.index');
     }
 
     /**
@@ -29,10 +24,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        $users = User::where('role', 'Petugas')->get();
-        return view('devices.create')->with([
-            'users' => $users
-        ]);
+        return view('devices.create');
     }
 
     /**
@@ -45,22 +37,24 @@ class DeviceController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required', 'string'],
-                'location' => ['required', 'string'],
-                'id_user' => ['required']
+                'name' => ['required'],
+                'coordinate_device_x' => ['required'],
+                'coordinate_device_y' => ['required'],
+                'status' => ['required'],
+                'condition' => ['required'],
             ]);
 
-            $uniqueID = uniqid('', true);
             $data = [
-                'uuid' => explode('.', $uniqueID)[0],
                 'name' => $request->input('name'),
-                'location' => $request->input('location'),
-                'id_user' => $request->input('id_user'),
+                'coordinate_device_x' => $request->input('coordinate_device_x'),
+                'coordinate_device_y' => $request->input('coordinate_device_y'),
+                'status' => $request->input('status'),
+                'condition' => $request->input('condition'),
             ];
 
             Device::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan data perangkat.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data device.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -74,16 +68,10 @@ class DeviceController extends Controller
      */
     public function show($id)
     {
-        try {
-            $device = Device::findOrFail($id);
-            $subdevices = Subdevice::where('id_device', $device->id)->get();
-            return view('devices.show')->with([
-                'device' => $device,
-                'subdevices' => $subdevices
-            ]);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $device = Device::findOrFail($id);
+        return view('devices.show')->with([
+            'device' => $device
+        ]);
     }
 
     /**
@@ -94,11 +82,9 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
-        $users = User::all();
         $device = Device::findOrFail($id);
         return view('devices.edit')->with([
-            'device' => $device,
-            'users' => $users
+            'device' => $device
         ]);
     }
 
@@ -111,7 +97,31 @@ class DeviceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'name' => ['required'],
+                'coordinate_device_x' => ['required'],
+                'coordinate_device_y' => ['required'],
+                'status' => ['required'],
+                'condition' => ['required'],
+            ]);
+
+            $data = [
+                'name' => $request->input('name'),
+                'coordinate_device_x' => $request->input('coordinate_device_x'),
+                'coordinate_device_y' => $request->input('coordinate_device_y'),
+                'status' => $request->input('status'),
+                'condition' => $request->input('condition'),
+            ];
+
+            $device = Device::findOrFail($id);
+
+            $device->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil memperbarui data device.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -126,7 +136,7 @@ class DeviceController extends Controller
             $device = Device::findOrFail($id);
             $device->delete();
             return response()->json([
-                'message' => 'Berhasil menghapus perangkat'
+                'message' => 'Berhasil menghapus data device'
             ]);
         } catch (\Throwable $th) {
             throw $th;

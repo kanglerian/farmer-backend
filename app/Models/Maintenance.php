@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Maintenance extends Model
 {
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,15 +16,8 @@ class Maintenance extends Model
      */
     protected $fillable = [
         'date',
-        'id_subdevice',
-        'problem',
+        'maintenance',
         'cost',
+        'id_user',
     ];
-
-    protected $table = 'maintenance';
-
-    public function subdevice()
-    {
-        return $this->belongsTo(Subdevice::class, 'id_subdevice', 'id');
-    }
 }

@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('maintenances', function (Blueprint $table) {
+        Schema::create('role_devices', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->text('maintenance');
-            $table->integer('cost');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
+            
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('role_devices');
     }
 };

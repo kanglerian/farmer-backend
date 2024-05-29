@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Maintenance;
-use App\Models\Subdevice;
+use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
 
-class MaintenanceController extends Controller
+class DetailRoleDeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class MaintenanceController extends Controller
      */
     public function index()
     {
-        //
+        return view('detail-role-device.index');
     }
 
     /**
@@ -25,7 +24,7 @@ class MaintenanceController extends Controller
      */
     public function create()
     {
-        //
+        return view('detail-role-device.create');
     }
 
     /**
@@ -38,22 +37,18 @@ class MaintenanceController extends Controller
     {
         try {
             $request->validate([
-                'date' => ['required'],
-                'id_subdevice' => ['required'],
-                'problem' => ['required'],
-                'cost' => ['required'],
+                'id_sub_device' => ['required'],
+                'status' => ['required'],
             ]);
 
             $data = [
-                'date' => $request->input('date'),
-                'id_subdevice' => $request->input('id_subdevice'),
-                'problem' => $request->input('problem'),
-                'cost' => $request->input('cost'),
+                'id_sub_device' => $request->input('id_sub_device'),
+                'status' => $request->input('status'),
             ];
 
-            Maintenance::create($data);
+            DetailRoleDevice::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan perawatan.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data detail role device.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -67,11 +62,9 @@ class MaintenanceController extends Controller
      */
     public function show($id)
     {
-        $subdevice = Subdevice::findOrFail($id);
-        $total_maintenance = Maintenance::where('id_subdevice', $id)->count();
-        return view('maintenances.show')->with([
-            'subdevice' => $subdevice,
-            'total_maintenance' => $total_maintenance
+        $detail_role_device = DetailRoleDevice::findOrFail($id);
+        return view('detail-role-device.show')->with([
+            'detail_role_device' => $detail_role_device
         ]);
     }
 
@@ -83,7 +76,10 @@ class MaintenanceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail_role_device = DetailRoleDevice::findOrFail($id);
+        return view('detail-role-device.edit')->with([
+            'detail_role_device' => $detail_role_device
+        ]);
     }
 
     /**
@@ -97,24 +93,20 @@ class MaintenanceController extends Controller
     {
         try {
             $request->validate([
-                'date' => ['required'],
-                'id_subdevice' => ['required'],
-                'problem' => ['required'],
-                'cost' => ['required'],
+                'id_sub_device' => ['required'],
+                'status' => ['required'],
             ]);
 
-            $maintenance = Maintenance::findOrFail($id);
-
             $data = [
-                'date' => $request->input('date'),
-                'id_subdevice' => $request->input('id_subdevice'),
-                'problem' => $request->input('problem'),
-                'cost' => $request->input('cost'),
+                'id_sub_device' => $request->input('id_sub_device'),
+                'status' => $request->input('status'),
             ];
 
-            $maintenance->update($data);
+            $detail_role_device = DetailRoleDevice::findOrFail($id);
 
-            return redirect()->back()->with('message', 'Berhasil mengubah data perawatan.');
+            $detail_role_device->update($data);
+
+            return redirect()->back()->with('message', 'Berhasil memperbarui data detail role device.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -128,10 +120,14 @@ class MaintenanceController extends Controller
      */
     public function destroy($id)
     {
-        $maintenance = Maintenance::findOrFail($id);
-        $maintenance->delete();
-        return response()->json([
-            'message' => 'Berhasil menghapus data perawatan.'
-        ]);
+        try {
+            $detail_role_device = DetailRoleDevice::findOrFail($id);
+            $detail_role_device->delete();
+            return response()->json([
+                'message' => 'Berhasil menghapus data device'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

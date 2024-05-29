@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_controlling', function (Blueprint $table) {
+        Schema::create('role_devices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_controlling');
-            $table->string('time');
-            $table->integer('temperature');
-            $table->integer('voltage');
-            $table->foreign('id_controlling')->references('id')->on('controlling')->onDelete('restrict');
+            $table->unsignedBigInteger('id_device_master');
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_device_master')->references('id')->on('devices')->onDelete('restrict');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_controlling');
+        Schema::dropIfExists('role_devices');
     }
 };

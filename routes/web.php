@@ -7,6 +7,7 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubdeviceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,12 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('users', UserController::class)->middleware('role:Administrator');
-    Route::resource('devices', DeviceController::class)->middleware('role:Administrator');
-    Route::resource('subdevices', SubdeviceController::class)->middleware('role:Administrator');
-    Route::resource('maintenances', MaintenanceController::class)->middleware('role:Administrator');
-    Route::resource('controlling', ControllingController::class)->middleware('role:Administrator');
-    Route::resource('detailcontrolling', DetailControllingController::class)->middleware('role:Administrator');
+    Route::resource('users', UsersController::class)->middleware('role:Administrator');
 });
 
 require __DIR__.'/auth.php';

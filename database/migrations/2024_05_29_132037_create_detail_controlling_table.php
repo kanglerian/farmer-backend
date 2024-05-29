@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('maintenances', function (Blueprint $table) {
+        Schema::create('detail_controlling', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->text('maintenance');
-            $table->integer('cost');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('id_controlling');
+            $table->integer('temperature');
+            $table->integer('watt');
+            $table->foreign('id_controlling')->references('id')->on('controlling')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('detail_controlling');
     }
 };

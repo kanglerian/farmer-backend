@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailControlling;
+use App\Models\Maintenance;
 use Illuminate\Http\Request;
 
-class DetailControllingController extends Controller
+class MaintenancesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DetailControllingController extends Controller
      */
     public function index()
     {
-        return view('detail-controlling.index');
+        return view('maintenances.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class DetailControllingController extends Controller
      */
     public function create()
     {
-        return view('detail-controlling.create');
+        return view('maintenances.create');
     }
 
     /**
@@ -37,20 +37,22 @@ class DetailControllingController extends Controller
     {
         try {
             $request->validate([
-                'id_controlling' => ['required'],
-                'temperature' => ['required'],
-                'watt' => ['required'],
+                'date' => ['required'],
+                'maintenance' => ['required'],
+                'cost' => ['required'],
+                'id_user' => ['required'],
             ]);
 
             $data = [
-                'id_controlling' => $request->input('id_controlling'),
-                'temperature' => $request->input('temperature'),
-                'watt' => $request->input('watt'),
+                'date' => $request->input('date'),
+                'maintenance' => $request->input('maintenance'),
+                'cost' => $request->input('cost'),
+                'id_user' => $request->input('id_user'),
             ];
 
-            DetailControlling::create($data);
+            Maintenance::create($data);
 
-            return redirect()->back()->with('message', 'Berhasil menambahkan data detail controlling.');
+            return redirect()->back()->with('message', 'Berhasil menambahkan data maintenance.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -64,9 +66,9 @@ class DetailControllingController extends Controller
      */
     public function show($id)
     {
-        $detail_controlling = DetailControlling::findOrFail($id);
-        return view('detail-controlling.show')->with([
-            'detail_controlling' => $detail_controlling
+        $maintenance = Maintenance::findOrFail($id);
+        return view('maintenances.show')->with([
+            'maintenance' => $maintenance
         ]);
     }
 
@@ -78,9 +80,9 @@ class DetailControllingController extends Controller
      */
     public function edit($id)
     {
-        $detail_controlling = DetailControlling::findOrFail($id);
-        return view('detail-controlling.edit')->with([
-            'detail_controlling' => $detail_controlling
+        $maintenance = Maintenance::findOrFail($id);
+        return view('maintenances.edit')->with([
+            'maintenance' => $maintenance
         ]);
     }
 
@@ -95,22 +97,24 @@ class DetailControllingController extends Controller
     {
         try {
             $request->validate([
-                'id_controlling' => ['required'],
-                'temperature' => ['required'],
-                'watt' => ['required'],
+                'date' => ['required'],
+                'maintenance' => ['required'],
+                'cost' => ['required'],
+                'id_user' => ['required'],
             ]);
 
             $data = [
-                'id_controlling' => $request->input('id_controlling'),
-                'temperature' => $request->input('temperature'),
-                'watt' => $request->input('watt'),
+                'date' => $request->input('date'),
+                'maintenance' => $request->input('maintenance'),
+                'cost' => $request->input('cost'),
+                'id_user' => $request->input('id_user'),
             ];
 
-            $detail_controlling = DetailControlling::findOrFail($id);
+            $maintenance = Maintenance::findOrFail($id);
 
-            $detail_controlling->update($data);
+            $maintenance->update($data);
 
-            return redirect()->back()->with('message', 'Berhasil memperbarui data detail controlling.');
+            return redirect()->back()->with('message', 'Berhasil memperbarui data maintenance.');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -125,10 +129,10 @@ class DetailControllingController extends Controller
     public function destroy($id)
     {
         try {
-            $detail_controlling = DetailControlling::findOrFail($id);
-            $detail_controlling->delete();
+            $maintenance = Maintenance::findOrFail($id);
+            $maintenance->delete();
             return response()->json([
-                'message' => 'Berhasil menghapus data detail controlling'
+                'message' => 'Berhasil menghapus data maintenance.'
             ]);
         } catch (\Throwable $th) {
             throw $th;

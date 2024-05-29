@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('controlling', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->unsignedBigInteger('id_subdevice');
             $table->integer('duration');
-            $table->boolean('status');
-            $table->foreign('id_subdevice')->references('id')->on('subdevice')->onDelete('restrict');
+            $table->string('status');
+            $table->unsignedBigInteger('id_sub_device');
+            $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();
         });
     }

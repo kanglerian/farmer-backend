@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('detail_role_devices', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
-            $table->string('name');
-            $table->text('location');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('id_sub_device');
+            $table->string('status');
+            $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('detail_role_devices');
     }
 };
