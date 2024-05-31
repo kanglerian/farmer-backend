@@ -30,7 +30,7 @@
                 <div class="w-full md:w-auto grid grid-cols-1 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Devices</h4>
-                        <span class="font-medium text-lg">{{ $total_devices }}</span>
+                        <span class="font-medium text-lg">0</span>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RoleMiddleware
+class LevelMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $level)
     {
-        if(Auth::check() && Auth::user()->role == $role || Auth::user()->role == 'Administrator'){
+        if(Auth::check() && Auth::user()->level == $level || Auth::user()->level == 1){
             return $next($request);
         }
         return back();

@@ -16,11 +16,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('devices.index')" :active="request()->routeIs(['devices.index','devices.edit','devices.show','subdevices.show','maintenances.show','controlling.show','detailcontrolling.show'])">
+                    <x-nav-link :href="route('devices.index')" :active="request()->routeIs(['devices.index','devices.edit','devices.show','devices.show'])">
                         {{ __('Devices') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('controlling.index')" :active="request()->routeIs(['controlling.index','controlling.edit','controlling.show','detailcontrolling.show'])">
+                    <x-nav-link :href="route('controlling.index')" :active="request()->routeIs(['controlling.index','controlling.edit','controlling.show','controlling.show'])">
                         {{ __('Controlling') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('maintenances.index')" :active="request()->routeIs(['maintenances.index','maintenances.edit','maintenances.show','maintenances.show'])">
+                        {{ __('Maintenance') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index','users.edit'])">
                         {{ __('Users') }}
@@ -35,7 +38,6 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>
                                 <span class="font-bold">{{ Auth::user()->name }}</span>
-                                <span class="italic">({{ Auth::user()->role }})</span>
                             </div>
 
                             <div class="ml-1">

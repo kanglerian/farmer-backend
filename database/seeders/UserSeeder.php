@@ -21,18 +21,18 @@ class UserSeeder extends Seeder
                 'name' => 'Administrator',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('admin123'),
-                'role' => 'Administrator',
+                'level' => 1,
             ],
             [
                 'name' => 'Lerian Febriana',
                 'email' => 'kanglerian@gmail.com',
                 'password' => Hash::make('lerian123'),
-                'role' => 'Petugas',
+                'level' => 0,
             ],[
                 'name' => 'Nabila Azzahra',
                 'email' => 'nabil@gmail.com',
                 'password' => Hash::make('nabil123'),
-                'role' => 'Petugas',
+                'level' => 0,
             ],
         ]);
     }
