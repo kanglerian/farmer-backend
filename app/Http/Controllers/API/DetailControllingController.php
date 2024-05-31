@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\DetailControlling;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class DetailControllingController extends Controller
 {
     public function get_all()
     {
-        $query = User::query();
+        $query = DetailControlling::query();
         $results = $query->get();
         return response()->json([
             'results' => $results
@@ -19,7 +19,7 @@ class UsersController extends Controller
 
     public function get_one($id)
     {
-        $query = User::query();
+        $query = DetailControlling::query();
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([

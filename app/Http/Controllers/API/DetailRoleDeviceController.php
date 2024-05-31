@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class DetailRoleDeviceController extends Controller
 {
     public function get_all()
     {
-        $query = User::query();
+        $query = DetailRoleDevice::query();
         $results = $query->get();
         return response()->json([
             'results' => $results
@@ -19,7 +19,7 @@ class UsersController extends Controller
 
     public function get_one($id)
     {
-        $query = User::query();
+        $query = DetailRoleDevice::query();
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([

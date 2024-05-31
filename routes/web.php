@@ -2,9 +2,14 @@
 
 use App\Http\Controllers\ControllingController;
 use App\Http\Controllers\DetailControllingController;
+use App\Http\Controllers\DetailMaintenanceController;
+use App\Http\Controllers\DetailRoleDeviceController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\MaintenancesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleDeviceController;
 use App\Http\Controllers\SubdeviceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersController;
@@ -34,6 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', UsersController::class)->middleware('role:Administrator');
+    Route::resource('roledevice', RoleDeviceController::class)->middleware('role:Administrator');
+    Route::resource('maintenances', MaintenancesController::class)->middleware('role:Administrator');
+    Route::resource('devices', DevicesController::class)->middleware('role:Administrator');
+    Route::resource('detailroledevice', DetailRoleDeviceController::class)->middleware('role:Administrator');
+    Route::resource('detailmaintenance', DetailMaintenanceController::class)->middleware('role:Administrator');
+    Route::resource('detailcontrolling', DetailControllingController::class)->middleware('role:Administrator');
+    Route::resource('controlling', ControllingController::class)->middleware('role:Administrator');
 });
 
 require __DIR__.'/auth.php';

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Device;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class DevicesController extends Controller
 {
     public function get_all()
     {
-        $query = User::query();
+        $query = Device::query();
         $results = $query->get();
         return response()->json([
             'results' => $results
@@ -19,7 +19,7 @@ class UsersController extends Controller
 
     public function get_one($id)
     {
-        $query = User::query();
+        $query = Device::query();
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([

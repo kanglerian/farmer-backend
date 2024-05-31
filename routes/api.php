@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\API\ControllingController;
 use App\Http\Controllers\API\DetailControllingController;
+use App\Http\Controllers\API\DetailMaintenanceController;
+use App\Http\Controllers\API\DetailRoleDeviceController;
 use App\Http\Controllers\API\DeviceController;
+use App\Http\Controllers\API\DevicesController;
 use App\Http\Controllers\API\MaintenanceController;
+use App\Http\Controllers\API\MaintenancesController;
+use App\Http\Controllers\API\RoleDeviceController;
 use App\Http\Controllers\API\SubdeviceController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UsersController;
@@ -26,3 +31,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', [UsersController::class, 'get_all']);
+Route::get('/users/{id}', [UsersController::class, 'get_one']);
+
+Route::get('/roledevice', [RoleDeviceController::class, 'get_all']);
+Route::get('/roledevice/{id}', [RoleDeviceController::class, 'get_one']);
+
+Route::get('/maintenances', [MaintenancesController::class, 'get_all']);
+Route::get('/maintenances/{id}', [MaintenancesController::class, 'get_one']);
+
+Route::get('/devices', [DevicesController::class, 'get_all']);
+Route::get('/devices/{id}', [DevicesController::class, 'get_one']);
+
+Route::get('/detailroledevice', [DetailRoleDeviceController::class, 'get_all']);
+Route::get('/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one']);
+
+Route::get('/detailmaintenance', [DetailMaintenanceController::class, 'get_all']);
+Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_one']);
+
+Route::get('/detailcontrolling', [DetailControllingController::class, 'get_all']);
+Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_one']);
+
+Route::get('/controlling', [ControllingController::class, 'get_all']);
+Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);
