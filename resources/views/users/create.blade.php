@@ -52,12 +52,12 @@
                         placeholder="name@flowbite.com" required />
                 </div>
                 <div class="mb-5">
-                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Sebagai</label>
-                    <select id="role" name="role"
+                    <label for="level" class="block mb-2 text-sm font-medium text-gray-900">Sebagai</label>
+                    <select id="level" name="level"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
                         <option selected>Pilih</option>
-                        <option value="Administrator">Administrator</option>
-                        <option value="Petugas">Petugas</option>
+                        <option value="1">Administrator</option>
+                        <option value="0">Petugas</option>
                     </select>
                 </div>
                 <div class="mb-5">

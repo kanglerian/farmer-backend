@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
-            <i class="fa-solid fa-user-circle"></i>
-            <span>{{ __('Users') }}</span>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span>{{ __('Maintenance') }}</span>
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <a href="{{ route('users.create') }}"
+                <a href="{{ route('maintenances.create') }}"
                     class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
                         class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
             </div>
@@ -22,10 +22,10 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama
+                                    Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Email
+                                    Maintenance
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Sebagai

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->text('maintenance');
-            $table->integer('cost');
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();

@@ -15,12 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $total_administrator = User::where('level','1')->count();
-        $total_petugas = User::where('level','0')->count();
-        return view('users.index')->with([
-            'total_administrator' => $total_administrator,
-            'total_petugas' => $total_petugas
-        ]);
+        return view('users.index');
     }
 
     /**

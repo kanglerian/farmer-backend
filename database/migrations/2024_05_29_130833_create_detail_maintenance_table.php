@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('detail_maintenance', function (Blueprint $table) {
             $table->id();
-            $table->string('detail');
             $table->unsignedBigInteger('id_maintenance');
+            $table->string('detail');
+            $table->float('cost');
             $table->foreign('id_maintenance')->references('id')->on('maintenances')->onDelete('restrict');
             $table->timestamps();
         });

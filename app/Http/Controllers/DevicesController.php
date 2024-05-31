@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DevicesController extends Controller
@@ -24,7 +25,10 @@ class DevicesController extends Controller
      */
     public function create()
     {
-        return view('devices.create');
+        $users = User::all();
+        return view('devices.create')->with([
+            'users' => $users
+        ]);
     }
 
     /**

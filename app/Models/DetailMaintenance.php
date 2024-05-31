@@ -15,7 +15,8 @@ class DetailMaintenance extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'detail',
         'id_maintenance',
+        'detail',
+        'cost'
     ];
 }
