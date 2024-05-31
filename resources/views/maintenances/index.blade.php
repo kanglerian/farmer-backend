@@ -28,7 +28,7 @@
                                     Maintenance
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Sebagai
+                                    Petugas
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
