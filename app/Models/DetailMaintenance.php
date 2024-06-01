@@ -19,4 +19,8 @@ class DetailMaintenance extends Model
         'detail',
         'cost'
     ];
+
+    public function maintenance(){
+        return $this->belongsTo(Maintenance::class,'id_maintenance','id');
+    }
 }

@@ -17,4 +17,8 @@ class DetailRoleDevice extends Model
         'id_sub_device',
         'status',
     ];
+
+    public function detailroledevice(){
+        return $this->belongsTo(Device::class,'id_sub_device','id');
+    }
 }

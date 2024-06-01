@@ -42,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function maintenance(){
+        return $this->hasMany(Maintenance::class, 'id_user');
+    }
+
+    public function roledevice(){
+        return $this->hasMany(RoleDevice::class, 'id_user');
+    }
 }

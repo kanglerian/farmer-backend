@@ -17,4 +17,12 @@ class RoleDevice extends Model
         'id_device_master',
         'id_user',
     ];
+
+    public function users(){
+        return $this->belongsTo(User::class,'id_user','id');
+    }
+
+    public function devices(){
+        return $this->belongsTo(Device::class,'id_device_master','id');
+    }
 }

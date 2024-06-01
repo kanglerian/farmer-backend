@@ -20,4 +20,12 @@ class Device extends Model
         'status',
         'condition',
     ];
+
+    public function roledevice(){
+        return $this->hasMany(RoleDevice::class, 'id_device_master');
+    }
+
+    public function detailroledevice(){
+        return $this->hasMany(DetailRoleDevice::class, 'id_sub_device');
+    }
 }
