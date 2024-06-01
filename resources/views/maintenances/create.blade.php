@@ -5,14 +5,14 @@
                 <li class="inline-flex items-center">
                     <a href="{{ route('devices.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
-                        <i class="fa-solid fa-microchip"></i>
-                        <span>Devices</span>
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>Maintenances</span>
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Edit</span>
+                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Tambah</span>
                     </div>
                 </li>
             </ol>
@@ -37,42 +37,30 @@
                     </button>
                 </div>
             @endif
-            <form method="POST" action="{{ route('devices.update', $device->id) }}"
+            <form method="POST" action="{{ route('devices.store') }}"
                 class="max-w-sm bg-white mx-auto md:mx-0 p-10 rounded-2xl">
                 @csrf
-                @method('PATCH')
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Device</label>
-                    <input type="text" id="name" name="name" value="{{ $device->name }}"
+                    <input type="text" id="name" name="name"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Nama Device" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device X</label>
-                    <input type="text" id="coordinate_device_x" name="coordinate_device_x" value="{{ $device->coordinate_device_x }}"
+                    <label for="location" class="block mb-2 text-sm font-medium text-gray-900">Lokasi</label>
+                    <input type="text" id="location" name="location"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                        placeholder="Koordinat Device X" required />
+                        placeholder="Lokasi" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device Y</label>
-                    <input type="text" id="coordinate_device_y" name="coordinate_device_y" value="{{ $device->coordinate_device_y }}"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                        placeholder="Koordinat Device Y" required />
-                </div>
-                <div class="mb-5">
-                    <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                    <select id="status" name="status"
+                    <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900">Petugas</label>
+                    <select id="id_user" name="id_user"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
-                        <option value="{{ $device->status }}">{{ $device->status }}</option>
-                        <option value="Master">Master</option>
-                        <option value="Pompa">Pompa</option>
+                        <option>Pilih</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
                     </select>
-                </div>
-                <div class="mb-5">
-                    <label for="condition" class="block mb-2 text-sm font-medium text-gray-900">Kondisi</label>
-                    <input type="text" id="condition" name="condition" value="{{ $device->condition }}"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                        placeholder="Kondisi" required />
                 </div>
                 <button type="submit"
                     class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">

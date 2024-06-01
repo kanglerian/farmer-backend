@@ -24,13 +24,18 @@
                 </div>
             @endif
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <a href="{{ route('devices.create') }}"
-                    class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
-                        class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
+                <div>
+                    <a href="{{ route('devices.create') }}"
+                        class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
+                            class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
+                    <a href="{{ route('roledevice.create') }}"
+                        class="inline-block text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
+                            class="fa-solid fa-circle-plus me-1"></i> Tambah Role Device</a>
+                </div>
                 <div class="w-full md:w-auto grid grid-cols-1 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Devices</h4>
-                        <span class="font-medium text-lg">0</span>
+                        <span class="font-medium text-lg">{{ $total }}</span>
                     </div>
                 </div>
             </div>
@@ -43,16 +48,16 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    ID
+                                    Nama Device
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama
+                                    Koordinat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
+                                    Status
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Petugas
+                                    Kondisi
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
@@ -78,7 +83,7 @@
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(urlDevice);
-                        const devices = response.data.devices;
+                        const resultData = response.data.results;
 
                         let columnConfigs = [{
                             data: 'id',
@@ -86,61 +91,37 @@
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'uuid',
-                            render: (data, type, row, meta) => {
-                                return data;
-                            },
-                        }, {
                             data: 'name',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
-                            data: 'location',
+                            data: {
+                                x: 'coordinate_device_x',
+                                y: 'coordinate_device_y'
+                            },
+                            render: (data, type, row, meta) => {
+                                return `${data.coordinate_device_x},${data.coordinate_device_y}`;
+                            },
+                        }, {
+                            data: 'status',
+                            render: (data, type, row, meta) => {
+                                return data;
+                            },
+                        }, {
+                            data: 'condition',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
                             data: {
-                                id_user: 'id_user',
-                                petugas: 'petugas'
-                            },
-                            render: (data, type, row, meta) => {
-                                return data ? data.petugas.name : 'Tidak diketahui';
-                            },
-                        }, {
-                            data: {
                                 id: 'id',
-                                uuid: 'uuid',
-                                name: 'name',
-                                location: 'location'
                             },
                             render: (data, type, row, meta) => {
-                                let qrcodeVal;
-                                QRCode.toDataURL(data.uuid, {
-                                    type: 'image/jpeg',
-                                    quality: 5,
-                                    margin: 3,
-                                }, function(error, string) {
-                                    if (error) console.log(error);
-                                    qrcodeVal = string;
-                                })
-                                let nameData = data.name.toLowerCase();
-                                let locationData = data.location.toLowerCase();
-                                let nameDevice = nameData.replaceAll(' ', '-');
-                                let locationDevice = locationData.replaceAll(' ', '-');
                                 let editUrl = "{{ route('devices.edit', ':id') }}".replace(
-                                    ':id', data.id);
-                                let showUrl = "{{ route('devices.show', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <a href="${qrcodeVal}" class="bg-sky-500 hover:bg-sky-600 px-3 py-1 rounded-lg text-xs text-white" download="${nameDevice}_${locationDevice}">
-                                        <i class="fa-solid fa-download"></i>
-                                    </a>
                                     <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
@@ -153,7 +134,7 @@
                         }];
 
                         const dataTableConfig = {
-                            data: devices,
+                            data: resultData,
                             columnDefs: [{
                                 width: 50,
                                 target: 0

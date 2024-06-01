@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Maintenance;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MaintenancesController extends Controller
@@ -24,7 +25,10 @@ class MaintenancesController extends Controller
      */
     public function create()
     {
-        return view('maintenances.create');
+        $users = User::all();
+        return view('maintenances.create')->with([
+            'users' => $users
+        ]);
     }
 
     /**

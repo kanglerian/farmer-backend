@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\RoleDevice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleDeviceController extends Controller
@@ -14,7 +16,7 @@ class RoleDeviceController extends Controller
      */
     public function index()
     {
-        return view('role-device.index');
+        return view('roledevice.index');
     }
 
     /**
@@ -24,7 +26,14 @@ class RoleDeviceController extends Controller
      */
     public function create()
     {
-        return view('role-device.create');
+        $devices_master = Device::where('status', 'Master')->get();
+        $devices = Device::where('status', 'Pompa')->get();
+        $users = User::where('level', '0')->get();
+        return view('roledevice.create')->with([
+            'devices_master' => $devices_master,
+            'devices' => $devices,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -63,7 +72,7 @@ class RoleDeviceController extends Controller
     public function show($id)
     {
         $role_device = RoleDevice::findOrFail($id);
-        return view('role-device.show')->with([
+        return view('roledevice.show')->with([
             'role_device' => $role_device
         ]);
     }
@@ -77,7 +86,7 @@ class RoleDeviceController extends Controller
     public function edit($id)
     {
         $role_device = RoleDevice::findOrFail($id);
-        return view('role-device.edit')->with([
+        return view('roledevice.edit')->with([
             'role_device' => $role_device
         ]);
     }

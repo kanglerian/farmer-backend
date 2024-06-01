@@ -20,4 +20,12 @@ class Controlling extends Model
         'status',
         'id_sub_device',
     ];
+
+    public function controlling(){
+        return $this->belongsTo(Device::class,'id_sub_device','id');
+    }
+
+    public function detailcontrolling(){
+        return $this->hasMany(DetailControlling::class, 'id_controlling');
+    }
 }

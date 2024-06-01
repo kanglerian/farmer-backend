@@ -27,16 +27,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', [UsersController::class, 'get_all']);
-Route::get('/users/{id}', [UsersController::class, 'get_one']);
+Route::get('/user/{id}', [UsersController::class, 'get_one']);
 
 Route::get('/roledevice', [RoleDeviceController::class, 'get_all']);
 Route::get('/roledevice/{id}', [RoleDeviceController::class, 'get_one']);
 
 Route::get('/maintenances', [MaintenancesController::class, 'get_all']);
-Route::get('/maintenances/{id}', [MaintenancesController::class, 'get_one']);
+Route::get('/maintenance/{id}', [MaintenancesController::class, 'get_one']);
 
 Route::get('/devices', [DevicesController::class, 'get_all']);
-Route::get('/devices/{id}', [DevicesController::class, 'get_one']);
+Route::get('/device/{id}', [DevicesController::class, 'get_one']);
 
 Route::get('/detailroledevice', [DetailRoleDeviceController::class, 'get_all']);
 Route::get('/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one']);

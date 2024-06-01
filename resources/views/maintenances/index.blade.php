@@ -46,7 +46,7 @@
             let users;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let urlUser = '/api/users';
+            let urlUser = '/api/maintenances';
 
             const DataTableUsers = async () => {
                 return new Promise(async (resolve, reject) => {
@@ -60,17 +60,17 @@
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'name',
+                            data: 'date',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
-                            data: 'email',
+                            data: 'maintenance',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
                         }, {
-                            data: 'level',
+                            data: 'id_user',
                             render: (data, type, row, meta) => {
                                 return data;
                             },

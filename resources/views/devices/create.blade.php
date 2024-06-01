@@ -47,20 +47,31 @@
                         placeholder="Nama Device" required />
                 </div>
                 <div class="mb-5">
-                    <label for="location" class="block mb-2 text-sm font-medium text-gray-900">Lokasi</label>
-                    <input type="text" id="location" name="location"
+                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device X</label>
+                    <input type="text" id="coordinate_device_x" name="coordinate_device_x"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                        placeholder="Lokasi" required />
+                        placeholder="Koordinat Device X" required />
                 </div>
                 <div class="mb-5">
-                    <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900">Petugas</label>
-                    <select id="id_user" name="id_user"
+                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device Y</label>
+                    <input type="text" id="coordinate_device_y" name="coordinate_device_y"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
+                        placeholder="Koordinat Device Y" required />
+                </div>
+                <div class="mb-5">
+                    <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
+                    <select id="status" name="status"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
                         <option>Pilih</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
+                        <option value="Master">Master</option>
+                        <option value="Pompa">Pompa</option>
                     </select>
+                </div>
+                <div class="mb-5">
+                    <label for="condition" class="block mb-2 text-sm font-medium text-gray-900">Kondisi</label>
+                    <input type="text" id="condition" name="condition"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
+                        placeholder="Kondisi" required />
                 </div>
                 <button type="submit"
                     class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">

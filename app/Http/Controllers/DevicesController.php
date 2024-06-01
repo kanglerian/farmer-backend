@@ -15,7 +15,10 @@ class DevicesController extends Controller
      */
     public function index()
     {
-        return view('devices.index');
+        $total = Device::count();
+        return view('devices.index')->with([
+            'total' => $total
+        ]);
     }
 
     /**
