@@ -19,6 +19,9 @@
                     <x-nav-link :href="route('devices.index')" :active="request()->routeIs(['devices.index','devices.edit','devices.show','devices.create'])">
                         {{ __('Devices') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('roledevice.index')" :active="request()->routeIs(['roledevice.index','roledevice.edit','roledevice.show','roledevice.create'])">
+                        {{ __('Role Devices') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('controlling.index')" :active="request()->routeIs(['controlling.index','controlling.edit','controlling.show','controlling.create'])">
                         {{ __('Controlling') }}
                     </x-nav-link>

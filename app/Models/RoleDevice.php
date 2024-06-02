@@ -18,11 +18,18 @@ class RoleDevice extends Model
         'id_user',
     ];
 
+    protected $table = 'role_devices';
+
     public function users(){
         return $this->belongsTo(User::class,'id_user','id');
     }
 
     public function devices(){
         return $this->belongsTo(Device::class,'id_device_master','id');
+    }
+
+    public function detailroledevice()
+    {
+        return $this->hasMany(DetailRoleDevice::class, 'id_role');
     }
 }

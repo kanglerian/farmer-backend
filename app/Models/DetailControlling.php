@@ -19,6 +19,7 @@ class DetailControlling extends Model
         'temperature',
         'watt',
     ];
+    protected $table = 'detail_controlling';
 
     public function controlling(){
         return $this->belongsTo(Controlling::class,'id_controlling','id');

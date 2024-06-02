@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_maintenance');
             $table->string('detail');
             $table->float('cost');
-            $table->foreign('id_maintenance')->references('id')->on('maintenances')->onDelete('restrict');
+            $table->foreign('id_maintenance')->references('id')->on('maintenances')->onDelete('cascade');
             $table->timestamps();
         });
     }

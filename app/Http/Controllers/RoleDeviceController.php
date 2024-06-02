@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Controlling;
+use App\Models\DetailRoleDevice;
 use App\Models\Device;
 use App\Models\RoleDevice;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RoleDeviceController extends Controller
@@ -16,7 +19,10 @@ class RoleDeviceController extends Controller
      */
     public function index()
     {
-        return view('roledevice.index');
+        $total = RoleDevice::count();
+        return view('roledevice.index')->with([
+            'total' => $total
+        ]);
     }
 
     /**
@@ -46,16 +52,43 @@ class RoleDeviceController extends Controller
     {
         try {
             $request->validate([
-                'id_device_master' => ['required'],
+                'id_device' => ['required'],
                 'id_user' => ['required'],
+                'id_sub_device' => ['required'],
+                'status' => ['required'],
             ]);
 
             $data = [
-                'id_device_master' => $request->input('id_device_master'),
+                'id_device_master' => $request->input('id_device'),
                 'id_user' => $request->input('id_user'),
             ];
 
-            RoleDevice::create($data);
+            $role_device = RoleDevice::create($data);
+
+            $count = $request->input('status');
+
+            $data_detail = [];
+            $data_controlling = [];
+
+            for ($i = 0; $i < count($count); $i++) {
+                array_push($data_detail, [
+                    'id_role' => $role_device->id,
+                    'id_sub_device' => $request->input('id_sub_device')[$i],
+                    'status' => $request->input('status')[$i],
+                    'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                    'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                ]);
+
+                array_push($data_controlling, [
+                    'id_sub_device' => $request->input('id_sub_device')[$i],
+                    'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                    'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                ]);
+            }
+
+
+            DetailRoleDevice::insert($data_detail);
+            Controlling::insert($data_controlling);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data role device.');
         } catch (\Throwable $th) {
@@ -71,8 +104,10 @@ class RoleDeviceController extends Controller
      */
     public function show($id)
     {
+        $total = DetailRoleDevice::where('id_role', $id)->count();
         $role_device = RoleDevice::findOrFail($id);
         return view('roledevice.show')->with([
+            'total' => $total,
             'role_device' => $role_device
         ]);
     }
@@ -86,8 +121,10 @@ class RoleDeviceController extends Controller
     public function edit($id)
     {
         $role_device = RoleDevice::findOrFail($id);
+        $users = User::where('level', '0')->get();
         return view('roledevice.edit')->with([
-            'role_device' => $role_device
+            'role_device' => $role_device,
+            'users' => $users,
         ]);
     }
 
@@ -102,12 +139,10 @@ class RoleDeviceController extends Controller
     {
         try {
             $request->validate([
-                'id_device_master' => ['required'],
                 'id_user' => ['required'],
             ]);
 
             $data = [
-                'id_device_master' => $request->input('id_device_master'),
                 'id_user' => $request->input('id_user'),
             ];
 

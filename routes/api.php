@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', [UsersController::class, 'get_all']);
 Route::get('/user/{id}', [UsersController::class, 'get_one']);
 
-Route::get('/roledevice', [RoleDeviceController::class, 'get_all']);
+Route::get('/roledevices', [RoleDeviceController::class, 'get_all']);
 Route::get('/roledevice/{id}', [RoleDeviceController::class, 'get_one']);
 
 Route::get('/maintenances', [MaintenancesController::class, 'get_all']);
@@ -38,10 +38,10 @@ Route::get('/maintenance/{id}', [MaintenancesController::class, 'get_one']);
 Route::get('/devices', [DevicesController::class, 'get_all']);
 Route::get('/device/{id}', [DevicesController::class, 'get_one']);
 
-Route::get('/detailroledevice', [DetailRoleDeviceController::class, 'get_all']);
+Route::get('/detailroledevices', [DetailRoleDeviceController::class, 'get_all']);
 Route::get('/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one']);
 
-Route::get('/detailmaintenance', [DetailMaintenanceController::class, 'get_all']);
+Route::get('/detailmaintenances', [DetailMaintenanceController::class, 'get_all']);
 Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_one']);
 
 Route::get('/detailcontrolling', [DetailControllingController::class, 'get_all']);

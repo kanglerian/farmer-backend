@@ -20,6 +20,8 @@ class Maintenance extends Model
         'id_user',
     ];
 
+    protected $table = 'maintenances';
+
     public function detailmaintenance(){
         return $this->hasMany(DetailMaintenance::class, 'id_maintenance');
     }

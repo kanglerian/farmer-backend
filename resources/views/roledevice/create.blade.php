@@ -3,7 +3,7 @@
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('devices.index') }}"
+                    <a href="{{ route('roledevice.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
                         <i class="fa-solid fa-microchip"></i>
                         <span>Role Devices</span>
@@ -17,7 +17,6 @@
                 </li>
             </ol>
         </nav>
-
     </x-slot>
 
     <div class="py-12">
@@ -38,8 +37,9 @@
                 </div>
             @endif
             <section class="w-full px-5">
-                <form action="#" method="post" class="w-full space-y-5">
+                <form action="{{ route('roledevice.store') }}" method="post" class="w-full space-y-5">
                     @csrf
+                    @method('POST')
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="w-full">
                             <label for="id_device" class="block mb-2 text-sm font-medium text-gray-900">Nama Device
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 gap-5">
-                        <div class="p-5 bg-gray-50 border border-gray-200 rounded-2xl">
+                        <div class="p-5 bg-gray-50 border border-gray-300 rounded-2xl">
                             <ul class="text-sm space-y-2">
                                 <li>
                                     <span class="font-medium">Nama Device: </span>
@@ -79,7 +79,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-300">
                         <div class="relative overflow-x-auto rounded-xl">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                 <thead class="text-xs text-gray-700 uppercase">
@@ -100,7 +100,8 @@
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-white">
                                             <select name="id_sub_device[]"
-                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5" required>
+                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5"
+                                                required>
                                                 <option>Pilih</option>
                                                 @foreach ($devices as $device)
                                                     <option value="{{ $device->id }}">{{ $device->name }}</option>
@@ -109,17 +110,24 @@
                                         </th>
                                         <td class="px-6 py-4">
                                             <input type="text" name="status[]"
-                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                                            placeholder="Status" required />
+                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
+                                                placeholder="Status" required />
                                         </td>
                                         <td class="px-6 py-4 bg-white">
-                                            <button onclick="addSubdevice()" type="button" class="hover:text-sky-500"><i class="fa-solid fa-circle-plus"></i></button>
+                                            <button onclick="addSubdevice()" type="button"
+                                                class="hover:text-sky-500"><i
+                                                    class="fa-solid fa-circle-plus"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <button type="submit"
+                        class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Simpan</span>
+                    </button>
                 </form>
             </section>
         </div>
@@ -159,10 +167,14 @@
                                         </td>
                                         <td class="px-6 py-4 bg-white">
                                             <button onclick="addSubdevice()" type="button" class="hover:text-sky-500"><i class="fa-solid fa-circle-plus"></i></button>
-                                            <button onclick="removeSubDevice(this)" type="button" class="hover:text-red-500"><i class="fa-solid fa-circle-minus"></i></button>
+                                            <button onclick="removeSubdevice(this)" type="button" class="hover:text-red-500"><i class="fa-solid fa-circle-minus"></i></button>
                                         </td>
                                     </tr>`
                 $('#form-sub-devices').append(element);
+            }
+
+            const removeSubdevice = (button) => {
+                button.closest('tr').remove();
             }
         </script>
     @endpush

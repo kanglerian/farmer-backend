@@ -66,7 +66,7 @@ class ControllingController extends Controller
      */
     public function show($id)
     {
-        $controlling = Controlling::findOrFail($id);
+        $controlling = Controlling::with(['device'])->where('id_sub_device', $id)->first();
         return view('controlling.show')->with([
             'controlling' => $controlling
         ]);

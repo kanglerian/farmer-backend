@@ -20,6 +20,8 @@ class DetailMaintenance extends Model
         'cost'
     ];
 
+    protected $table = 'detail_maintenance';
+
     public function maintenance(){
         return $this->belongsTo(Maintenance::class,'id_maintenance','id');
     }
