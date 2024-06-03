@@ -1,9 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
-            <i class="fa-solid fa-wifi"></i>
-            <span>{{ __('Controlling') }}</span>
-        </h2>
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('roledevice.index') }}"
+                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>Role Devices</span>
+                    </a>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-angle-right text-gray-300"></i>
+                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Detail</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
     </x-slot>
 
     <div class="py-12">
@@ -23,6 +36,19 @@
                     </button>
                 </div>
             @endif
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
+                <div>
+                    <a href="{{ route('roledevice.create') }}"
+                        class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
+                            class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
+                </div>
+                <div class="w-full md:w-auto grid grid-cols-1 gap-3">
+                    <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
+                        <h4 class="text-sm">Detail Role Devices</h4>
+                        <span class="font-medium text-lg">{{ $total }}</span>
+                    </div>
+                </div>
+            </div>
             <section class="bg-white p-10 rounded-2xl">
                 <div class="relative overflow-x-auto">
                     <table class="w-full bg-white text-sm text-left rtl:text-right text-gray-500" id="table-devices">
@@ -32,13 +58,13 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Tanggal
+                                    Nama Sub Device
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama Device
+                                    Koordinat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Durasi
+                                    Status
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Status
@@ -55,57 +81,58 @@
         </div>
     </div>
     @push('scripts')
+        <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
+        <script src="{{ asset('js/qrcode.js') }}"></script>
         <script>
             let devices;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let urlEndpoint = '/api/controllings';
+            let urlDevice = '/api/detailroledevices';
 
             const DataTableDevices = async () => {
                 return new Promise(async (resolve, reject) => {
                     try {
-                        const response = await axios.get(urlEndpoint);
+                        const response = await axios.get(urlDevice);
                         const resultData = response.data.results;
-                        console.log(resultData);
+
                         let columnConfigs = [{
                             data: 'id',
                             render: (data, type, row, meta) => {
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'date',
-                            render: (data, type, row, meta) => {
-                                return data;
-                            },
-                        }, {
-                            data: 'devices',
+                            data: 'detailroledevice',
                             render: (data, type, row, meta) => {
                                 return data.name;
                             },
                         }, {
-                            data: 'duration',
+                            data: 'detailroledevice',
                             render: (data, type, row, meta) => {
-                                return `${data} menit`;
+                                return `${data.coordinate_device_x}, ${data.coordinate_device_y}`;
+                            },
+                        }, {
+                            data: 'detailroledevice',
+                            render: (data, type, row, meta) => {
+                                return data.status;
                             },
                         }, {
                             data: 'status',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
-                        },{
+                        }, {
                             data: {
                                 id: 'id',
-                                id_sub_device: 'id_sub_device'
                             },
                             render: (data, type, row, meta) => {
                                 let showUrl = "{{ route('controlling.show', ':id') }}".replace(
-                                    ':id', data.id_sub_device);
+                                    ':id', data.id);
                                 let editUrl = "{{ route('roledevice.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
                                     <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-cogs"></i>
+                                        <i class="fa-solid fa-eye"></i>
                                     </a>
                                     <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
@@ -116,7 +143,7 @@
                                 </div>
                                 `;
                             },
-                        }, ];
+                        }];
 
                         const dataTableConfig = {
                             data: resultData,

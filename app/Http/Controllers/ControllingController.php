@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Controlling;
+use App\Models\DetailRoleDevice;
+use App\Models\Device;
+use App\Models\RoleDevice;
 use Illuminate\Http\Request;
 
 class ControllingController extends Controller
@@ -66,8 +69,10 @@ class ControllingController extends Controller
      */
     public function show($id)
     {
-        $controlling = Controlling::with(['device'])->where('id_sub_device', $id)->first();
+        $detailroledevice = DetailRoleDevice::with('devices')->where('id_sub_device', $id)->first();
+        $controlling = Controlling::where('id_sub_device', $id)->first();
         return view('controlling.show')->with([
+            'detailroledevice' => $detailroledevice,
             'controlling' => $controlling
         ]);
     }

@@ -11,7 +11,7 @@ class DetailRoleDeviceController extends Controller
     public function get_all()
     {
         $query = DetailRoleDevice::query();
-        $query->with(['detailroledevice','roledevice','roledevice.devices']);
+        $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
         $results = $query->get();
         return response()->json([
             'results' => $results

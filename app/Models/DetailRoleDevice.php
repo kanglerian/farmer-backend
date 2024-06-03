@@ -20,11 +20,12 @@ class DetailRoleDevice extends Model
     ];
     protected $table = 'detail_role_devices';
 
-    public function detailroledevice(){
+    public function devices(){
         return $this->belongsTo(Device::class,'id_sub_device','id');
     }
 
     public function roledevice(){
         return $this->belongsTo(RoleDevice::class,'id_role','id');
     }
+
 }

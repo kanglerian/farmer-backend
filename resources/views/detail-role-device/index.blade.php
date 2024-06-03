@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
-            <i class="fa-solid fa-wifi"></i>
-            <span>{{ __('Controlling') }}</span>
+            <i class="fa-solid fa-microchip"></i>
+            <span>{{ __('Role Devices') }}</span>
         </h2>
     </x-slot>
 
@@ -23,6 +23,19 @@
                     </button>
                 </div>
             @endif
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
+                <div>
+                    <a href="{{ route('roledevice.create') }}"
+                        class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
+                            class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
+                </div>
+                <div class="w-full md:w-auto grid grid-cols-1 gap-3">
+                    <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
+                        <h4 class="text-sm">Role Devices</h4>
+                        <span class="font-medium text-lg">{{ $total }}</span>
+                    </div>
+                </div>
+            </div>
             <section class="bg-white p-10 rounded-2xl">
                 <div class="relative overflow-x-auto">
                     <table class="w-full bg-white text-sm text-left rtl:text-right text-gray-500" id="table-devices">
@@ -32,16 +45,16 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Tanggal
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Nama Device
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Durasi
+                                    Koordinat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Status
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Petugas
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
@@ -55,16 +68,18 @@
         </div>
     </div>
     @push('scripts')
+        <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
+        <script src="{{ asset('js/qrcode.js') }}"></script>
         <script>
             let devices;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let urlEndpoint = '/api/controllings';
+            let urlDevice = '/api/detailroledevices';
 
             const DataTableDevices = async () => {
                 return new Promise(async (resolve, reject) => {
                     try {
-                        const response = await axios.get(urlEndpoint);
+                        const response = await axios.get(urlDevice);
                         const resultData = response.data.results;
                         console.log(resultData);
                         let columnConfigs = [{
@@ -73,26 +88,27 @@
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'date',
-                            render: (data, type, row, meta) => {
-                                return data;
-                            },
-                        }, {
                             data: 'devices',
                             render: (data, type, row, meta) => {
                                 return data.name;
                             },
                         }, {
-                            data: 'duration',
+                            data: 'devices',
                             render: (data, type, row, meta) => {
-                                return `${data} menit`;
+                                console.log(data);
+                                return `${data.coordinate_device_x}, ${data.coordinate_device_y}`;
                             },
                         }, {
-                            data: 'status',
+                            data: 'devices',
                             render: (data, type, row, meta) => {
-                                return data;
+                                return data.status;
                             },
-                        },{
+                        }, {
+                            data: 'roledevice',
+                            render: (data, type, row, meta) => {
+                                return data.users.name;
+                            },
+                        }, {
                             data: {
                                 id: 'id',
                                 id_sub_device: 'id_sub_device'
@@ -116,7 +132,7 @@
                                 </div>
                                 `;
                             },
-                        }, ];
+                        }];
 
                         const dataTableConfig = {
                             data: resultData,

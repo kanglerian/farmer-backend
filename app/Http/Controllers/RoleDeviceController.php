@@ -81,6 +81,7 @@ class RoleDeviceController extends Controller
 
                 array_push($data_controlling, [
                     'id_sub_device' => $request->input('id_sub_device')[$i],
+                    'date' => Carbon::now()->setTimezone('Asia/Jakarta'),
                     'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
                     'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
                 ]);

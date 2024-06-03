@@ -111,17 +111,13 @@
                         }, {
                             data: {
                                 id: 'id',
+                                id_sub_device: 'id_sub_device'
                             },
                             render: (data, type, row, meta) => {
-                                let showUrl = "{{ route('roledevice.show', ':id') }}".replace(
-                                    ':id', data.id);
                                 let editUrl = "{{ route('roledevice.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
                                     <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>

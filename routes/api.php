@@ -44,8 +44,8 @@ Route::get('/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_on
 Route::get('/detailmaintenances', [DetailMaintenanceController::class, 'get_all']);
 Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_one']);
 
-Route::get('/detailcontrolling', [DetailControllingController::class, 'get_all']);
+Route::get('/detailcontrollings', [DetailControllingController::class, 'get_all']);
 Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_one']);
 
-Route::get('/controlling', [ControllingController::class, 'get_all']);
+Route::get('/controllings', [ControllingController::class, 'get_all']);
 Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);

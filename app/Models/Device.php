@@ -29,4 +29,8 @@ class Device extends Model
     public function detailroledevice(){
         return $this->hasMany(DetailRoleDevice::class, 'id_sub_device');
     }
+
+    public function controlling(){
+        return $this->hasMany(Controlling::class, 'id_sub_device');
+    }
 }

@@ -11,6 +11,7 @@ class ControllingController extends Controller
     public function get_all()
     {
         $query = Controlling::query();
+        $query->with(['devices']);
         $results = $query->get();
         return response()->json([
             'results' => $results

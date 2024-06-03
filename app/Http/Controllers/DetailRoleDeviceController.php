@@ -14,7 +14,10 @@ class DetailRoleDeviceController extends Controller
      */
     public function index()
     {
-        return view('detail-role-device.index');
+        $total = DetailRoleDevice::count();
+        return view('detail-role-device.index')->with([
+            'total' => $total
+        ]);
     }
 
     /**

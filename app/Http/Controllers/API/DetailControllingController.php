@@ -20,7 +20,7 @@ class DetailControllingController extends Controller
     public function get_one($id)
     {
         $query = DetailControlling::query();
-        $query->where('id', $id);
+        $query->where('id_controlling', $id);
         $result = $query->first();
         return response()->json([
             'result' => $result

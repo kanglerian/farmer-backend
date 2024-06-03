@@ -23,7 +23,7 @@ class Controlling extends Model
 
     protected $table = 'controlling';
 
-    public function device(){
+    public function devices(){
         return $this->belongsTo(Device::class,'id_sub_device','id');
     }
 
