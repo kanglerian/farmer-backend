@@ -82,10 +82,11 @@
                         <span>Mulai</span>
                     </button>
                 </form>
-                <div class="bg-white p-10 rounded-2xl border border-gray-200">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, sapiente cum sequi
-                        molestiae, ad, ex debitis tempore maiores distinctio dolorum dolore eaque corrupti aliquam
-                        ratione aliquid voluptas placeat rem excepturi.</p>
+                <div class="flex justify-center items-center bg-white p-10 rounded-2xl border border-gray-200">
+                    <div class="text-center space-y-3">
+                        <h2 class="font-medium">Siswa Waktu</h2>
+                        <h3 class="text-5xl font-bold">0</h3>
+                    </div>
                 </div>
             </section>
 

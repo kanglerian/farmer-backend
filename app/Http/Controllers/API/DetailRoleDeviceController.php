@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DetailRoleDeviceController extends Controller
 {
@@ -12,9 +13,16 @@ class DetailRoleDeviceController extends Controller
     {
         $query = DetailRoleDevice::query();
         $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
+        if (Auth::user()->level === 0) {
+            $user = Auth::user();
+            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+                $queryIsi->where('id_user', $user->id);
+            });
+        }
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'results' => $results,
+            'id' => Auth::user(),
         ]);
     }
 

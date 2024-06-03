@@ -72,7 +72,7 @@
                         }, {
                             data: 'level',
                             render: (data, type, row, meta) => {
-                                return data;
+                                return data == 1 ? 'Administrator' : 'Petugas';
                             },
                         }, {
                             data: {

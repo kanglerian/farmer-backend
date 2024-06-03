@@ -44,7 +44,7 @@
                                     Status
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Aksi
+                                    Petugas
                                 </th>
                             </tr>
                         </thead>
@@ -66,7 +66,7 @@
                     try {
                         const response = await axios.get(urlEndpoint);
                         const resultData = response.data.results;
-                        console.log(resultData);
+
                         let columnConfigs = [{
                             data: 'id',
                             render: (data, type, row, meta) => {
@@ -92,31 +92,12 @@
                             render: (data, type, row, meta) => {
                                 return data;
                             },
-                        },{
-                            data: {
-                                id: 'id',
-                                id_sub_device: 'id_sub_device'
-                            },
+                        }, {
+                            data: 'status',
                             render: (data, type, row, meta) => {
-                                let showUrl = "{{ route('controlling.show', ':id') }}".replace(
-                                    ':id', data.id_sub_device);
-                                let editUrl = "{{ route('roledevice.edit', ':id') }}".replace(
-                                    ':id', data.id);
-                                return `
-                                <div class="flex items-center gap-1">
-                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-cogs"></i>
-                                    </a>
-                                    <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </a>
-                                    <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteDevice('${data.id}')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                                `;
+                                return data;
                             },
-                        }, ];
+                        }];
 
                         const dataTableConfig = {
                             data: resultData,

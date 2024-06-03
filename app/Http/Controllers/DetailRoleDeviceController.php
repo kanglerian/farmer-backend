@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DetailRoleDeviceController extends Controller
 {
@@ -132,5 +133,38 @@ class DetailRoleDeviceController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function get_all()
+    {
+        $query = DetailRoleDevice::query();
+        $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
+        if (Auth::user()->level === 0) {
+            $user = Auth::user();
+            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+                $queryIsi->where('id_user', $user->id);
+            });
+        }
+        $results = $query->get();
+        return response()->json([
+            'results' => $results,
+        ]);
+    }
+
+    public function get_one($id)
+    {
+        $query = DetailRoleDevice::query();
+        $query->with(['detailroledevice','roledevice']);
+        if (Auth::user()->level === 0) {
+            $user = Auth::user();
+            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+                $queryIsi->where('id_user', $user->id);
+            });
+        }
+        $query->where('id', $id);
+        $result = $query->first();
+        return response()->json([
+            'result' => $result
+        ]);
     }
 }

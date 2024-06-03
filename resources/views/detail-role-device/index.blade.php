@@ -23,12 +23,7 @@
                     </button>
                 </div>
             @endif
-            <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <div>
-                    <a href="{{ route('roledevice.create') }}"
-                        class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
-                            class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
-                </div>
+            <div class="flex flex-col md:flex-row items-center justify-end gap-5 px-5 md:px-0 mb-5">
                 <div class="w-full md:w-auto grid grid-cols-1 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Role Devices</h4>
@@ -74,7 +69,7 @@
             let devices;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let urlDevice = '/api/detailroledevices';
+            let urlDevice = '/get/detailroledevices';
 
             const DataTableDevices = async () => {
                 return new Promise(async (resolve, reject) => {
@@ -116,19 +111,11 @@
                             render: (data, type, row, meta) => {
                                 let showUrl = "{{ route('controlling.show', ':id') }}".replace(
                                     ':id', data.id_sub_device);
-                                let editUrl = "{{ route('roledevice.edit', ':id') }}".replace(
-                                    ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
                                     <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-cogs"></i>
                                     </a>
-                                    <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </a>
-                                    <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteDevice('${data.id}')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
                                 </div>
                                 `;
                             },

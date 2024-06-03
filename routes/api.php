@@ -38,9 +38,6 @@ Route::get('/maintenance/{id}', [MaintenancesController::class, 'get_one']);
 Route::get('/devices', [DevicesController::class, 'get_all']);
 Route::get('/device/{id}', [DevicesController::class, 'get_one']);
 
-Route::get('/detailroledevices', [DetailRoleDeviceController::class, 'get_all']);
-Route::get('/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one']);
-
 Route::get('/detailmaintenances', [DetailMaintenanceController::class, 'get_all']);
 Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_one']);
 

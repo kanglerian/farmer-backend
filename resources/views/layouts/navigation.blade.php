@@ -33,6 +33,9 @@
                         ])">
                             {{ __('Role Devices') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index', 'users.edit', 'users.show', 'users.create'])">
+                            {{ __('Users') }}
+                        </x-nav-link>
                     @endif
                     @if (Auth::user()->level == '0')
                     <x-nav-link :href="route('detailroledevice.index')" :active="request()->routeIs([
@@ -60,9 +63,6 @@
                         {{ __('Maintenance') }}
                     </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index', 'users.edit', 'users.show', 'users.create'])">
-                        {{ __('Users') }}
-                    </x-nav-link>
                 </div>
             </div>
 

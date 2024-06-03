@@ -38,10 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('roledevice', RoleDeviceController::class)->middleware('level:1');
     Route::resource('maintenances', MaintenancesController::class)->middleware('level:1');
     Route::resource('devices', DevicesController::class)->middleware('level:1');
-    Route::resource('detailroledevice', DetailRoleDeviceController::class)->middleware('level:1');
-    Route::resource('detailmaintenance', DetailMaintenanceController::class)->middleware('level:1');
-    Route::resource('detailcontrolling', DetailControllingController::class)->middleware('level:1');
-    Route::resource('controlling', ControllingController::class)->middleware('level:1');
+    Route::resource('detailroledevice', DetailRoleDeviceController::class)->middleware('level:0');
+    Route::resource('detailmaintenance', DetailMaintenanceController::class)->middleware('level:0');
+    Route::resource('detailcontrolling', DetailControllingController::class)->middleware('level:0');
+    Route::resource('controlling', ControllingController::class)->middleware('level:0');
+
+    Route::get('/get/detailroledevices', [DetailRoleDeviceController::class, 'get_all'])->middleware('level:0');
+    Route::get('/get/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one'])->middleware('level:0');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
