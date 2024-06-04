@@ -51,7 +51,8 @@
                         </div>
                         <div>
                             <label for="date" class="block mb-2 text-sm font-medium">Tanggal</label>
-                            <input type="date" id="date" name="date" value="{{ $controlling->date ?? '' }}"
+                            <input type="datetime-local" id="date" name="date"
+                                value="{{ $controlling->date ?? '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div>
@@ -64,7 +65,7 @@
                                 <option value="Not Running">Not Running</option>
                             </select>
                         </div>
-                        <div class="relative">
+                        <div class="relative mb-5">
                             <label for="date" class="block mb-2 text-sm font-medium">
                                 <span>Durasi: </span>
                                 <span id="preview_duration">{{ $controlling->duration ?? 0 }} menit</span>
@@ -76,16 +77,27 @@
                             <span class="text-sm text-gray-500 absolute end-0 -bottom-6">300 menit</span>
                         </div>
                     </div>
-                    <button type="submit"
-                        class="text-white mt-14 bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
-                        <i class="fa-solid fa-play"></i>
-                        <span>Mulai</span>
-                    </button>
+                    @if ($controlling)
+                        <button type="submit" id="button-start"
+                            class="text-white mt-8 bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Mulai</span>
+                        </button>
+                    @else
+                        <button type="submit" id="button-start"
+                            class="text-white mt-14 bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Mulai</span>
+                        </button>
+                    @endif
                 </form>
                 <div class="flex justify-center items-center bg-white p-10 rounded-2xl border border-gray-200">
                     <div class="text-center space-y-3">
                         <h2 class="font-medium">Siswa Waktu</h2>
-                        <h3 class="text-5xl font-bold">0</h3>
+                        <h3 class="text-5xl font-bold" id="stopwatch">0</h3>
+                        <input type="hidden" id="date-result">
+                        <input type="hidden" id="date-record" value="{{ $controlling->date ?? '0' }}">
+                        <input type="hidden" id="duration-record" value="{{ $controlling->duration ?? '0' }}">
                     </div>
                 </div>
             </section>
@@ -124,9 +136,80 @@
             const setDuration = () => {
                 ;
                 let duration = $('#duration').val();
-                console.log(duration);
                 $('#preview_duration').text(`${duration} menit`);
             }
+
+            const getCurrent = () => {
+                const record = $('#date-record').val();
+                const duration = parseInt($('#duration-record').val(), 10);
+                const dateRecord = record.split(' ')[0];
+                const timeRecord = record.split(' ')[1];
+                let yearRecord = dateRecord.split('-')[0]
+                let monthRecord = dateRecord.split('-')[1]
+                let dayRecord = dateRecord.split('-')[2]
+                let hoursRecord = parseInt(timeRecord.split(':')[0], 10);
+                let minutesRecord = parseInt(timeRecord.split(':')[1], 10);
+                let secondsRecord = timeRecord.split(':')[2]
+
+                minutesRecord += duration;
+                if (minutesRecord >= 60) {
+                    hoursRecord += Math.floor(minutesRecord / 60);
+                    minutesRecord = minutesRecord % 60;
+                }
+
+                let updatedHours = String(hoursRecord).padStart(2, '0');
+                let updatedMinutes = String(minutesRecord).padStart(2, '0');
+
+                let current = new Date();
+                let year = current.getFullYear();
+                let month = String(current.getMonth() + 1).padStart(2, '0');
+                let date = String(current.getDate()).padStart(2, '0');
+                let hours = String(current.getHours()).padStart(2, '0');
+                let minutes = String(current.getMinutes()).padStart(2, '0');
+                let seconds = String(current.getSeconds()).padStart(2, '0');
+
+                $('#date-result').val(
+                    `${yearRecord}-${monthRecord}-${dayRecord} ${updatedHours}:${updatedMinutes}:${secondsRecord}`);
+                $('#current').text(`${year}-${month}-${date} ${hours}:${minutes}:${seconds}`);
+            }
+
+            const containerHitung = () => {
+                const endTimeString = $('#date-result').val();
+                const startTimeString = $('#date-record').val();
+
+                const startTime = new Date(startTimeString);
+                const endTime = new Date(endTimeString);
+                const now = new Date();
+
+                if (now >= startTime && now <= endTime) {
+                    let timeRemaining = endTime - now;
+
+                    if (timeRemaining > 0) {
+                        let hoursLeft = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+                        let minutesLeft = Math.floor((timeRemaining / (1000 * 60)) % 60);
+                        let secondsLeft = Math.floor((timeRemaining / 1000) % 60);
+
+                        hoursLeft = String(hoursLeft).padStart(2, '0');
+                        minutesLeft = String(minutesLeft).padStart(2, '0');
+                        secondsLeft = String(secondsLeft).padStart(2, '0');
+
+                        document.getElementById('stopwatch').innerText =
+                            `${hoursLeft}:${minutesLeft}:${secondsLeft}`;
+                        $('#button-start').hide();
+                    } else {
+                        clearInterval(countdownInterval);
+                        document.getElementById('stopwatch').innerText = '00:00:00';
+                        $('#button-start').show();
+                    }
+                }
+            }
+
+            setInterval(() => {
+                getCurrent();
+            }, 1000);
+            const countdownInterval = setInterval(() => {
+                containerHitung();
+            }, 1000);
         </script>
     @endpush
 
@@ -143,7 +226,6 @@
                         try {
                             const response = await axios.get(urlEndpoint);
                             const resultData = response.data.results;
-                            console.log(resultData);
                             let columnConfigs = [{
                                 data: 'id',
                                 render: (data, type, row, meta) => {
@@ -213,31 +295,6 @@
                         });
                 }
                 promiseDataDevices();
-            </script>
-
-            <script>
-                const deleteDevice = async (data) => {
-                    const message = confirm('Apakah anda yakin akan menghapus perangkat?');
-                    if (message) {
-                        await axios.post(`/devices/${data}`, {
-                                '_method': 'DELETE',
-                                '_token': $('meta[name="csrf-token"]').attr('content')
-                            })
-                            .then((response) => {
-                                alert(response.data.message);
-                                location.reload();
-                            })
-                            .catch((error) => {
-                                alert('Perangkat tidak dapat dihapus!')
-                                console.log(error);
-                            });
-                    }
-                }
-
-                const downloadQRCode = async (data) => {
-                    QRCode.toFile(``)
-                    console.log(data);
-                }
             </script>
         @endpush
     @endif

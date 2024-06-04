@@ -48,14 +48,18 @@
                         placeholder="Nama Device" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device X</label>
-                    <input type="text" id="coordinate_device_x" name="coordinate_device_x" value="{{ $device->coordinate_device_x }}"
+                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat
+                        Device X</label>
+                    <input type="text" id="coordinate_device_x" name="coordinate_device_x"
+                        value="{{ $device->coordinate_device_x }}"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Koordinat Device X" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device Y</label>
-                    <input type="text" id="coordinate_device_y" name="coordinate_device_y" value="{{ $device->coordinate_device_y }}"
+                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat
+                        Device Y</label>
+                    <input type="text" id="coordinate_device_y" name="coordinate_device_y"
+                        value="{{ $device->coordinate_device_y }}"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Koordinat Device Y" required />
                 </div>
@@ -82,5 +86,23 @@
             </form>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                }
+            }
 
+            function showPosition(position) {
+                const {
+                    latitude,
+                    longitude
+                } = position.coords;
+                document.getElementById('coordinate_device_x').value = latitude;
+                document.getElementById('coordinate_device_y').value = longitude;
+            }
+            getLocation();
+        </script>
+    @endpush
 </x-app-layout>

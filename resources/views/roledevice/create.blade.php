@@ -72,9 +72,13 @@
                                     <span id="preview_name_device">Tidak ada</span>
                                 </li>
                                 <li>
-                                    <span class="font-medium">Koordinat: </span>
-                                    <span id="preview_coordinate_x">0</span>,
-                                    <span id="preview_coordinate_y">0</span>,
+                                    <a target="_self" id="link_coordinate" href="">
+                                        <span class="font-medium">Koordinat: </span>
+                                        <span class="hover:underline">
+                                            <span id="preview_coordinate_x">0</span>,
+                                            <span id="preview_coordinate_y">0</span>,
+                                        </span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -146,6 +150,10 @@
                         $('#preview_name_device').text(device.name);
                         $('#preview_coordinate_x').text(device.coordinate_device_x);
                         $('#preview_coordinate_y').text(device.coordinate_device_y);
+                        $('#link_coordinate').attr('href',
+                            `https://google.com/maps?q=${device.coordinate_device_x},${device.coordinate_device_y}`
+                            );
+                        $('#link_coordinate').attr('target','_blank');
                     })
                     .catch((error) => {
                         console.log(error);

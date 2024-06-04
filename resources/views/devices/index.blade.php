@@ -98,7 +98,7 @@
                                 y: 'coordinate_device_y'
                             },
                             render: (data, type, row, meta) => {
-                                return `${data.coordinate_device_x},${data.coordinate_device_y}`;
+                                return `<a class="hover:underline" target="_blank" href="https://google.com/maps?q=${data.coordinate_device_x},${data.coordinate_device_y}">${data.coordinate_device_x},${data.coordinate_device_y}</a>`;
                             },
                         }, {
                             data: 'status',

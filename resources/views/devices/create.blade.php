@@ -87,5 +87,23 @@
             </form>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                }
+            }
 
+            function showPosition(position) {
+                const {
+                    latitude,
+                    longitude
+                } = position.coords;
+                document.getElementById('coordinate_device_x').value = latitude;
+                document.getElementById('coordinate_device_y').value = longitude;
+            }
+            getLocation();
+        </script>
+    @endpush
 </x-app-layout>

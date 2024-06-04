@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('controlling', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->nullable();
+            $table->dateTime('date');
             $table->integer('duration')->default(0);
-            $table->string('status')->nullable();
+            $table->string('status');
             $table->unsignedBigInteger('id_sub_device');
             $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();

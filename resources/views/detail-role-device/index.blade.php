@@ -32,7 +32,7 @@
                                     class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $result->devices->name }}</a>
                                 <ul class="text-gray-700 text-sm space-y-2">
                                     <li>
-                                        <a target="_blank" href="https://google.com/maps?q={{ $result->devices->coordinate_device_x }},{{ $result->devices->coordinate_device_y }}">
+                                        <a target="_blank" class="hover:underline" href="https://google.com/maps?q={{ $result->devices->coordinate_device_x }},{{ $result->devices->coordinate_device_y }}">
                                             <i class="fa-solid fa-location-dot me-1 text-sky-500"></i>
                                             Lokasi Sub Device
                                         </a>

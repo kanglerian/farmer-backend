@@ -70,7 +70,7 @@ class ControllingController extends Controller
     public function show($id)
     {
         $detailroledevice = DetailRoleDevice::with('devices')->where('id_sub_device', $id)->first();
-        $controlling = Controlling::where('id_sub_device', $id)->first();
+        $controlling = Controlling::where('id_sub_device', $id)->orderBy('id','DESC')->first();
         return view('controlling.show')->with([
             'detailroledevice' => $detailroledevice,
             'controlling' => $controlling
@@ -143,5 +143,5 @@ class ControllingController extends Controller
             throw $th;
         }
     }
-    
+
 }
