@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_device_master');
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_device_master')->references('id')->on('devices')->onDelete('cascade');
+            $table->foreign('id_device_master')->references('id')->on('devices')->onDelete('restrict');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });

@@ -53,6 +53,7 @@
                     try {
                         const response = await axios.get(urlUser);
                         const resultData = response.data.results;
+                        console.log(resultData);
 
                         let columnConfigs = [{
                             data: 'id',
@@ -70,19 +71,24 @@
                                 return data;
                             },
                         }, {
-                            data: 'id_user',
+                            data: 'users',
                             render: (data, type, row, meta) => {
-                                return data;
+                                return data.name;
                             },
                         }, {
                             data: {
                                 id: 'id'
                             },
                             render: (data, type, row, meta) => {
-                                let editUrl = "{{ route('users.edit', ':id') }}".replace(':id',
+                                let showUrl = "{{ route('maintenances.show', ':id') }}".replace(':id',
+                                    data.id);
+                                let editUrl = "{{ route('maintenances.edit', ':id') }}".replace(':id',
                                     data.id);
                                 return `
                                 <div class="flex items-center gap-1">
+                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                     <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailMaintenance;
 use App\Models\Maintenance;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MaintenancesController extends Controller
@@ -25,7 +27,7 @@ class MaintenancesController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::where('level', 0)->get();
         return view('maintenances.create')->with([
             'users' => $users
         ]);
@@ -43,18 +45,32 @@ class MaintenancesController extends Controller
             $request->validate([
                 'date' => ['required'],
                 'maintenance' => ['required'],
-                'cost' => ['required'],
                 'id_user' => ['required'],
             ]);
 
             $data = [
                 'date' => $request->input('date'),
                 'maintenance' => $request->input('maintenance'),
-                'cost' => $request->input('cost'),
                 'id_user' => $request->input('id_user'),
             ];
 
-            Maintenance::create($data);
+            $maintenance = Maintenance::create($data);
+
+            $count = $request->input('cost');
+
+            $data_detail = [];
+
+            for ($i = 0; $i < count($count); $i++) {
+                array_push($data_detail, [
+                    'id_maintenance' => $maintenance->id,
+                    'detail' => $request->input('detail')[$i],
+                    'cost' => $request->input('cost')[$i],
+                    'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                    'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
+                ]);
+            }
+
+            DetailMaintenance::insert($data_detail);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data maintenance.');
         } catch (\Throwable $th) {

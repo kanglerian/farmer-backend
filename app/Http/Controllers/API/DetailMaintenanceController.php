@@ -17,11 +17,12 @@ class DetailMaintenanceController extends Controller
         ]);
     }
 
-    public function get_one($id)
+    public function get_all_by_id_maintenance($id)
     {
         $query = DetailMaintenance::query();
-        $query->where('id', $id);
-        $result = $query->first();
+        $query->with(['maintenance']);
+        $query->where('id_maintenance', $id);
+        $result = $query->get();
         return response()->json([
             'result' => $result
         ]);

@@ -36,8 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', UsersController::class)->middleware('level:1');
     Route::resource('roledevice', RoleDeviceController::class)->middleware('level:1');
-    Route::resource('maintenances', MaintenancesController::class)->middleware('level:1');
     Route::resource('devices', DevicesController::class)->middleware('level:1');
+    Route::resource('maintenances', MaintenancesController::class)->middleware('level:0');
     Route::resource('detailroledevice', DetailRoleDeviceController::class)->middleware('level:0');
     Route::resource('detailmaintenance', DetailMaintenanceController::class)->middleware('level:0');
     Route::resource('detailcontrolling', DetailControllingController::class)->middleware('level:0');

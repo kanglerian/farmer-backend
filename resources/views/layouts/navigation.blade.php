@@ -31,7 +31,7 @@
                             'roledevice.show',
                             'roledevice.create',
                         ])">
-                            {{ __('Role Devices') }}
+                            {{ __('Master') }}
                         </x-nav-link>
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index', 'users.edit', 'users.show', 'users.create'])">
                             {{ __('Users') }}
@@ -44,7 +44,7 @@
                         'detailroledevice.show',
                         'detailroledevice.create',
                     ])">
-                        {{ __('Role Devices') }}
+                        {{ __('Pompa') }}
                     </x-nav-link>
                     <x-nav-link :href="route('controlling.index')" :active="request()->routeIs([
                         'controlling.index',
@@ -59,6 +59,10 @@
                         'maintenances.edit',
                         'maintenances.show',
                         'maintenances.create',
+                        'detailmaintenance.index',
+                        'detailmaintenance.edit',
+                        'detailmaintenance.show',
+                        'detailmaintenance.create',
                     ])">
                         {{ __('Maintenance') }}
                     </x-nav-link>

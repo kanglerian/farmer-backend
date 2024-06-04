@@ -6,7 +6,7 @@
                     <a href="{{ route('roledevice.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
                         <i class="fa-solid fa-microchip"></i>
-                        <span>Role Devices</span>
+                        <span>Master</span>
                     </a>
                 </li>
                 <li aria-current="page">

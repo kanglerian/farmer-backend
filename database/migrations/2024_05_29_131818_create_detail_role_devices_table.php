@@ -18,8 +18,8 @@ return new class extends Migration
                 $table->unsignedBigInteger('id_role');
                 $table->unsignedBigInteger('id_sub_device');
                 $table->string('status');
-                $table->foreign('id_role')->references('id')->on('role_devices')->onDelete('cascade');
-                $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('cascade');
+                $table->foreign('id_role')->references('id')->on('role_devices')->onDelete('restrict');
+                $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
                 $table->timestamps();
             });
     }

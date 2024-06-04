@@ -15,9 +15,17 @@ class DetailRoleDeviceController extends Controller
      */
     public function index()
     {
-        $total = DetailRoleDevice::count();
+        $query = DetailRoleDevice::query();
+        $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
+        if (Auth::user()->level === 0) {
+            $user = Auth::user();
+            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+                $queryIsi->where('id_user', $user->id);
+            });
+        }
+        $results = $query->get();
         return view('detail-role-device.index')->with([
-            'total' => $total
+            'results' => $results
         ]);
     }
 

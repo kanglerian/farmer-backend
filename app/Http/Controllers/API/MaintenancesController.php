@@ -11,6 +11,7 @@ class MaintenancesController extends Controller
     public function get_all()
     {
         $query = Maintenance::query();
+        $query->with(['users']);
         $results = $query->get();
         return response()->json([
             'results' => $results

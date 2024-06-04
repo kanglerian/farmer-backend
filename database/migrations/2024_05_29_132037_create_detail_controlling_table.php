@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_controlling');
             $table->integer('temperature');
             $table->integer('watt');
-            $table->foreign('id_controlling')->references('id')->on('controlling')->onDelete('cascade');
+            $table->foreign('id_controlling')->references('id')->on('controlling')->onDelete('restrict');
             $table->timestamps();
         });
     }

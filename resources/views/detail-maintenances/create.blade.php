@@ -3,16 +3,16 @@
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('roledevice.index') }}"
+                    <a href="{{ route('maintenances.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
-                        <i class="fa-solid fa-microchip"></i>
-                        <span>Master</span>
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>Detail Maintenance</span>
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Edit</span>
+                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Tambah</span>
                     </div>
                 </li>
             </ol>
@@ -36,20 +36,35 @@
                     </button>
                 </div>
             @endif
-            <form method="POST" action="{{ route('roledevice.update', $role_device->id) }}"
+            <form method="POST" action="{{ route('detailmaintenance.store') }}"
                 class="max-w-sm bg-white mx-auto md:mx-0 p-10 rounded-2xl">
                 @csrf
-                @method('PATCH')
                 <div class="mb-5">
-                    <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900">Nama
-                        Petugas</label>
-                    <select id="id_user" name="id_user" value="{{ $role_device->id_user }}"
-                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5">
-                        <option value="{{ $role_device->id_user }}">{{ $role_device->users->name }}</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    <label for="id_maintenance" class="block mb-2 text-sm font-medium text-gray-900">id_maintenance</label>
+                    <select id="id_maintenance" name="id_maintenance"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
+                        <option>Pilih</option>
+                        @foreach ($maintenances as $maintenance)
+                        <option value="{{ $maintenance->id }}">{{ $maintenance->maintenance }} - {{ $maintenance->date }} - {{ $maintenance->users->name }}</option>
                         @endforeach
                     </select>
+                </div>
+                <div class="mb-5">
+                    <label for="detail" class="block mb-2 text-sm font-medium text-gray-900">Detail
+                        Maintenance</label>
+                    <input type="text" id="detail" name="detail"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
+                        placeholder="Detail Maintenance" required />
+                </div>
+                <div class="mb-5">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                            <i class="fa-solid fa-coins text-gray-300"></i>
+                        </div>
+                        <input type="number" name="cost" id="cost" aria-describedby="helper-text-explanation"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                            placeholder="Tarif" required />
+                    </div>
                 </div>
                 <button type="submit"
                     class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">

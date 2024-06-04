@@ -23,163 +23,47 @@
                     </button>
                 </div>
             @endif
-            <div class="flex flex-col md:flex-row items-center justify-end gap-5 px-5 md:px-0 mb-5">
-                <div class="w-full md:w-auto grid grid-cols-1 gap-3">
-                    <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
-                        <h4 class="text-sm">Role Devices</h4>
-                        <span class="font-medium text-lg">{{ $total }}</span>
-                    </div>
+            @if (count($results) > 0)
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    @foreach ($results as $result)
+                        <div class="relative bg-white p-8 rounded-3xl">
+                            <div class="space-y-2">
+                                <a href="{{ route('controlling.show', $result->id_sub_device) }}"
+                                    class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $result->devices->name }}</a>
+                                <ul class="text-gray-700 text-sm space-y-2">
+                                    <li>
+                                        <a target="_blank" href="https://google.com/maps?q={{ $result->devices->coordinate_device_x }},{{ $result->devices->coordinate_device_y }}">
+                                            <i class="fa-solid fa-location-dot me-1 text-sky-500"></i>
+                                            Lokasi Sub Device
+                                        </a>
+                                    </li>
+                                    <li class="text-sm text-gray-500">
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        {{ $result->roledevice->users->name }}
+                                    </li>
+                                    <li class="text-sm text-gray-500">
+                                        <i class="fa-solid fa-circle-info me-1"></i>
+                                        {{ $result->status }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <i class="absolute right-5 top-10 text-gray-200 fa-solid fa-house-signal text-3xl"></i>
+                            <hr class="my-5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('controlling.show', $result->id_sub_device) }}"
+                                        class="bg-emerald-500 hover:bg-emerald-600 text-xs text-white px-5 py-2 rounded-xl"><i
+                                            class="fa-solid fa-cogs me-1"></i> Control</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-            <section class="bg-white p-10 rounded-2xl">
-                <div class="relative overflow-x-auto">
-                    <table class="w-full bg-white text-sm text-left rtl:text-right text-gray-500" id="table-devices">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    No.
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nama Device
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Koordinat
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Status
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Petugas
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </section>
+            @else
+                <p class="text-center text-gray-700 mt-10"><i class="fa-solid fa-microchip me-1"></i> Belum ada sub
+                    perangkat yang terdaftar.</p>
+            @endif
+
         </div>
     </div>
-    @push('scripts')
-        <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
-        <script src="{{ asset('js/qrcode.js') }}"></script>
-        <script>
-            let devices;
-            let dataTableInstance;
-            let dataTableInitialized = false;
-            let urlDevice = '/get/detailroledevices';
-
-            const DataTableDevices = async () => {
-                return new Promise(async (resolve, reject) => {
-                    try {
-                        const response = await axios.get(urlDevice);
-                        const resultData = response.data.results;
-                        console.log(resultData);
-                        let columnConfigs = [{
-                            data: 'id',
-                            render: (data, type, row, meta) => {
-                                return meta.row + 1;
-                            },
-                        }, {
-                            data: 'devices',
-                            render: (data, type, row, meta) => {
-                                return data.name;
-                            },
-                        }, {
-                            data: 'devices',
-                            render: (data, type, row, meta) => {
-                                console.log(data);
-                                return `${data.coordinate_device_x}, ${data.coordinate_device_y}`;
-                            },
-                        }, {
-                            data: 'devices',
-                            render: (data, type, row, meta) => {
-                                return data.status;
-                            },
-                        }, {
-                            data: 'roledevice',
-                            render: (data, type, row, meta) => {
-                                return data.users.name;
-                            },
-                        }, {
-                            data: {
-                                id: 'id',
-                                id_sub_device: 'id_sub_device'
-                            },
-                            render: (data, type, row, meta) => {
-                                let showUrl = "{{ route('controlling.show', ':id') }}".replace(
-                                    ':id', data.id_sub_device);
-                                return `
-                                <div class="flex items-center gap-1">
-                                    <a href="${showUrl}" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-cogs"></i>
-                                    </a>
-                                </div>
-                                `;
-                            },
-                        }];
-
-                        const dataTableConfig = {
-                            data: resultData,
-                            columnDefs: [{
-                                width: 50,
-                                target: 0
-                            }],
-                            columns: columnConfigs
-                        }
-
-                        let results = {
-                            config: dataTableConfig,
-                            initialized: true,
-                        }
-                        resolve(results);
-                    } catch (error) {
-                        reject(error);
-                    }
-                });
-            }
-
-            const promiseDataDevices = () => {
-                Promise.all([
-                        DataTableDevices(),
-                    ])
-                    .then((response) => {
-                        let responseDTS = response[0];
-                        dataTableInstance = $('#table-devices').DataTable(responseDTS.config);
-                        dataTableInitialized = responseDTS.initialized;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-            promiseDataDevices();
-        </script>
-
-        <script>
-            const deleteDevice = async (data) => {
-                const message = confirm('Apakah anda yakin akan menghapus perangkat?');
-                if (message) {
-                    await axios.post(`/devices/${data}`, {
-                            '_method': 'DELETE',
-                            '_token': $('meta[name="csrf-token"]').attr('content')
-                        })
-                        .then((response) => {
-                            alert(response.data.message);
-                            location.reload();
-                        })
-                        .catch((error) => {
-                            alert('Perangkat tidak dapat dihapus!')
-                            console.log(error);
-                        });
-                }
-            }
-
-            const downloadQRCode = async (data) => {
-                QRCode.toFile(``)
-                console.log(data);
-            }
-        </script>
-    @endpush
 </x-app-layout>

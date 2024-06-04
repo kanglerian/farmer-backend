@@ -39,7 +39,7 @@ Route::get('/devices', [DevicesController::class, 'get_all']);
 Route::get('/device/{id}', [DevicesController::class, 'get_one']);
 
 Route::get('/detailmaintenances', [DetailMaintenanceController::class, 'get_all']);
-Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_one']);
+Route::get('/detailmaintenance/{id}', [DetailMaintenanceController::class, 'get_all_by_id_maintenance']);
 
 Route::get('/detailcontrollings', [DetailControllingController::class, 'get_all']);
 Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_one']);

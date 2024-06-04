@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('duration')->default(0);
             $table->string('status')->nullable();
             $table->unsignedBigInteger('id_sub_device');
-            $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('cascade');
+            $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();
         });
     }

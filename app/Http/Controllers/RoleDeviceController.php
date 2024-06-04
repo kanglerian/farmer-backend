@@ -68,7 +68,6 @@ class RoleDeviceController extends Controller
             $count = $request->input('status');
 
             $data_detail = [];
-            $data_controlling = [];
 
             for ($i = 0; $i < count($count); $i++) {
                 array_push($data_detail, [
@@ -78,18 +77,10 @@ class RoleDeviceController extends Controller
                     'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
                     'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
                 ]);
-
-                array_push($data_controlling, [
-                    'id_sub_device' => $request->input('id_sub_device')[$i],
-                    'date' => Carbon::now()->setTimezone('Asia/Jakarta'),
-                    'created_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
-                    'updated_at' => Carbon::now()->setTimezone('Asia/Jakarta'),
-                ]);
             }
 
 
             DetailRoleDevice::insert($data_detail);
-            Controlling::insert($data_controlling);
 
             return redirect()->back()->with('message', 'Berhasil menambahkan data role device.');
         } catch (\Throwable $th) {

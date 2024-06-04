@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailMaintenance;
+use App\Models\Maintenance;
 use Illuminate\Http\Request;
 
 class DetailMaintenanceController extends Controller
@@ -24,7 +25,10 @@ class DetailMaintenanceController extends Controller
      */
     public function create()
     {
-        return view('detail-maintenances.create');
+        $maintenances = Maintenance::with('users')->get();
+        return view('detail-maintenances.create')->with([
+            'maintenances' => $maintenances
+        ]);
     }
 
     /**
@@ -37,11 +41,13 @@ class DetailMaintenanceController extends Controller
     {
         try {
             $request->validate([
+                'cost' => ['required'],
                 'detail' => ['required'],
                 'id_maintenance' => ['required'],
             ]);
 
             $data = [
+                'cost' => $request->input('cost'),
                 'detail' => $request->input('detail'),
                 'id_maintenance' => $request->input('id_maintenance'),
             ];
@@ -93,11 +99,13 @@ class DetailMaintenanceController extends Controller
     {
         try {
             $request->validate([
+                'cost' => ['required'],
                 'detail' => ['required'],
                 'id_maintenance' => ['required'],
             ]);
 
             $data = [
+                'cost' => $request->input('cost'),
                 'detail' => $request->input('detail'),
                 'id_maintenance' => $request->input('id_maintenance'),
             ];

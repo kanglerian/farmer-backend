@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
             <i class="fa-solid fa-microchip"></i>
-            <span>{{ __('Role Devices') }}</span>
+            <span>{{ __('Master') }}</span>
         </h2>
     </x-slot>
 

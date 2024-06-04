@@ -6,7 +6,7 @@
                     <a href="{{ route('roledevice.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
                         <i class="fa-solid fa-microchip"></i>
-                        <span>Role Devices</span>
+                        <span>Master</span>
                     </a>
                 </li>
                 <li aria-current="page">
@@ -109,9 +109,13 @@
                                             </select>
                                         </th>
                                         <td class="px-6 py-4">
-                                            <input type="text" name="status[]"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                                                placeholder="Status" required />
+                                            <select name="status[]"
+                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5"
+                                                required>
+                                                <option>Pilih</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Butuh Perawatan">Butuh Perawatan</option>
+                                            </select>
                                         </td>
                                         <td class="px-6 py-4 bg-white">
                                             <button onclick="addSubdevice()" type="button"
@@ -161,9 +165,13 @@
                                             </select>
                                         </th>
                                         <td class="px-6 py-4">
-                                            <input type="text" name="status[]"
-                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                                            placeholder="Status" required />
+                                            <select name="status[]"
+                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5"
+                                                required>
+                                                <option>Pilih</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Butuh Perawatan">Butuh Perawatan</option>
+                                            </select>
                                         </td>
                                         <td class="px-6 py-4 bg-white">
                                             <button onclick="addSubdevice()" type="button" class="hover:text-sky-500"><i class="fa-solid fa-circle-plus"></i></button>

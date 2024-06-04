@@ -3,39 +3,25 @@
         <div class="flex items-center justify-between">
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('devices.index') }}"
+                    <a href="{{ route('maintenances.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
-                        <i class="fa-solid fa-microchip"></i>
-                        <span>Devices</span>
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>Maintenance</span>
                     </a>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <a href="{{ route('devices.show', $subdevice->id_device) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->device->name }}
-                            ({{ $subdevice->device->location }})</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <a href="{{ route('subdevices.show', $subdevice->id) }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->name }} ({{ $subdevice->location }})</a>
-                    </div>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i class="fa-solid fa-angle-right text-gray-300"></i>
                         <span class="ms-1 text-sm font-medium text-gray-500 ms-2">
-                            Maintenance
+                            Detail
                         </span>
                     </div>
                 </li>
             </ol>
-            <input type="hidden" id="id_subdevice" value="{{ $subdevice->id }}">
         </div>
     </x-slot>
+
+    <input type="hidden" id="id_maintenance" value="{{ $maintenance->id }}">
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -54,18 +40,14 @@
                     </button>
                 </div>
             @endif
-            <header class="mb-5 space-y-1 mx-5 md:mx-0">
-                <h2 class="font-bold text-2xl">Maintenance</h2>
-                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ducimus.</p>
-            </header>
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 px-5 md:px-0 mb-5">
-                <button type="button" onclick="toggleMaintenanceModal('create')"
+                <a href="{{ route('detailmaintenance.create') }}"
                     class="inline-block text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5"><i
-                        class="fa-solid fa-circle-plus me-1"></i> Tambah</button>
+                        class="fa-solid fa-circle-plus me-1"></i> Tambah</a>
                 <div class="w-full md:w-auto grid grid-cols-1 gap-3">
                     <div class="bg-sky-500 text-white px-5 py-2.5 rounded-2xl">
                         <h4 class="text-sm">Perawatan</h4>
-                        <span class="font-medium text-lg">{{ $total_maintenance }}</span>
+                        <span class="font-medium text-lg" id="count">0</span>
                     </div>
                 </div>
             </div>
@@ -100,20 +82,19 @@
     </div>
 
     @push('scripts')
-        <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
-        <script src="{{ asset('js/qrcode.js') }}"></script>
         <script>
             let devices;
             let dataTableInstance;
             let dataTableInitialized = false;
-            let idSubdevice = document.getElementById('id_subdevice').value;
-            let endpoint = `/api/maintenances/${idSubdevice}`;
+            let id = document.getElementById('id_maintenance').value;
+            let endpoint = `/api/detailmaintenance/${id}`;
 
             const DataTable = async () => {
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(endpoint);
-                        const dataResult = response.data.result;
+                        const resultData = response.data.result;
+                        document.getElementById('count').innerText = resultData.length;
 
                         let columnConfigs = [{
                             data: 'id',
@@ -121,12 +102,12 @@
                                 return meta.row + 1;
                             },
                         }, {
-                            data: 'date',
+                            data: 'maintenance',
                             render: (data, type, row, meta) => {
-                                return data;
+                                return data.date;
                             },
                         }, {
-                            data: 'problem',
+                            data: 'detail',
                             render: (data, type, row, meta) => {
                                 return data;
                             },
@@ -140,13 +121,13 @@
                                 id: 'id',
                             },
                             render: (data, type, row, meta) => {
-                                let editUrl = "{{ route('devices.edit', ':id') }}".replace(
+                                let editUrl = "{{ route('detailmaintenance.edit', ':id') }}".replace(
                                     ':id', data.id);
                                 return `
                                 <div class="flex items-center gap-1">
-                                    <button type="button" onclick="toggleMaintenanceModal('edit','${data.id}')" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
+                                    <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
                                         <i class="fa-solid fa-edit"></i>
-                                    </button>
+                                    </a>
                                     <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteMaintenance('${data.id}')">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
@@ -156,7 +137,7 @@
                         }];
 
                         const dataTableConfig = {
-                            data: dataResult,
+                            data: resultData,
                             columnDefs: [{
                                 width: 50,
                                 target: 0
@@ -210,99 +191,5 @@
                 }
             }
         </script>
-        <script>
-            const toggleMaintenanceModal = async (status, data) => {
-                if (status == 'create') {
-                    const url = "{{ route('maintenances.store') }}";
-                    $('#maintenance-form').attr('action', url);
-                    $('#maintenance-header').text('Tambah Perawatan');
-                    $('#maintenance-button').text('Simpan');
-                    $('#maintenance-field').html('');
-                    $('#date').val('');
-                    $('#problem').val('');
-                    $('#cost').val('');
-                } else if (status == 'edit') {
-                    await axios.get(`/api/maintenance/${data}`)
-                        .then((response) => {
-                            const maintenance = response.data.result;
-                            const token = $('meta[name="csrf-token"]').attr('content')
-                            const url = "{{ route('maintenances.update', ':id') }}".replace(':id', data);
-                            $('#maintenance-header').text(`Edit Perawatan ${maintenance.subdevice.name}`);
-                            $('#maintenance-button').text('Simpan perubahan');
-                            $('#maintenance-form').attr('action', url);
-                            $('#maintenance-field').html(`<input type="hidden" name="_method" value="PATCH">`
-                            );
-                            $('#date').val(maintenance.date);
-                            $('#problem').val(maintenance.problem);
-                            $('#cost').val(maintenance.cost);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        })
-
-                }
-                $('#maintenance-modal').toggle();
-            }
-        </script>
     @endpush
-
-    <div id="maintenance-modal"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="fixed inset-0 bg-black opacity-50"></div>
-        <div class="relative flex justify-center items-center h-screen p-4 w-full max-w-md mx-auto max-h-full">
-            <!-- Modal content -->
-            <div class="w-full relative bg-white rounded-2xl">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-5 border-b rounded-t">
-                    <h3 class="text-lg font-semibold text-gray-900" id="maintenance-header">
-                        Tambah Perawatan
-                    </h3>
-                    <button type="button" onclick="toggleMaintenanceModal()"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
-                        <i class="fa-solid fa-xmark"></i>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <form method="POST" action="{{ route('maintenances.store') }}" id="maintenance-form"
-                    class="w-full px-6">
-                    @csrf
-                    <div class="w-full grid gap-4 mb-4 grid-cols-1">
-                        <div id="maintenance-field"></div>
-                        <input type="hidden" name="id_subdevice" id="id_subdevice" value="{{ $subdevice->id }}">
-                        <div>
-                            <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal</label>
-                            <input type="date" id="date" name="date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
-                                placeholder="Tanggal" required />
-                        </div>
-                        <div>
-                            <label for="problem" class="block mb-2 text-sm font-medium text-gray-900">Keluhan</label>
-                            <textarea id="problem" name="problem" rows="4"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-sky-500 focus:border-sky-500"
-                                placeholder="Tulis keluhan disini..."></textarea>
-                        </div>
-                        <div>
-                            <label for="zip-input" class="block mb-2 text-sm font-medium text-gray-900">Biaya</label>
-                            <div class="relative">
-                                <div
-                                    class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none text-gray-400 text-sm font-medium">
-                                    Rp
-                                </div>
-                                <input type="number" id="cost" name="cost"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5"
-                                    placeholder="0" required />
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit"
-                                class="w-full block text-white flex justify-center items-center gap-2 bg-sky-700 gap-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
-                                <i class="fa-solid fa-save"></i>
-                                <span id="maintenance-button">Tambah Perawatan</span>
-                            </button>
-                        </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </x-app-layout>

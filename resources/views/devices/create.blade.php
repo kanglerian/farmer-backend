@@ -47,13 +47,15 @@
                         placeholder="Nama Device" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device X</label>
+                    <label for="coordinate_device_x" class="block mb-2 text-sm font-medium text-gray-900">Koordinat
+                        Device X</label>
                     <input type="text" id="coordinate_device_x" name="coordinate_device_x"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Koordinat Device X" required />
                 </div>
                 <div class="mb-5">
-                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat Device Y</label>
+                    <label for="coordinate_device_y" class="block mb-2 text-sm font-medium text-gray-900">Koordinat
+                        Device Y</label>
                     <input type="text" id="coordinate_device_y" name="coordinate_device_y"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                         placeholder="Koordinat Device Y" required />
@@ -69,9 +71,13 @@
                 </div>
                 <div class="mb-5">
                     <label for="condition" class="block mb-2 text-sm font-medium text-gray-900">Kondisi</label>
-                    <input type="text" id="condition" name="condition"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
-                        placeholder="Kondisi" required />
+                    <select name="condition" id="condition"
+                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5"
+                        required>
+                        <option>Pilih</option>
+                        <option value="Good">Good</option>
+                        <option value="Butuh Perawatan">Butuh Perawatan</option>
+                    </select>
                 </div>
                 <button type="submit"
                     class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center">
