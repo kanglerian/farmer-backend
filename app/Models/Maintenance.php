@@ -18,6 +18,7 @@ class Maintenance extends Model
         'date',
         'maintenance',
         'id_user',
+        'id_device'
     ];
 
     protected $table = 'maintenances';
@@ -25,7 +26,11 @@ class Maintenance extends Model
     public function detailmaintenance(){
         return $this->hasMany(DetailMaintenance::class, 'id_maintenance');
     }
+
     public function users(){
         return $this->belongsTo(User::class,'id_user','id');
+    }
+    public function devices(){
+        return $this->belongsTo(Device::class,'id_device','id');
     }
 }

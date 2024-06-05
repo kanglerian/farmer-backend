@@ -72,7 +72,7 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white shadow-sm">
+            <header class="bg-[#f39c12] shadow-sm">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
@@ -80,8 +80,13 @@
         @endif
 
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
+        <main class="flex h-screen">
+            <aside class="w-full md:w-3/12 bg-[#2c3e50] h-full p-5">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias impedit, fugiat amet modi provident quaerat rerum rem quis iure nostrum veniam molestiae aliquid dolorem nemo, quo officia asperiores. A ipsam reprehenderit eius, pariatur quo laudantium architecto rem sapiente unde dignissimos, odit adipisci corrupti. Nemo eligendi quaerat tempore consequuntur, exercitationem corrupti laudantium numquam accusamus rerum qui minus sapiente, explicabo molestias quo molestiae id neque! Perferendis natus nam recusandae sed aspernatur necessitatibus! Placeat ex optio minima rem iste libero assumenda facilis ipsam? A excepturi, voluptatibus quaerat reprehenderit consequatur labore similique illum atque iusto quod assumenda, iste id est distinctio saepe animi accusamus.</p>
+            </aside>
+            <div class="w-full md:w-9/12">
+                {{ $slot }}
+            </div>
         </main>
     </div>
     <script src="{{ asset('js/all.min.js') }}"></script>

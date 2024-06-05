@@ -24,7 +24,7 @@
                 </div>
             @endif
             @if (count($results) > 0)
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     @foreach ($results as $result)
                         <div class="relative bg-white p-8 rounded-3xl">
                             <div class="space-y-2">

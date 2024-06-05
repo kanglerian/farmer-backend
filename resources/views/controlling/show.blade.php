@@ -55,16 +55,6 @@
                                 value="{{ $controlling->date ?? '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
-                        <div>
-                            <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                            <select id="status" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5">
-                                <option value="{{ $controlling->status ?? '' }}">{{ $controlling->status ?? 'Pilih' }}
-                                </option>
-                                <option value="Running">Running</option>
-                                <option value="Not Running">Not Running</option>
-                            </select>
-                        </div>
                         <div class="relative mb-5">
                             <label for="date" class="block mb-2 text-sm font-medium">
                                 <span>Durasi: </span>

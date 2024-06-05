@@ -42,14 +42,13 @@ class ControllingController extends Controller
             $request->validate([
                 'date' => ['required'],
                 'duration' => ['required'],
-                'status' => ['required'],
                 'id_sub_device' => ['required'],
             ]);
 
             $data = [
                 'date' => $request->input('date'),
                 'duration' => $request->input('duration'),
-                'status' => $request->input('status'),
+                'status' => 'Belum dieksekusi',
                 'id_sub_device' => $request->input('id_sub_device'),
             ];
 
