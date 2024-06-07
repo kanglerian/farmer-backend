@@ -4,14 +4,14 @@
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{ route('devices.index') }}"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
+                        class="inline-flex items-center text-sm font-medium text-white space-x-2">
                         <i class="fa-solid fa-microchip"></i>
                         <span>Devices</span>
                     </a>
                 </li>
                 <li>
                     <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
+                        <i class="fa-solid fa-angle-right text-white"></i>
                         <a href="{{ route('devices.show', $subdevice->id_device) }}"
                             class="ms-1 text-sm font-medium text-gray-700 hover:text-sky-600 md:ms-2">{{ $subdevice->device->name }}
                             ({{ $subdevice->device->location }})</a>
@@ -19,8 +19,8 @@
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">
+                        <i class="fa-solid fa-angle-right text-white"></i>
+                        <span class="text-sm font-medium text-white ms-2">
                             {{ $subdevice->name }} ({{ $subdevice->location }})
                         </span>
                     </div>

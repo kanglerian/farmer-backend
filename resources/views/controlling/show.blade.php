@@ -4,7 +4,7 @@
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{ route('controlling.index') }}"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
+                        class="inline-flex items-center text-sm font-medium text-white space-x-2">
                         <i class="fa-solid fa-house-signal"></i>
                         <span>Controlling</span>
                     </a>
@@ -13,7 +13,7 @@
         </div>
     </x-slot>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto space-y-5 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-5 sm:px-6 lg:px-8 bg-blue-500">
             @if (session('message'))
                 <div id="alert" class="flex items-center p-4 mb-4 text-green-800 rounded-xl bg-green-50"
                     role="alert">

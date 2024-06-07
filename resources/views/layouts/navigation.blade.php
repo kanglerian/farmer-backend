@@ -1,14 +1,16 @@
-<nav x-data="{ open: false }" class="bg-[#f39c12] border-b border-[#f39c12]">
+<nav x-data="{ open: false }" class="bg-[#2c3e50] border-b border-[#e67e22]">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 ">
+        <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <button type="button" class="block md:hidden" onclick="sidebarToggle()">Muncul</button>
-                    <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('img/sipetani.png') }}" alt="" class="w-auto h-full">
-                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
+                <div class="shrink-0 flex items-center gap-5">
+                    <button type="button" class="flex items-center justify-center md:hidden border border-white text-white hover:border-[#e67e22] hover:bg-[#e67e22] h-10 w-10 rounded-full" onclick="sidebarToggle()">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <a href="{{ route('dashboard') }}" class="flex items-end gap-3">
+                        <img src="{{ asset('img/plant.png') }}" alt="" class="w-auto h-10">
+                        <span class="font-bold text-white">SIPETANI</span>
                     </a>
                 </div>
             </div>
@@ -18,7 +20,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-xl text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-xl text-white bg-[#e67e22] focus:outline-none transition ease-in-out duration-150">
                             <div>
                                 <span class="font-bold">{{ Auth::user()->name }}</span>
                             </div>
@@ -56,7 +58,7 @@
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                    class="inline-flex items-center justify-center p-2 rounded-xl text-white hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

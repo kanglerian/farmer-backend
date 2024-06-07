@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl space-x-1 text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl space-x-1 text-white leading-tight">
             <i class="fa-solid fa-microchip"></i>
             <span>{{ __('Devices') }}</span>
         </h2>

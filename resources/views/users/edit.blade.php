@@ -4,15 +4,15 @@
             <ol class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{ route('users.index') }}"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-sky-600 space-x-2">
+                        class="inline-flex items-center text-sm font-medium text-white space-x-2">
                         <i class="fa-solid fa-user-circle"></i>
                         <span>Users</span>
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i class="fa-solid fa-angle-right text-gray-300"></i>
-                        <span class="ms-1 text-sm font-medium text-gray-500 ms-2">Ubah</span>
+                        <i class="fa-solid fa-angle-right text-white"></i>
+                        <span class="text-sm font-medium text-white ms-2">Ubah</span>
                     </div>
                 </li>
             </ol>
