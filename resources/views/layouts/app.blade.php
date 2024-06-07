@@ -308,12 +308,12 @@
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
     <script src="{{ asset('js/datatables.min.js') }}"></script>
-    @stack('scripts')
     <script>
         const sidebarToggle = () => {
             $('#aside').toggle();
         }
     </script>
+    @stack('scripts')
 </body>
 
 </html>
