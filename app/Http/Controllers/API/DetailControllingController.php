@@ -21,9 +21,9 @@ class DetailControllingController extends Controller
     {
         $query = DetailControlling::query();
         $query->where('id_controlling', $id);
-        $result = $query->first();
+        $results = $query->get();
         return response()->json([
-            'result' => $result
+            'results' => $results
         ]);
     }
 }

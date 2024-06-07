@@ -39,12 +39,23 @@
             <section class="w-full px-5">
                 <form action="{{ route('maintenances.store') }}" method="post" class="w-full space-y-5">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="w-full">
                             <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal</label>
                             <input type="date" id="date" name="date"
                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 "
                                 placeholder="Tanggal" required />
+                        </div>
+                        <div class="w-full">
+                            <label for="id_device" class="block mb-2 text-sm font-medium text-gray-900">Nama Device
+                                Master</label>
+                            <select id="id_device" name="id_device"
+                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-sky-500 focus:border-sky-500 block p-2.5">
+                                <option>Pilih</option>
+                                @foreach ($devices as $device)
+                                    <option value="{{ $device->id }}">{{ $device->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="w-full">
                             <label for="maintenance" class="block mb-2 text-sm font-medium text-gray-900">Jenis

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Controlling;
 use App\Models\DetailControlling;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,10 @@ class DetailControllingController extends Controller
      */
     public function create()
     {
-        return view('detail-controlling.create');
+        $controlling = Controlling::with('devices')->get();
+        return view('detail-controlling.create')->with([
+            'controlling' => $controlling
+        ]);
     }
 
     /**

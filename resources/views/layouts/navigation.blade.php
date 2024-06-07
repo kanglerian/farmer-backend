@@ -5,68 +5,11 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
+                    <button type="button" class="block md:hidden" onclick="sidebarToggle()">Muncul</button>
                     <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('img/sipetani.png') }}" alt="" class="w-auto h-full">
                         {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                     </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    @if (Auth::user()->level == '1')
-                        <x-nav-link :href="route('devices.index')" :active="request()->routeIs([
-                            'devices.index',
-                            'devices.edit',
-                            'devices.show',
-                            'devices.create',
-                        ])">
-                            {{ __('Devices') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('roledevice.index')" :active="request()->routeIs([
-                            'roledevice.index',
-                            'roledevice.edit',
-                            'roledevice.show',
-                            'roledevice.create',
-                        ])">
-                            {{ __('Master') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index', 'users.edit', 'users.show', 'users.create'])">
-                            {{ __('Users') }}
-                        </x-nav-link>
-                    @endif
-                    @if (Auth::user()->level == '0')
-                    <x-nav-link :href="route('detailroledevice.index')" :active="request()->routeIs([
-                        'detailroledevice.index',
-                        'detailroledevice.edit',
-                        'detailroledevice.show',
-                        'detailroledevice.create',
-                    ])">
-                        {{ __('Pompa') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('controlling.index')" :active="request()->routeIs([
-                        'controlling.index',
-                        'controlling.edit',
-                        'controlling.show',
-                        'controlling.create',
-                    ])">
-                        {{ __('Controlling') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('maintenances.index')" :active="request()->routeIs([
-                        'maintenances.index',
-                        'maintenances.edit',
-                        'maintenances.show',
-                        'maintenances.create',
-                        'detailmaintenance.index',
-                        'detailmaintenance.edit',
-                        'detailmaintenance.show',
-                        'detailmaintenance.create',
-                    ])">
-                        {{ __('Maintenance') }}
-                    </x-nav-link>
-                    @endif
                 </div>
             </div>
 
@@ -128,23 +71,11 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('devices.index')" :active="request()->routeIs(['devices.index', 'devices.edit'])">
-                {{ __('Devices') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs(['users.index', 'users.edit'])">
-                {{ __('Users') }}
-            </x-responsive-nav-link>
-        </div>
-
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-4 pb-1">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-white">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">

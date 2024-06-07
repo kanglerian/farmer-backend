@@ -23,27 +23,43 @@
                     </button>
                 </div>
             @endif
-            @if (count($results) > 0)
+            @if (count($detailroledevices) > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    @foreach ($results as $result)
+                    @foreach ($detailroledevices as $detailroledevice)
                         <div class="relative bg-white p-8 rounded-3xl">
                             <div class="space-y-2">
-                                <a href="{{ route('controlling.show', $result->id_sub_device) }}"
-                                    class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $result->devices->name }}</a>
+                                <a href="{{ route('controlling.show', $detailroledevice['id_sub_device']) }}"
+                                    class="text-gray-900 hover:text-sky-700 text-xl font-bold">{{ $detailroledevice['devices']['name'] }}</a>
                                 <ul class="text-gray-700 text-sm space-y-2">
                                     <li>
-                                        <a target="_blank" class="hover:underline" href="https://google.com/maps?q={{ $result->devices->coordinate_device_x }},{{ $result->devices->coordinate_device_y }}">
+                                        <a target="_blank" class="hover:underline"
+                                            href="https://google.com/maps?q={{ $detailroledevice['devices']['coordinate_device_x'] }},{{ $detailroledevice['devices']['coordinate_device_y'] }}">
                                             <i class="fa-solid fa-location-dot me-1 text-sky-500"></i>
                                             Lokasi Sub Device
                                         </a>
                                     </li>
                                     <li class="text-sm text-gray-500">
                                         <i class="fa-solid fa-user me-1"></i>
-                                        {{ $result->roledevice->users->name }}
+                                        {{ $detailroledevice['roledevice']['users']['name'] }}
                                     </li>
                                     <li class="text-sm text-gray-500">
                                         <i class="fa-solid fa-circle-info me-1"></i>
-                                        {{ $result->status }}
+                                        @if ($detailroledevice['controlling'])
+                                            @php
+                                                $controllingDate = \Carbon\Carbon::parse($detailroledevice['controlling']['date']);
+                                                $dateNow = \Carbon\Carbon::now();
+                                                $diffInDays = $controllingDate->diffInDays($dateNow);
+                                                $temperature = (int)$detailroledevice['detail_controlling']['temperature'];
+                                                $watt = (int)$detailroledevice['detail_controlling']['watt'];
+                                            @endphp
+                                            @if ($diffInDays > 30 && $temperature > 60 && $watt < 220)
+                                                Butuh Perawatan
+                                            @else
+                                                Good
+                                            @endif
+                                        @else
+                                            Good
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
@@ -51,7 +67,7 @@
                             <hr class="my-5">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('controlling.show', $result->id_sub_device) }}"
+                                    <a href="{{ route('controlling.show', $detailroledevice['id_sub_device']) }}"
                                         class="bg-emerald-500 hover:bg-emerald-600 text-xs text-white px-5 py-2 rounded-xl"><i
                                             class="fa-solid fa-cogs me-1"></i> Control</a>
                                 </div>

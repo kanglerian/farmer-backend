@@ -73,7 +73,7 @@
                 .then((response) => {
                     const maps = response.data.results;
 
-                    const map = L.map('map').setView([0, 0], 2);
+                    const map = L.map('map').setView([-7.351971,108.515845], 10);
 
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
@@ -81,24 +81,20 @@
                     }).addTo(map);
 
                     maps.forEach((result) => {
-                        const lat = result.coordinate_device_x;
-                        const lng = result.coordinate_device_y;
+                        console.log(result);
+                        const lat = result.coordinate_device_x ?? -7.351971;
+                        const lng = result.coordinate_device_y ?? 108.515845;
                         const marker = L.marker([lat, lng]).addTo(map);
-                        const paragraph = `<b>${result.name}</b><p>${result.status}</p>`
+                        const paragraph = `<b>${result.name}</b><br/><span>${result.status} | ${result.condition}</span>`
                         marker.bindPopup(paragraph).openPopup();
 
                         const circle = L.circle([lat, lng], {
                             color: 'red',
                             fillColor: '#f03',
                             fillOpacity: 0.5,
-                            radius: 20
+                            radius: 80
                         }).addTo(map);
                     });
-
-                    if (maps.length > 0) {
-                        const firstDevice = maps[0];
-                        map.setView([firstDevice.coordinate_device_x, firstDevice.coordinate_device_y], 15);
-                    }
                 })
                 .catch((error) => {
                     console.log(error);

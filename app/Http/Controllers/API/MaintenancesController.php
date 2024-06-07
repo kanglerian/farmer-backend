@@ -11,7 +11,7 @@ class MaintenancesController extends Controller
     public function get_all()
     {
         $query = Maintenance::query();
-        $query->with(['users']);
+        $query->with(['users','devices']);
         $results = $query->get();
         return response()->json([
             'results' => $results
@@ -21,6 +21,7 @@ class MaintenancesController extends Controller
     public function get_one($id)
     {
         $query = Maintenance::query();
+        $query->with(['users','devices']);
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([

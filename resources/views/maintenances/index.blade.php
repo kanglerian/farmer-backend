@@ -25,6 +25,12 @@
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Device
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Maintenance
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -53,7 +59,6 @@
                     try {
                         const response = await axios.get(urlUser);
                         const resultData = response.data.results;
-                        console.log(resultData);
 
                         let columnConfigs = [{
                             data: 'id',
@@ -66,6 +71,16 @@
                                 return data;
                             },
                         }, {
+                            data: 'devices',
+                            render: (data, type, row, meta) => {
+                                return data.name;
+                            },
+                        }, {
+                            data: 'devices',
+                            render: (data, type, row, meta) => {
+                                return data.status;
+                            },
+                        },{
                             data: 'maintenance',
                             render: (data, type, row, meta) => {
                                 return data;

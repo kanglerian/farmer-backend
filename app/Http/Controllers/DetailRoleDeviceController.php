@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Controlling;
+use App\Models\DetailControlling;
 use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,17 +18,41 @@ class DetailRoleDeviceController extends Controller
     public function index()
     {
         $query = DetailRoleDevice::query();
-        $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
+        $query->with(['devices', 'roledevice', 'roledevice.devices', 'roledevice.users']);
         if (Auth::user()->level === 0) {
             $user = Auth::user();
-            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+            $query->whereHas('roledevice', function ($queryIsi) use ($user) {
                 $queryIsi->where('id_user', $user->id);
             });
         }
+
         $results = $query->get();
+
+        $detailroledevices = [];
+        foreach ($results as $result) {
+            $controlling = Controlling::where('id_sub_device', $result->id_sub_device)->orderBy('id','DESC')->first();
+            if($controlling){
+                $detail_controlling = DetailControlling::where('id_controlling', $controlling->id)->orderBy('id','DESC')->first();
+            } else {
+                $detail_controlling = null;
+            }
+            array_push($detailroledevices, [
+                "id" => $result->id,
+                "id_role" => $result->id_role,
+                "id_sub_device" => $result->id_sub_device,
+                "status" => $result->status,
+                "created_at" => $result->created_at,
+                "updated_at" => $result->updated_at,
+                "devices" => $result->devices,
+                "roledevice" => $result->roledevice,
+                "controlling" => $controlling,
+                "detail_controlling" => $detail_controlling
+            ]);
+        }
         return view('detail-role-device.index')->with([
-            'results' => $results
+            'detailroledevices' => $detailroledevices
         ]);
+        // return response()->json($detailroledevices);
     }
 
     /**
@@ -146,10 +172,10 @@ class DetailRoleDeviceController extends Controller
     public function get_all()
     {
         $query = DetailRoleDevice::query();
-        $query->with(['devices','roledevice','roledevice.devices','roledevice.users']);
+        $query->with(['devices', 'roledevice', 'roledevice.devices', 'roledevice.users']);
         if (Auth::user()->level === 0) {
             $user = Auth::user();
-            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+            $query->whereHas('roledevice', function ($queryIsi) use ($user) {
                 $queryIsi->where('id_user', $user->id);
             });
         }
@@ -162,10 +188,10 @@ class DetailRoleDeviceController extends Controller
     public function get_one($id)
     {
         $query = DetailRoleDevice::query();
-        $query->with(['detailroledevice','roledevice']);
+        $query->with(['detailroledevice', 'roledevice']);
         if (Auth::user()->level === 0) {
             $user = Auth::user();
-            $query->whereHas('roledevice', function($queryIsi) use ($user) {
+            $query->whereHas('roledevice', function ($queryIsi) use ($user) {
                 $queryIsi->where('id_user', $user->id);
             });
         }

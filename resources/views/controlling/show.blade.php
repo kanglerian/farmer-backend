@@ -12,7 +12,6 @@
             </ol>
         </div>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto space-y-5 sm:px-6 lg:px-8">
             @if (session('message'))
@@ -35,7 +34,8 @@
                     class="w-full bg-white p-10 rounded-2xl border border-gray-200">
                     @csrf
                     <div class="grid grid-cols-1 gap-5">
-                        <input type="hidden" name="id_sub_device" value="{{ $detailroledevice->devices->id }}">
+                        <input type="hidden" name="id_sub_device" id="id_sub_device"
+                            value="{{ $detailroledevice->devices->id }}">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium">Nama Mesin</label>
                             <input type="text" id="name" value="{{ $detailroledevice->devices->name }}"
@@ -93,10 +93,11 @@
             </section>
 
             @if ($controlling)
+            <input type="hidden" id="id_controlling" value="{{ $controlling->id }}">
                 <section class="bg-white border border-gray-200 p-10 rounded-2xl">
                     <div class="relative overflow-x-auto">
                         <table class="w-full bg-white text-sm text-left rtl:text-right text-gray-500"
-                            id="table-devices">
+                            id="table-detail-controlling">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
@@ -107,9 +108,6 @@
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Watt
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Status
                                     </th>
                                 </tr>
                             </thead>
@@ -124,7 +122,6 @@
     @push('scripts')
         <script>
             const setDuration = () => {
-                ;
                 let duration = $('#duration').val();
                 $('#preview_duration').text(`${duration} menit`);
             }
@@ -209,13 +206,15 @@
                 let devices;
                 let dataTableInstance;
                 let dataTableInitialized = false;
-                let urlEndpoint = `/api/detailcontrolling/10`;
+                let idControlling = document.getElementById('id_controlling').value;
+                let urlEndpoint = `/api/detailcontrolling/${idControlling}`;
 
                 const DataTableDevices = async () => {
                     return new Promise(async (resolve, reject) => {
                         try {
                             const response = await axios.get(urlEndpoint);
                             const resultData = response.data.results;
+                            console.log(resultData);
                             let columnConfigs = [{
                                 data: 'id',
                                 render: (data, type, row, meta) => {
@@ -224,32 +223,14 @@
                             }, {
                                 data: 'temperature',
                                 render: (data, type, row, meta) => {
-                                    return data;
+                                    return `${data} °C`;
                                 },
                             }, {
                                 data: 'watt',
                                 render: (data, type, row, meta) => {
-                                    return data;
+                                    return `${data} W`;
                                 },
-                            }, {
-                                data: {
-                                    id: 'id',
-                                },
-                                render: (data, type, row, meta) => {
-                                    let editUrl = "{{ route('roledevice.edit', ':id') }}".replace(
-                                        ':id', data.id);
-                                    return `
-                                <div class="flex items-center gap-1">
-                                    <a href="${editUrl}" class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-lg text-xs text-white">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </a>
-                                    <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-xs text-white" onclick="event.preventDefault(); deleteDevice('${data.id}')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                                `;
-                                },
-                            }, ];
+                            }];
 
                             const dataTableConfig = {
                                 data: resultData,
@@ -277,7 +258,7 @@
                         ])
                         .then((response) => {
                             let responseDTS = response[0];
-                            dataTableInstance = $('#table-devices').DataTable(responseDTS.config);
+                            dataTableInstance = $('#table-detail-controlling').DataTable(responseDTS.config);
                             dataTableInitialized = responseDTS.initialized;
                         })
                         .catch((error) => {

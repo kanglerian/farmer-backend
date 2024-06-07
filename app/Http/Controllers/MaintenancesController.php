@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailMaintenance;
+use App\Models\Device;
 use App\Models\Maintenance;
 use App\Models\User;
 use Carbon\Carbon;
@@ -28,8 +29,10 @@ class MaintenancesController extends Controller
     public function create()
     {
         $users = User::where('level', 0)->get();
+        $devices = Device::all();
         return view('maintenances.create')->with([
-            'users' => $users
+            'users' => $users,
+            'devices' => $devices
         ]);
     }
 
@@ -46,12 +49,14 @@ class MaintenancesController extends Controller
                 'date' => ['required'],
                 'maintenance' => ['required'],
                 'id_user' => ['required'],
+                'id_device' => ['required'],
             ]);
 
             $data = [
                 'date' => $request->input('date'),
                 'maintenance' => $request->input('maintenance'),
                 'id_user' => $request->input('id_user'),
+                'id_device' => $request->input('id_device'),
             ];
 
             $maintenance = Maintenance::create($data);
