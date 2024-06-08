@@ -46,11 +46,6 @@
                         <li>
                             <a href="{{ route('login') }}" class="text-sm text-white bg-[#e67e22] hover:bg-[#DA7821] px-5 py-3 rounded-xl">Log in</a>
                         </li>
-                        @if (Route::has('register'))
-                            <li>
-                                <a href="{{ route('register') }}" class="text-sm text-white bg-[#e67e22] hover:bg-[#DA7821] px-5 py-3 rounded-xl">Register</a>
-                            </li>
-                        @endif
                     @endauth
                 </ul>
             @endif
