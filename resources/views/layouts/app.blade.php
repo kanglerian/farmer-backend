@@ -67,12 +67,12 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100 overflow-hidden">
         <main class="flex h-screen">
             <aside id="aside"
                 class="hidden w-7/12 md:w-2/12 ox h-full md:flex flex-col flex-shrink-0 font-normal fixed md:static z-50 lg:flex">
                 <div class="relative flex flex-col flex-1 h-full pt-0 bg-[#2c3e50] px-2 border-r-4 border-[#34495e]">
-                    <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                    <div class="flex flex-col flex-1 pt-5 pb-4">
                         <div class="flex-1 px-3 space-y-1 bg-[#2c3e50] divide-y divide-[#455e78]">
                             <ul class="pb-2 space-y-2">
                                 <li>
@@ -160,14 +160,14 @@
                     </div>
                 </div>
             </aside>
-            <section class="w-full md:w-10/12">
+            <section class="w-full md:w-10/12 flex flex-col h-screen">
                 @include('layouts.navigation')
                 <header class="bg-[#e67e22]">
                     <div class="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-                <div class="px-5 md:px-0">
+                <div class="px-5 md:px-0 overflow-auto h-full">
                     {{ $slot }}
                 </div>
             </section>

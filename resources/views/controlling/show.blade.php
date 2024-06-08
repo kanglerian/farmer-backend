@@ -12,8 +12,8 @@
             </ol>
         </div>
     </x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto space-y-5 sm:px-6 lg:px-8 bg-blue-500">
+    <div class="py-5">
+        <div class="max-w-7xl mx-auto space-y-5 sm:px-6 lg:px-8">
             @if (session('message'))
                 <div id="alert" class="flex items-center p-4 mb-4 text-green-800 rounded-xl bg-green-50"
                     role="alert">

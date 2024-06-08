@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>SIPETANI</title>
 
     <!-- Fonts -->
 
@@ -29,25 +29,26 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased bg-gray-100">
+<body class="antialiased bg-[#2c3e50]">
     <section class="flex flex-col items-center justify-between h-screen px-5 md:px-0 py-5">
         <nav class="flex flex-col justify-center items-center space-y-5">
-            <a href="/">
-                <img src="{{ asset('img/sipetani.png') }}" alt="h-full">
+            <a href="/" class="flex items-end gap-3 py-5">
+                <img src="{{ asset('img/plant.png') }}" style="width: 50px">
+                <span class="font-bold text-white">SIPETANI</span>
             </a>
             @if (Route::has('login'))
                 <ul class="flex items-center gap-5">
                     @auth
                         <li>
-                            <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="text-sm text-white underline">Dashboard</a>
                         </li>
                     @else
                         <li>
-                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+                            <a href="{{ route('login') }}" class="text-sm text-white bg-[#e67e22] hover:bg-[#DA7821] px-5 py-3 rounded-xl">Log in</a>
                         </li>
                         @if (Route::has('register'))
                             <li>
-                                <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Register</a>
+                                <a href="{{ route('register') }}" class="text-sm text-white bg-[#e67e22] hover:bg-[#DA7821] px-5 py-3 rounded-xl">Register</a>
                             </li>
                         @endif
                     @endauth
@@ -55,11 +56,10 @@
             @endif
         </nav>
         <div class="w-full md:w-2/3 h-2/3">
-            <div id="map" class="rounded-2xl shadow-xl border-4 border-gray-500"></div>
+            <div id="map" class="rounded-2xl shadow-xl border-4 border-[#e67e22]"></div>
         </div>
         <footer>
-            <p class="text-sm">Created by <a href="https://kanglerian.github.io" target="_blank"
-                    class="underline">@kanglerian</a> ☕️</p>
+            <p class="text-sm text-white">Copyright © 2024 SIPETANI</p>
         </footer>
     </section>
     <script src="{{ asset('js/all.min.js') }}"></script>
