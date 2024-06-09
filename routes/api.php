@@ -8,6 +8,16 @@ use App\Http\Controllers\API\DevicesController;
 use App\Http\Controllers\API\MaintenancesController;
 use App\Http\Controllers\API\RoleDeviceController;
 use App\Http\Controllers\API\UsersController;
+
+
+use App\Http\Controllers\API\CRUD\ControllingController as CRUDControllingController;
+use App\Http\Controllers\API\CRUD\DetailControllingController as CRUDDetailControllingController;
+use App\Http\Controllers\API\CRUD\DetailMaintenanceController as CRUDDetailMaintenanceController;
+use App\Http\Controllers\API\CRUD\DetailRoleDeviceController as CRUDDetailRoleDeviceController;
+use App\Http\Controllers\API\CRUD\DevicesController as CRUDDevicesController;
+use App\Http\Controllers\API\CRUD\MaintenancesController as CRUDMaintenancesController;
+use App\Http\Controllers\API\CRUD\RoleDeviceController as CRUDRoleDeviceController;
+use App\Http\Controllers\API\CRUD\UsersController as CRUDUsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,3 +56,14 @@ Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_
 
 Route::get('/controllings', [ControllingController::class, 'get_all']);
 Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);
+
+Route::prefix('crud')->group(function() {
+    Route::resource('controlling', CRUDControllingController::class);
+    Route::resource('detailcontrolling', CRUDDetailControllingController::class);
+    Route::resource('detailmaintenance', CRUDDetailMaintenanceController::class);
+    Route::resource('detailroledevice', CRUDDetailRoleDeviceController::class);
+    Route::resource('devices', CRUDDevicesController::class);
+    Route::resource('maintenances', CRUDMaintenancesController::class);
+    Route::resource('roledevice', CRUDRoleDeviceController::class);
+    Route::resource('users', CRUDUsersController::class);
+});
