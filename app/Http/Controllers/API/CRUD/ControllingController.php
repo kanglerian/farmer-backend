@@ -15,9 +15,9 @@ class ControllingController extends Controller
      */
     public function index()
     {
-        $results = Controlling::with(['controlling','controlling.devices','controlling.detailcontrolling'])->get();
+        $results = Controlling::with(['devices','detailcontrolling'])->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -60,9 +60,9 @@ class ControllingController extends Controller
      */
     public function show($id)
     {
-        $result = Controlling::where('id', $id)->with(['controlling','controlling.devices','controlling.detailcontrolling'])->first();
+        $result = Controlling::where('id', $id)->with(['devices','detailcontrolling'])->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 

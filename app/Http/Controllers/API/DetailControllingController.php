@@ -13,7 +13,7 @@ class DetailControllingController extends Controller
         $query = DetailControlling::query();
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -23,7 +23,7 @@ class DetailControllingController extends Controller
         $query->where('id_controlling', $id);
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 }

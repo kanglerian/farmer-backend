@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\ControllingController;
 use App\Http\Controllers\DetailControllingController;
 use App\Http\Controllers\DetailMaintenanceController;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('detailmaintenance', DetailMaintenanceController::class)->middleware('level:0');
     Route::resource('detailcontrolling', DetailControllingController::class)->middleware('level:0');
     Route::resource('controlling', ControllingController::class)->middleware('level:0');
+    Route::resource('api-support', APIController::class);
 
     Route::get('/get/detailroledevices', [DetailRoleDeviceController::class, 'get_all'])->middleware('level:0');
     Route::get('/get/detailroledevice/{id}', [DetailRoleDeviceController::class, 'get_one'])->middleware('level:0');

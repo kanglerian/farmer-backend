@@ -17,7 +17,7 @@ class DetailControllingController extends Controller
     {
         $results = DetailControlling::with(['devices','detailcontrolling'])->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -61,7 +61,7 @@ class DetailControllingController extends Controller
     {
         $result = DetailControlling::where('id', $id)->with(['devices','detailcontrolling'])->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 

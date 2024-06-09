@@ -14,7 +14,7 @@ class RoleDeviceController extends Controller
         $query->with(['devices','users']);
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -25,7 +25,7 @@ class RoleDeviceController extends Controller
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 }

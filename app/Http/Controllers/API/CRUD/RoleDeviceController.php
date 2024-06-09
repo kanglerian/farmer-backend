@@ -17,7 +17,7 @@ class RoleDeviceController extends Controller
     {
         $results = RoleDevice::with(['users','devices'])->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -60,7 +60,7 @@ class RoleDeviceController extends Controller
     {
         $result = RoleDevice::where('id', $id)->with(['users','devices'])->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 

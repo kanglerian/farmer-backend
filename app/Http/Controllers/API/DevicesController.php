@@ -13,7 +13,7 @@ class DevicesController extends Controller
         $query = Device::query();
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -23,7 +23,7 @@ class DevicesController extends Controller
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 }

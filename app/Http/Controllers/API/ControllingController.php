@@ -14,7 +14,7 @@ class ControllingController extends Controller
         $query->with(['devices']);
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -24,7 +24,7 @@ class ControllingController extends Controller
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 }

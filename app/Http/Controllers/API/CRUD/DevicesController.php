@@ -17,7 +17,7 @@ class DevicesController extends Controller
     {
         $results = Device::all();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -63,7 +63,7 @@ class DevicesController extends Controller
     {
         $result = Device::where('id', $id)->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 

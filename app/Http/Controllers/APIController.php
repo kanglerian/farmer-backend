@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API\CRUD;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\DetailRoleDevice;
 use Illuminate\Http\Request;
 
-class DetailRoleDeviceController extends Controller
+class APIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +13,7 @@ class DetailRoleDeviceController extends Controller
      */
     public function index()
     {
-        $results = DetailRoleDevice::with(['devices','roledevice','roledevice.users','roledevice.devices'])->get();
-        return response()->json([
-            'data' => $results
-        ]);
+        return view('api.index');
     }
 
     /**
@@ -39,16 +34,7 @@ class DetailRoleDeviceController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'id_role' => $request->input('id_role'),
-            'id_sub_device' => $request->input('id_sub_device'),
-            'status' => $request->input('status'),
-
-        ];
-        DetailRoleDevice::create($data);
-        return response()->json([
-            'message' => 'Detail role device berhasil ditambahkan.'
-        ]);
+        //
     }
 
     /**
@@ -59,10 +45,7 @@ class DetailRoleDeviceController extends Controller
      */
     public function show($id)
     {
-        $result = DetailRoleDevice::where('id', $id)->with(['devices','roledevice','roledevice.users','roledevice.devices'])->first();
-        return response()->json([
-            'data' => $result
-        ]);
+        //
     }
 
     /**

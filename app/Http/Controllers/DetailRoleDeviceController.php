@@ -181,7 +181,7 @@ class DetailRoleDeviceController extends Controller
         }
         $results = $query->get();
         return response()->json([
-            'results' => $results,
+            'data' => $results,
         ]);
     }
 
@@ -198,7 +198,7 @@ class DetailRoleDeviceController extends Controller
         $query->where('id', $id);
         $result = $query->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 }

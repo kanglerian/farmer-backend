@@ -17,7 +17,7 @@ class MaintenancesController extends Controller
     {
         $results = Maintenance::with(['users','devices'])->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -62,7 +62,7 @@ class MaintenancesController extends Controller
     {
         $result = Maintenance::where('id', $id)->with(['users','devices'])->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 

@@ -130,10 +130,10 @@
                                 @endif
                             </ul>
                             <div class="pt-2 space-y-2">
-                                <a href="https://github.com/themesberg/flowbite-admin-dashboard/issues" target="_blank"
+                                <a href="{{ route('api-support.index') }}"
                                     class="flex items-center px-5 py-3 text-sm text-white rounded-xl hover:bg-[#e67e22] group">
-                                    <i class="fa-solid fa-life-ring"></i>
-                                    <span class="ml-3">Support</span>
+                                    <i class="fa-solid fa-circle-nodes"></i>
+                                    <span class="ml-3">API Integration</span>
                                 </a>
                                 <button type="button" class="w-full md:hidden flex items-center px-5 py-3 text-sm text-white rounded-xl hover:bg-[#e67e22] group" onclick="sidebarToggle()">
                                     <i class="fa-solid fa-circle-chevron-left"></i>

@@ -13,7 +13,7 @@ class DetailMaintenanceController extends Controller
         $query = DetailMaintenance::query();
         $results = $query->get();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -24,7 +24,7 @@ class DetailMaintenanceController extends Controller
         $query->where('id_maintenance', $id);
         $result = $query->get();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 }

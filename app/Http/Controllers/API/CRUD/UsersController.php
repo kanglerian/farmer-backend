@@ -17,7 +17,7 @@ class UsersController extends Controller
     {
         $results = User::all();
         return response()->json([
-            'results' => $results
+            'data' => $results
         ]);
     }
 
@@ -62,7 +62,7 @@ class UsersController extends Controller
     {
         $result = User::where('id', $id)->first();
         return response()->json([
-            'result' => $result
+            'data' => $result
         ]);
     }
 
