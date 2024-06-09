@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('date');
             $table->integer('duration')->default(0);
-            $table->string('status');
+            $table->string('status', 100);
             $table->unsignedBigInteger('id_sub_device');
             $table->foreign('id_sub_device')->references('id')->on('devices')->onDelete('restrict');
             $table->timestamps();

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
+class ComposerStaticInit710038d9aec80e207a8fbc1df234df45
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -353,8 +353,8 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -540,10 +540,12 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\API\\ControllingController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/ControllingController.php',
         'App\\Http\\Controllers\\API\\DetailControllingController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/DetailControllingController.php',
-        'App\\Http\\Controllers\\API\\DeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/DeviceController.php',
-        'App\\Http\\Controllers\\API\\MaintenanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/MaintenanceController.php',
-        'App\\Http\\Controllers\\API\\SubdeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/SubdeviceController.php',
-        'App\\Http\\Controllers\\API\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/UserController.php',
+        'App\\Http\\Controllers\\API\\DetailMaintenanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/DetailMaintenanceController.php',
+        'App\\Http\\Controllers\\API\\DetailRoleDeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/DetailRoleDeviceController.php',
+        'App\\Http\\Controllers\\API\\DevicesController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/DevicesController.php',
+        'App\\Http\\Controllers\\API\\MaintenancesController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/MaintenancesController.php',
+        'App\\Http\\Controllers\\API\\RoleDeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/RoleDeviceController.php',
+        'App\\Http\\Controllers\\API\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/UsersController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
         'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -556,17 +558,19 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ControllingController' => __DIR__ . '/../..' . '/app/Http/Controllers/ControllingController.php',
         'App\\Http\\Controllers\\DetailControllingController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetailControllingController.php',
-        'App\\Http\\Controllers\\DeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/DeviceController.php',
-        'App\\Http\\Controllers\\MaintenanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaintenanceController.php',
+        'App\\Http\\Controllers\\DetailMaintenanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetailMaintenanceController.php',
+        'App\\Http\\Controllers\\DetailRoleDeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetailRoleDeviceController.php',
+        'App\\Http\\Controllers\\DevicesController' => __DIR__ . '/../..' . '/app/Http/Controllers/DevicesController.php',
+        'App\\Http\\Controllers\\MaintenancesController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaintenancesController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
-        'App\\Http\\Controllers\\SubdeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubdeviceController.php',
-        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\RoleDeviceController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleDeviceController.php',
+        'App\\Http\\Controllers\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsersController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
+        'App\\Http\\Middleware\\LevelMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/LevelMiddleware.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-        'App\\Http\\Middleware\\RoleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/RoleMiddleware.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
@@ -576,9 +580,11 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Models\\Controlling' => __DIR__ . '/../..' . '/app/Models/Controlling.php',
         'App\\Models\\DetailControlling' => __DIR__ . '/../..' . '/app/Models/DetailControlling.php',
+        'App\\Models\\DetailMaintenance' => __DIR__ . '/../..' . '/app/Models/DetailMaintenance.php',
+        'App\\Models\\DetailRoleDevice' => __DIR__ . '/../..' . '/app/Models/DetailRoleDevice.php',
         'App\\Models\\Device' => __DIR__ . '/../..' . '/app/Models/Device.php',
         'App\\Models\\Maintenance' => __DIR__ . '/../..' . '/app/Models/Maintenance.php',
-        'App\\Models\\Subdevice' => __DIR__ . '/../..' . '/app/Models/Subdevice.php',
+        'App\\Models\\RoleDevice' => __DIR__ . '/../..' . '/app/Models/RoleDevice.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -700,6 +706,9 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\DetailRoleDeviceSeeder' => __DIR__ . '/../..' . '/database/seeders/DetailRoleDeviceSeeder.php',
+        'Database\\Seeders\\DeviceSeeder' => __DIR__ . '/../..' . '/database/seeders/DeviceSeeder.php',
+        'Database\\Seeders\\RoleDeviceSeeder' => __DIR__ . '/../..' . '/database/seeders/RoleDeviceSeeder.php',
         'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
         'DeepCopy\\Exception\\CloneException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
@@ -5836,9 +5845,9 @@ class ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitff35c58a9dd5b9d53d462e3da7e83d8a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit710038d9aec80e207a8fbc1df234df45::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit710038d9aec80e207a8fbc1df234df45::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit710038d9aec80e207a8fbc1df234df45::$classMap;
 
         }, null, ClassLoader::class);
     }

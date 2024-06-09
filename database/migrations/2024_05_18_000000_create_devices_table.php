@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 150);
             $table->text('coordinate_device_x')->nullable();
             $table->text('coordinate_device_y')->nullable();
-            $table->string('status');
-            $table->string('condition');
+            $table->string('status', 100);
+            $table->string('condition', 100);
             $table->timestamps();
         });
     }
