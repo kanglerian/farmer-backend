@@ -27,4 +27,19 @@ class ControllingController extends Controller
             'data' => $result
         ]);
     }
+
+    public function get_by_id_sub_device($id)
+    {
+        $query = Controlling::query();
+        $query->where('id_sub_device', $id);
+        $query->where('status', 'Belum dieksekusi');
+        $results = $query->get();
+        if ($results->isEmpty()) {
+            echo "0";
+        } else {
+            foreach ($results as $result) {
+                echo $result->id . "-" . $result->duration;
+            }
+        }
+    }
 }

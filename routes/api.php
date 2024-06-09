@@ -56,6 +56,7 @@ Route::get('/detailcontrolling/{id}', [DetailControllingController::class, 'get_
 
 Route::get('/controllings', [ControllingController::class, 'get_all']);
 Route::get('/controlling/{id}', [ControllingController::class, 'get_one']);
+Route::get('/controlling/subdevice/{id_sub_device}', [ControllingController::class, 'get_by_id_sub_device']);
 
 Route::prefix('crud')->group(function() {
     Route::resource('controlling', CRUDControllingController::class);

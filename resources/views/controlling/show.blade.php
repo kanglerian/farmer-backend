@@ -208,13 +208,12 @@
                 let dataTableInitialized = false;
                 let idControlling = document.getElementById('id_controlling').value;
                 let urlEndpoint = `/api/detailcontrolling/${idControlling}`;
-
                 const DataTableDevices = async () => {
                     return new Promise(async (resolve, reject) => {
                         try {
                             const response = await axios.get(urlEndpoint);
-                            const resultData = response.data.results;
-                            console.log(resultData);
+                            const resultData = response.data.data;
+
                             let columnConfigs = [{
                                 data: 'id',
                                 render: (data, type, row, meta) => {

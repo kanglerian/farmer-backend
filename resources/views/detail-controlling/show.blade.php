@@ -110,8 +110,8 @@
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(endpoint);
-                        const dataResult = response.data.result;
-                        console.log(dataResult);
+                        const dataResult = response.data.data;
+
                         let columnConfigs = [{
                             data: 'id',
                             render: (data, type, row, meta) => {

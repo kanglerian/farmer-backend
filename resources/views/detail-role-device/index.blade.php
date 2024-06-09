@@ -44,7 +44,7 @@
                                     </li>
                                     <li class="text-sm text-gray-500">
                                         <i class="fa-solid fa-circle-info me-1"></i>
-                                        @if ($detailroledevice['controlling'])
+                                        @if (isset($detailroledevice['controlling']) && isset($detailroledevice['detail_controlling']))
                                             @php
                                                 $controllingDate = \Carbon\Carbon::parse($detailroledevice['controlling']['date']);
                                                 $dateNow = \Carbon\Carbon::now();

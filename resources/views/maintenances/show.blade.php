@@ -93,7 +93,7 @@
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(endpoint);
-                        const resultData = response.data.result;
+                        const resultData = response.data.data;
                         document.getElementById('count').innerText = resultData.length;
 
                         let columnConfigs = [{

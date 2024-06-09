@@ -66,7 +66,7 @@
         const getStreets = async () => {
             await axios.get(`/api/devices`)
                 .then((response) => {
-                    const maps = response.data.results;
+                    const maps = response.data.data;
 
                     const map = L.map('map').setView([-7.351971,108.515845], 10);
 

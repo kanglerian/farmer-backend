@@ -93,7 +93,7 @@
                 return new Promise(async (resolve, reject) => {
                     try {
                         const response = await axios.get(urlDevice);
-                        const resultData = response.data.results;
+                        const resultData = response.data.data;
 
                         let columnConfigs = [{
                             data: 'id',

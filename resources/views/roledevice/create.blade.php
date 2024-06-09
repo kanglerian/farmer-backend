@@ -146,7 +146,7 @@
                 const idDevice = $('#id_device').val();
                 await axios.get(`/api/device/${idDevice}`)
                     .then((response) => {
-                        const device = response.data.result;
+                        const device = response.data.data;
                         $('#preview_name_device').text(device.name);
                         $('#preview_coordinate_x').text(device.coordinate_device_x);
                         $('#preview_coordinate_y').text(device.coordinate_device_y);
