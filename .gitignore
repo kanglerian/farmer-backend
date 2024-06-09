@@ -1,4 +1,3 @@
-
 # /public/build
 /public/hot
 /public/storage
@@ -15,3 +14,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/node_modules
+/vendor
