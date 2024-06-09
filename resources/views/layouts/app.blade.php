@@ -133,7 +133,7 @@
                                 <a href="{{ route('api-support.index') }}"
                                     class="flex items-center px-5 py-3 text-sm text-white rounded-xl hover:bg-[#e67e22] group">
                                     <i class="fa-solid fa-circle-nodes"></i>
-                                    <span class="ml-3">API Integration</span>
+                                    <span class="ml-3">API Documentation</span>
                                 </a>
                                 <button type="button" class="w-full md:hidden flex items-center px-5 py-3 text-sm text-white rounded-xl hover:bg-[#e67e22] group" onclick="sidebarToggle()">
                                     <i class="fa-solid fa-circle-chevron-left"></i>
