@@ -25,15 +25,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/visimisi', function () {
     return view('visimisi');
-});
+})->name('visimisi');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
 
 Route::get('/dashboard', function () {

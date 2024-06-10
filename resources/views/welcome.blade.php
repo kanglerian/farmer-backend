@@ -40,13 +40,13 @@
             @if (Route::has('login'))
                 <ul class="flex items-center gap-5">
                     <li>
-                        <a href="/" class="text-sm text-gray-900 underline">Beranda</a>
+                        <a href="{{ route('welcome') }}" class="text-sm text-gray-900 underline">Beranda</a>
                     </li>
                     <li>
-                        <a href="/visimisi" class="text-sm text-gray-900 underline">Visi & Misi</a>
+                        <a href="{{ route('visimisi') }}" class="text-sm text-gray-900 underline">Visi & Misi</a>
                     </li>
                     <li>
-                        <a href="/about" class="text-sm text-gray-900 underline">Tentang Kami</a>
+                        <a href="{{ route('about') }}" class="text-sm text-gray-900 underline">Tentang Kami</a>
                     </li>
                     @auth
                         <li>
