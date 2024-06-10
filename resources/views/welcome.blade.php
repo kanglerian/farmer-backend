@@ -30,33 +30,39 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased bg-[#2c3e50]">
-    <section class="flex flex-col items-center justify-between h-screen px-5 md:px-0 py-5">
-        <nav class="flex flex-col justify-center items-center space-y-5">
+<body class="antialiased bg-gray-50">
+    <section class="flex flex-col items-center justify-between h-screen">
+        <nav class="w-full flex justify-between items-center px-10">
             <a href="/" class="flex items-end gap-3 py-5">
-                <img src="{{ asset('img/plant.png') }}" style="width: 50px">
-                <span class="font-bold text-white">SIPETANI</span>
+                <img src="{{ asset('img/plant-black.png') }}" style="width: 50px">
+                <span class="font-bold text-gray-900">SIPETANI</span>
             </a>
             @if (Route::has('login'))
                 <ul class="flex items-center gap-5">
+                    <li>
+                        <a href="/" class="text-sm text-gray-900 underline">Beranda</a>
+                    </li>
+                    <li>
+                        <a href="/visimisi" class="text-sm text-gray-900 underline">Visi & Misi</a>
+                    </li>
+                    <li>
+                        <a href="/about" class="text-sm text-gray-900 underline">Tentang Kami</a>
+                    </li>
                     @auth
                         <li>
-                            <a href="{{ url('/dashboard') }}" class="text-sm text-white underline">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="text-sm text-gray-900 underline">Dashboard</a>
                         </li>
                     @else
                         <li>
-                            <a href="{{ route('login') }}" class="text-sm text-white bg-[#e67e22] hover:bg-[#DA7821] px-5 py-3 rounded-xl">Log in</a>
+                            <a href="{{ route('login') }}" class="text-sm text-gray-900 underline">Log in</a>
                         </li>
                     @endauth
                 </ul>
             @endif
         </nav>
-        <div class="w-full md:w-2/3 h-2/3">
-            <div id="map" class="rounded-2xl shadow-xl border-4 border-[#e67e22]"></div>
+        <div class="w-full h-full">
+            <div id="map"></div>
         </div>
-        <footer>
-            <p class="text-sm text-white">Copyright © 2024 SIPETANI</p>
-        </footer>
     </section>
     <script src="{{ asset('js/all.min.js') }}"></script>
     <script src="{{ asset('js/axios.min.js') }}"></script>
@@ -69,7 +75,7 @@
                 .then((response) => {
                     const maps = response.data.data;
 
-                    const map = L.map('map').setView([-7.351971,108.515845], 10);
+                    const map = L.map('map').setView([-7.351971, 108.515845], 10);
 
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
@@ -81,7 +87,8 @@
                         const lat = result.coordinate_device_x ?? -7.351971;
                         const lng = result.coordinate_device_y ?? 108.515845;
                         const marker = L.marker([lat, lng]).addTo(map);
-                        const paragraph = `<b>${result.name}</b><br/><span>${result.status} | ${result.condition}</span>`
+                        const paragraph =
+                            `<b>${result.name}</b><br/><span>${result.status} | ${result.condition}</span>`
                         marker.bindPopup(paragraph).openPopup();
 
                         const circle = L.circle([lat, lng], {
