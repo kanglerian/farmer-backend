@@ -33,7 +33,7 @@
 <body class="antialiased bg-gray-50">
     <section class="flex flex-col items-center justify-between h-screen">
         <nav class="w-full flex justify-between items-center px-10">
-            <a href="/" class="flex items-end gap-3 py-5">
+            <a href="{{ route('welcome') }}" class="flex items-end gap-3 py-5">
                 <img src="{{ asset('img/plant-black.png') }}" style="width: 50px">
                 <span class="font-bold text-gray-900">SIPETANI</span>
             </a>
